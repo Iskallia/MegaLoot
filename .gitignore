@@ -1,0 +1,36 @@
+
+/bin/
+/eclipse/
+/build/
+/__wfiles/
+/.classpath
+/.project
+/.settings/
+/library/
+/run/
+
+/libs/
+/build.bat
+
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run

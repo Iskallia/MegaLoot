@@ -1,0 +1,16 @@
+[
+	{
+		"modid": "megaloot",
+		"name": "Mega Loot",
+		"description": "Mega Loot - Loot suitable for RPG Gameplay",
+		"version": "0.0.0-alpha",
+		"mcversion": "1.10.2",
+		"url": "",
+		"updateUrl": "",
+		"authorList": ["Iskall85","Winter_Grave"],
+		"credits": "Iskall85",
+		"logoFile": "",
+		"screenshots": [],
+		"dependencies": []
+}
+]
