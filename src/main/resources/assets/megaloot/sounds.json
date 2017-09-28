@@ -1,0 +1,50 @@
+{
+	"case_open": {
+		"category": "master"
+		,"sounds": [
+			{"name": "megaloot:case_open1", "stream": false}
+			,{"name": "megaloot:case_open2", "stream": false}
+			,{"name": "megaloot:case_open3", "stream": false}
+			,{"name": "megaloot:case_open4", "stream": false}
+			,{"name": "megaloot:case_open5", "stream": false}
+		]
+	}
+	,"weapon_loop": {
+		"category": "master"
+		,"sounds": [
+			{"name": "megaloot:weapon_loop1", "stream": false}
+		]
+	}
+	,"blade": {
+		"category": "master"
+		,"sounds": [
+			{"name": "megaloot:blade1", "stream": false}
+			,{"name": "megaloot:blade2", "stream": false}
+			,{"name": "megaloot:blade3", "stream": false}
+		]
+	}
+	,"power": {
+		"category": "master"
+		,"sounds": [
+			{"name": "megaloot:power1", "stream": false}
+			,{"name": "megaloot:power2", "stream": false}
+			,{"name": "megaloot:power3", "stream": false}
+			,{"name": "megaloot:power4", "stream": false}
+		]
+	}
+	,"draw": {
+		"category": "master"
+		,"sounds": [
+			{"name": "megaloot:longbow_draw_1", "stream": false}
+		]
+	}
+	,"bow_open": {
+		"category": "master"
+		,"sounds": [
+			{"name": "megaloot:bow_open1", "stream": false}
+			,{"name": "megaloot:bow_open2", "stream": false}
+			,{"name": "megaloot:bow_open3", "stream": false}
+			,{"name": "megaloot:bow_open4", "stream": false}
+		]
+	}
+}
