@@ -47,31 +47,12 @@ public class MLItemWeaponSword extends ItemSword
 				return model;
 			}
 		});
-		
-		/*
-		EntityLiving e = null;
-		Potion p;
-		
-		p = MobEffects.BLINDNESS; // Potion.getPotionById(Potion.getIdFromPotion(MobEffects.BLINDNESS));
-		
-		e.addPotionEffect(new PotionEffect(p, 20));
-		*/
 	}
 	
 	@Override
 	public int getMaxDamage(ItemStack stack)
 	{
-		int maxDamage = super.getMaxDamage(stack);
-		
-		maxDamage = LootItemHelper.getLootIntValue(stack, MLItem.LOOT_TAG_DURABILITY);
-		
-		return maxDamage;
-	}
-	
-	@Override
-	public float getDamageVsEntity()
-	{
-		return super.getDamageVsEntity();
+		return LootItemHelper.getMaxDamage(stack);
 	}
 	
 	@Override
@@ -79,7 +60,7 @@ public class MLItemWeaponSword extends ItemSword
 	{
 		boolean hit = super.hitEntity(stack, target, attacker);
 		
-		if (target.getHealth() <= 0.0)
+		if (target instanceof EntityPlayer && target.getHealth() <= 0.0)
 		{
 			int kills = LootItemHelper.getLootIntValue(stack, MLItem.LOOT_TAG_KILLS);
 			kills++;
@@ -97,12 +78,6 @@ public class MLItemWeaponSword extends ItemSword
 		}
 		
 		return hit;
-	}
-	
-	@Override
-	public int getItemEnchantability()
-	{
-		return super.getItemEnchantability();
 	}
 	
 	@Override
@@ -160,18 +135,21 @@ public class MLItemWeaponSword extends ItemSword
 		
 		tooltip.add("");
 		tooltip.add(TextFormatting.GRAY + "" + attackDamage + " Damage | " + ItemStack.DECIMALFORMAT.format(sp1) + " Atack Speed");
-		tooltip.add(TextFormatting.WHITE + ItemStack.DECIMALFORMAT.format(((float)attackDamage / sp1)) + " DPS");
+		tooltip.add(TextFormatting.WHITE + ItemStack.DECIMALFORMAT.format(((float)attackDamage * sp1)) + " DPS");
 		tooltip.add("");
 		
 		List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
 		for (LootWeaponEffect effect : effects)
 		{
-			tooltip.add(TextFormatting.AQUA + I18n.translateToLocal("weaponeffect." + effect.getId() + ".description"));
+			tooltip.add(TextFormatting.RESET + "" + TextFormatting.AQUA + I18n.translateToLocalFormatted("weaponeffect." + effect.getId() + ".description", new Object[] { effect.getDurationString() }));
 		}
 		
 		tooltip.add(durability + " Durability");
-		tooltip.add("");
 		
-		//stack.getEnchantmentTagList();
+		int kills = LootItemHelper.getLootIntValue(stack, MLItem.LOOT_TAG_KILLS);
+		if (kills > 0)
+			tooltip.add(kills + "player kills");
+		
+		tooltip.add("");
 	}
 }

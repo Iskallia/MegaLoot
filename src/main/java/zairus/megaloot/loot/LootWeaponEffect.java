@@ -15,6 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.text.TextFormatting;
 import zairus.megaloot.item.MLItem;
 
 public class LootWeaponEffect
@@ -50,7 +51,7 @@ public class LootWeaponEffect
 	}
 	
 	@Nullable
-	public static LootWeaponEffect getRandomExcluding(Random rand, LootWeaponEffect... exclude)
+	public static LootWeaponEffect getRandomExcluding(Random rand, List<LootWeaponEffect> exclude)
 	{
 		LootWeaponEffect weaponEffect = null;
 		
@@ -61,7 +62,7 @@ public class LootWeaponEffect
 			list.add(e);
 		}
 		
-		list.remove(exclude);
+		list.removeAll(exclude);
 		
 		if (list.size() > 0)
 			weaponEffect = list.get(rand.nextInt(list.size()));
@@ -148,5 +149,10 @@ public class LootWeaponEffect
 		
 		PotionEffect weaponEffect = new PotionEffect(this.effect, this.getDuration(rand), this.getAmplifier(rand), true, false);
 		target.addPotionEffect(weaponEffect);
+	}
+	
+	public String getDurationString()
+	{
+		return TextFormatting.BOLD + "" + (this.durationMax / 100) + "" + TextFormatting.RESET + "" + TextFormatting.AQUA + " seconds";
 	}
 }

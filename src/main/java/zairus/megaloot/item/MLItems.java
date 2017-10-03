@@ -12,6 +12,7 @@ public class MLItems
 	public static Item WEAPONCASE_RARE;
 	public static Item WEAPONCASE_EPIC;
 	public static Item WEAPONSWORD;
+	public static Item WEAPONBOW;
 	
 	static
 	{
@@ -19,6 +20,7 @@ public class MLItems
 		WEAPONCASE_RARE = initItem(new MLItemWeaponCase(LootRarity.RARE), MLItem.WEAPONCASE_RARE_ID);
 		WEAPONCASE_EPIC = initItem(new MLItemWeaponCase(LootRarity.EPIC), MLItem.WEAPONCASE_EPIC_ID);
 		WEAPONSWORD = initItem(new MLItemWeaponSword(), MLItem.WEAPONSWORD_ID);
+		WEAPONBOW = initItem(new MLItemWeaponBow(), MLItem.WEAPONBOW_ID);
 	}
 	
 	public static Item initItem(Item item, String id)
@@ -35,5 +37,6 @@ public class MLItems
 		MegaLoot.proxy.registerItem(WEAPONCASE_RARE, MLItem.WEAPONCASE_RARE_ID, 0, true);
 		MegaLoot.proxy.registerItem(WEAPONCASE_EPIC, MLItem.WEAPONCASE_EPIC_ID, 0, true);
 		MegaLoot.proxy.registerItem(WEAPONSWORD, MLItem.WEAPONSWORD_ID, 0, true);
+		MegaLoot.proxy.registerItem(WEAPONBOW, MLItem.WEAPONBOW_ID, 0, true);
 	}
 }

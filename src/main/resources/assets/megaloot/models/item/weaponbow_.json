@@ -1,0 +1,102 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "megaloot:items/bow/1"
+	},
+    "display": {
+        "thirdperson_righthand": {
+            "rotation": [ -80, 260, -40 ],
+            "translation": [ -1, -2, 2.5 ],
+            "scale": [ 0.9, 0.9, 0.9 ]
+        },
+        "thirdperson_lefthand": {
+            "rotation": [ -80, -280, 40 ],
+            "translation": [ -1, -2, 2.5 ],
+            "scale": [ 0.9, 0.9, 0.9 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, -90, 25 ],
+            "translation": [ 1.13, 3.2, 1.13],
+            "scale": [ 0.68, 0.68, 0.68 ]
+        },
+        "firstperson_lefthand": {
+            "rotation": [ 0, 90, -25 ],
+            "translation": [ 1.13, 3.2, 1.13],
+            "scale": [ 0.68, 0.68, 0.68 ]
+        }
+    },
+	"overrides": [
+		{
+			"predicate": {
+				"model": 1
+			},
+			"model": "megaloot:item/bow/1"
+		},
+		{
+			"predicate": {
+				"model": 2
+			},
+			"model": "megaloot:item/bow/2"
+		},
+		{
+			"predicate": {
+				"model": 3
+			},
+			"model": "megaloot:item/bow/3"
+		},
+		{
+			"predicate": {
+				"model": 4
+			},
+			"model": "megaloot:item/bow/4"
+		},
+		{
+			"predicate": {
+				"model": 5
+			},
+			"model": "megaloot:item/bow/5"
+		},
+		{
+			"predicate": {
+				"model": 6
+			},
+			"model": "megaloot:item/bow/6"
+		},
+		{
+			"predicate": {
+				"model": 7
+			},
+			"model": "megaloot:item/bow/7"
+		},
+		{
+			"predicate": {
+				"model": 8
+			},
+			"model": "megaloot:item/bow/8"
+		},
+		{
+			"predicate": {
+				"model": 9
+			},
+			"model": "megaloot:item/bow/9"
+		},
+		{
+			"predicate": {
+				"model": 10
+			},
+			"model": "megaloot:item/bow/10"
+		},
+		{
+			"predicate": {
+				"model": 11
+			},
+			"model": "megaloot:item/bow/11"
+		},
+		{
+			"predicate": {
+				"model": 12
+			},
+			"model": "megaloot:item/bow/12"
+		}
+	]
+}

@@ -1,12 +1,30 @@
 package zairus.megaloot.loot;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import zairus.megaloot.item.MLItem;
+import zairus.megaloot.item.MLItems;
 
 public class LootItemHelper
 {
+	public static ItemStack getRandomLoot(Random rand)
+	{
+		List<Item> items = new ArrayList<Item>();
+		
+		items.add(MLItems.WEAPONSWORD);
+		items.add(MLItems.WEAPONBOW);
+		
+		ItemStack stack = new ItemStack(items.get(rand.nextInt(items.size())));
+		
+		return stack;
+	}
+	
 	public static NBTTagList getLootTagList(ItemStack stack, String key)
 	{
 		NBTTagList list = new NBTTagList();
@@ -72,5 +90,15 @@ public class LootItemHelper
 			stack.getTagCompound().setTag(MLItem.LOOT_TAG, new NBTTagCompound());
 		
 		stack.getTagCompound().getCompoundTag(MLItem.LOOT_TAG).setFloat(key, value);
+	}
+	
+	public static int getMaxDamage(ItemStack stack)
+	{
+		int maxDamage = LootItemHelper.getLootIntValue(stack, MLItem.LOOT_TAG_DURABILITY);
+		
+		if (maxDamage == 0)
+			maxDamage = 100;
+		
+		return maxDamage;
 	}
 }

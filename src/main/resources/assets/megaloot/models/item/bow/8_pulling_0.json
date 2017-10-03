@@ -1,0 +1,6 @@
+{
+	"parent": "megaloot:item/bow/8",
+	"textures": {
+		"layer0": "megaloot:items/bow/8_pulling_0"
+	}
+}

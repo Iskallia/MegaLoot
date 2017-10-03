@@ -14,6 +14,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import zairus.megaloot.MegaLoot;
+import zairus.megaloot.loot.LootItemHelper;
 import zairus.megaloot.loot.LootRarity;
 import zairus.megaloot.loot.LootSet;
 import zairus.megaloot.loot.LootWeaponEffect;
@@ -37,7 +38,7 @@ public class MLItemWeaponCase extends MLItem
 		
 		for (int i = 0; i < 1 && !world.isRemote; ++i)
 		{
-			ItemStack loot = new ItemStack(MLItems.WEAPONSWORD);
+			ItemStack loot = LootItemHelper.getRandomLoot(itemRand); // new ItemStack(MLItems.WEAPONSWORD);
 			
 			NBTTagCompound tag = new NBTTagCompound();
 			tag.setInteger("HideFlags", 2);
@@ -62,7 +63,7 @@ public class MLItemWeaponCase extends MLItem
 				
 				for (int m = 0; m < modifierCount; ++m)
 				{
-					LootWeaponEffect me = LootWeaponEffect.getRandomExcluding(itemRand, appliedEffects.toArray(new LootWeaponEffect[] {}));
+					LootWeaponEffect me = LootWeaponEffect.getRandomExcluding(itemRand, appliedEffects);
 					
 					effectList.appendTag(me.getNBT());
 					appliedEffects.add(me);

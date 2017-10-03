@@ -8,6 +8,7 @@ public class MLItem extends Item
 	public static final String WEAPONCASE_RARE_ID = "weaponcase_rare";
 	public static final String WEAPONCASE_EPIC_ID = "weaponcase_epic";
 	public static final String WEAPONSWORD_ID = "weaponsword";
+	public static final String WEAPONBOW_ID = "weaponbow";
 	
 	public static final String LOOT_TAG = "MegaLoot";
 	public static final String LOOT_TAG_RARITY = "rarity";
