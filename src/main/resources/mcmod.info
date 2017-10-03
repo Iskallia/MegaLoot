@@ -3,7 +3,7 @@
 		"modid": "megaloot",
 		"name": "Mega Loot",
 		"description": "Mega Loot - Loot suitable for RPG Gameplay",
-		"version": "0.0.0-alpha",
+		"version": "0.0.1-alpha",
 		"mcversion": "1.10.2",
 		"url": "",
 		"updateUrl": "",
