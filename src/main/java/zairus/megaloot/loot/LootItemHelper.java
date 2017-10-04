@@ -8,9 +8,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import zairus.megaloot.item.MLItem;
 import zairus.megaloot.item.MLItems;
 
+@SuppressWarnings("deprecation")
 public class LootItemHelper
 {
 	public static ItemStack getRandomLoot(Random rand)
@@ -100,5 +105,25 @@ public class LootItemHelper
 			maxDamage = 100;
 		
 		return maxDamage;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static void addInformation(ItemStack stack, List<String> tooltip)
+	{
+		int durability = stack.getMaxDamage();
+		
+		List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
+		for (LootWeaponEffect effect : effects)
+		{
+			tooltip.add(TextFormatting.RESET + "" + TextFormatting.AQUA + I18n.translateToLocalFormatted("weaponeffect." + effect.getId() + ".description", new Object[] { effect.getDurationString(stack, effect.getId()), effect.getAmplifierString(stack, effect.getId()) }));
+		}
+		
+		tooltip.add(durability + " Durability");
+		
+		int kills = LootItemHelper.getLootIntValue(stack, MLItem.LOOT_TAG_KILLS);
+		if (kills > 0)
+			tooltip.add(TextFormatting.RED + "" + kills + "player kills");
+		
+		tooltip.add("");
 	}
 }

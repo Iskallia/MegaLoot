@@ -18,4 +18,8 @@ public class MLItem extends Item
 	public static final String LOOT_TAG_DURABILITY = "durability";
 	public static final String LOOT_TAG_KILLS = "playerkills";
 	public static final String LOOT_TAG_EFFECTLIST = "effectList";
+	
+	public static final String LOOT_TAG_DRAWSPEED = "drawspeed";
+	public static final String LOOT_TAG_MULTISHOT = "miltishot";
+	public static final String LOOT_TAG_POWER = "power";
 }

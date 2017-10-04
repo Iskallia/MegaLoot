@@ -1,5 +1,7 @@
 package zairus.megaloot.util;
 
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -8,6 +10,7 @@ import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import zairus.megaloot.item.MLItems;
+import zairus.megaloot.loot.LootWeaponEffect;
 
 @Mod.EventBusSubscriber
 public class MLEventHandler
@@ -37,8 +40,9 @@ public class MLEventHandler
 	public void onEntityAttacked(LivingAttackEvent event)
 	{
 		Entity sourceEntity = event.getSource().getSourceOfDamage();
+		Entity targetEntity = event.getEntityLiving();
 		
-		if (sourceEntity != null && !sourceEntity.worldObj.isRemote)
+		if (sourceEntity != null && targetEntity != null && !sourceEntity.worldObj.isRemote)
 		{
 			if (sourceEntity instanceof EntityPlayer)
 			{
@@ -46,7 +50,17 @@ public class MLEventHandler
 				
 				if (player.getHeldItemMainhand().getItem() == MLItems.WEAPONSWORD)
 				{
-					//float damageInflicted = Math.min(event.getAmount(), event.getEntityLiving().getHealth());
+					ItemStack stack = player.getHeldItemMainhand();
+					
+					List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
+					
+					if (effects.contains(LootWeaponEffect.getById("leechlife")))
+					{
+						float damageInflicted = Math.min(event.getAmount(), event.getEntityLiving().getHealth());
+						int amplifier = LootWeaponEffect.getAmplifierFromStack(stack, "leechlife");
+						float leech = damageInflicted * ((float)amplifier / 100.0F);
+						player.heal(leech);
+					}
 				}
 			}
 		}

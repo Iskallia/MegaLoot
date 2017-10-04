@@ -17,18 +17,21 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.text.TextFormatting;
 import zairus.megaloot.item.MLItem;
+import zairus.megaloot.loot.LootSet.LootSetType;
 
 public class LootWeaponEffect
 {
 	public static final Map<String, LootWeaponEffect> REGISTRY = new HashMap<String, LootWeaponEffect>();
 	
-	public static final LootWeaponEffect WITHERING = create("wither", MobEffects.WITHER).setDuration(1, 3);
-	public static final LootWeaponEffect POISON = create("poison", MobEffects.POISON).setDuration(1, 6).setAmplifier(0, 1);
-	public static final LootWeaponEffect HUNGER = create("hunger", MobEffects.HUNGER).setDuration(1, 10);
-	public static final LootWeaponEffect LEVITATION = create("levitation", MobEffects.LEVITATION).setDuration(1, 3);
-	public static final LootWeaponEffect WEAKNESS = create("weakness", MobEffects.WEAKNESS).setDuration(1, 3);
-	public static final LootWeaponEffect SLOWNESS = create("slowness", MobEffects.SLOWNESS).setDuration(1, 3);
-	public static final LootWeaponEffect BLINDNESS = create("blindness", MobEffects.BLINDNESS).setDuration(1, 2);
+	public static final LootWeaponEffect WITHERING = create("wither", MobEffects.WITHER).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect POISON = create("poison", MobEffects.POISON).setDuration(1, 6).setAmplifier(0, 1).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect HUNGER = create("hunger", MobEffects.HUNGER).setDuration(1, 10).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect LEVITATION = create("levitation", MobEffects.LEVITATION).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect WEAKNESS = create("weakness", MobEffects.WEAKNESS).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect SLOWNESS = create("slowness", MobEffects.SLOWNESS).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect BLINDNESS = create("blindness", MobEffects.BLINDNESS).setDuration(1, 2).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect MULTISHOT = create("multishot", null).setAmplifier(2, 6).setItemTypes(LootSetType.BOW);
+	public static final LootWeaponEffect LEECHLIFE = create("leechlife", null).setAmplifier(1, 100).setItemTypes(LootSetType.SWORD);
 	
 	private String id;
 	private Potion effect;
@@ -36,6 +39,22 @@ public class LootWeaponEffect
 	private int durationMax = 300;
 	private int amplifierMin = 0;
 	private int amplifierMax = 0;
+	private List<LootSetType> applyToItems = new ArrayList<LootSetType>();
+	
+	public boolean applyToItemType(LootSetType type)
+	{
+		return applyToItems.contains(type);
+	}
+	
+	protected LootWeaponEffect setItemTypes(LootSetType... itemTypes)
+	{
+		for (LootSetType itemType : itemTypes)
+		{
+			applyToItems.add(itemType);
+		}
+		
+		return this;
+	}
 	
 	@Nullable
 	public static LootWeaponEffect getById(String id)
@@ -51,7 +70,7 @@ public class LootWeaponEffect
 	}
 	
 	@Nullable
-	public static LootWeaponEffect getRandomExcluding(Random rand, List<LootWeaponEffect> exclude)
+	public static LootWeaponEffect getRandomExcluding(Random rand, LootSetType type, List<LootWeaponEffect> exclude)
 	{
 		LootWeaponEffect weaponEffect = null;
 		
@@ -59,7 +78,8 @@ public class LootWeaponEffect
 		
 		for (LootWeaponEffect e : REGISTRY.values())
 		{
-			list.add(e);
+			if (e.applyToItemType(type))
+				list.add(e);
 		}
 		
 		list.removeAll(exclude);
@@ -70,13 +90,55 @@ public class LootWeaponEffect
 		return weaponEffect;
 	}
 	
-	public NBTTagCompound getNBT()
+	public NBTTagCompound getNBT(Random rand)
 	{
 		NBTTagCompound tag = new NBTTagCompound();
 		
 		tag.setString("id", this.getId());
+		tag.setInteger("duration", this.getDuration(rand));
+		tag.setInteger("amplifier", this.getAmplifier(rand));
 		
 		return tag;
+	}
+	
+	public static int getDurationFromStack(ItemStack stack, String effectId)
+	{
+		int duration = 0;
+		
+		NBTTagList effectTagList = LootItemHelper.getLootTagList(stack, MLItem.LOOT_TAG_EFFECTLIST);
+		
+		int count = effectTagList.tagCount();
+		
+		for (int i = 0; i < count; ++i)
+		{
+			NBTTagCompound e = effectTagList.getCompoundTagAt(i);
+			if (e.getString("id").contains(effectId))
+			{
+				duration = e.getInteger("duration");
+			}
+		}
+		
+		return duration;
+	}
+	
+	public static int getAmplifierFromStack(ItemStack stack, String effectId)
+	{
+		int amplifier = 0;
+		
+		NBTTagList effectTagList = LootItemHelper.getLootTagList(stack, MLItem.LOOT_TAG_EFFECTLIST);
+		
+		int count = effectTagList.tagCount();
+		
+		for (int i = 0; i < count; ++i)
+		{
+			NBTTagCompound e = effectTagList.getCompoundTagAt(i);
+			if (e.getString("id").contains(effectId))
+			{
+				amplifier = e.getInteger("amplifier");
+			}
+		}
+		
+		return amplifier;
 	}
 	
 	public static List<LootWeaponEffect> getEffectList(ItemStack stack)
@@ -142,17 +204,31 @@ public class LootWeaponEffect
 		return amplifier;
 	}
 	
-	public void onHit(Random rand, EntityLivingBase target, EntityLivingBase attacker)
+	@Nullable
+	public PotionEffect getPotionEffect(int duration, int amplifier)
 	{
 		if (this.effect == null)
-			return;
+			return null;
 		
-		PotionEffect weaponEffect = new PotionEffect(this.effect, this.getDuration(rand), this.getAmplifier(rand), true, false);
-		target.addPotionEffect(weaponEffect);
+		PotionEffect weaponEffect = new PotionEffect(this.effect, duration, amplifier, true, false);
+		return weaponEffect;
 	}
 	
-	public String getDurationString()
+	public void onHit(int duration, int amplifier, EntityLivingBase target, EntityLivingBase attacker)
 	{
-		return TextFormatting.BOLD + "" + (this.durationMax / 100) + "" + TextFormatting.RESET + "" + TextFormatting.AQUA + " seconds";
+		PotionEffect effect = this.getPotionEffect(duration, amplifier);
+		
+		if (effect != null)
+			target.addPotionEffect(effect);
+	}
+	
+	public String getAmplifierString(ItemStack stack, String effectId)
+	{
+		return TextFormatting.BOLD + "" + (getAmplifierFromStack(stack, effectId)) + "" + TextFormatting.RESET + ""  + TextFormatting.AQUA + "";
+	}
+	
+	public String getDurationString(ItemStack stack, String effectId)
+	{
+		return TextFormatting.BOLD + "" + (getDurationFromStack(stack, effectId) / 100) + "" + TextFormatting.RESET + "" + TextFormatting.AQUA + "";
 	}
 }

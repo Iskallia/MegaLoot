@@ -39,6 +39,21 @@ public class LootSet
 			,"Wakizashi"
 			,"Wizard Spike"};
 	
+	public static final String[] BOW_NAMES = {
+			"Long Bow"
+			,"Venom"
+			,"Nat Bow"
+			,"Black Widow"
+			,"Eagle"
+			,"Drawling"
+			,"Zach"
+			,"Slimestrike"
+			,"Thunderforce"
+			,"Ghost"
+			,"Angel"
+			,"Starshot"
+	};
+	
 	protected static LootSet get(String name)
 	{
 		LootSet set = new LootSet();
@@ -59,12 +74,20 @@ public class LootSet
 		return SWORD_NAMES[rand.nextInt(SWORD_NAMES.length)];
 	}
 	
+	public static String getBowName(Random rand)
+	{
+		return BOW_NAMES[rand.nextInt(BOW_NAMES.length)];
+	}
+	
 	public enum LootSetType
 	{
 		SWORD,
 		BOW,
 		RING,
-		ARMOR
+		ARMOR_FEET,
+		ARMOR_LEGS,
+		ARMOR_CHEST,
+		ARMOR_HEAD
 	}
 	
 	public class LootSetElement

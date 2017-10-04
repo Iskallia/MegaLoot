@@ -68,7 +68,7 @@ public class LootRarity
 		int modifierCount = this.modifiersMin;
 		
 		if (modifierCount < this.modifiersMax)
-			modifierCount += rand.nextInt(this.modifiersMax - modifierCount);
+			modifierCount += rand.nextInt(this.modifiersMax - modifierCount + 1);
 		
 		return modifierCount;
 	}
@@ -78,7 +78,7 @@ public class LootRarity
 		int durability = this.durabilityMin;
 		
 		if (durability < this.durabilityMax)
-			durability += rand.nextInt(this.durabilityMax - durability);
+			durability += rand.nextInt(this.durabilityMax - durability + 1);
 		
 		return durability;
 	}
@@ -88,7 +88,7 @@ public class LootRarity
 		int damage = this.damageMin;
 		
 		if (damage < this.damageMax)
-			damage += rand.nextInt(this.damageMax - damage);
+			damage += rand.nextInt(this.damageMax - damage + 1);
 		
 		return damage;
 	}

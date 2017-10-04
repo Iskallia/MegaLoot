@@ -17,6 +17,7 @@ import zairus.megaloot.MegaLoot;
 import zairus.megaloot.loot.LootItemHelper;
 import zairus.megaloot.loot.LootRarity;
 import zairus.megaloot.loot.LootSet;
+import zairus.megaloot.loot.LootSet.LootSetType;
 import zairus.megaloot.loot.LootWeaponEffect;
 import zairus.megaloot.sound.MLSoundEvents;
 
@@ -36,9 +37,11 @@ public class MLItemWeaponCase extends MLItem
 	{
 		world.playSound((EntityPlayer)null, player.getPosition(), MLSoundEvents.CASE_OPEN, SoundCategory.PLAYERS, 1.0F, 1.2F / (world.rand.nextFloat() * 0.2f + 0.9f));
 		
-		for (int i = 0; i < 1 && !world.isRemote; ++i)
+		for (int i = 0; i < 1; ++i)
 		{
 			ItemStack loot = LootItemHelper.getRandomLoot(itemRand); // new ItemStack(MLItems.WEAPONSWORD);
+			
+			LootSetType type = (loot.getItem() == MLItems.WEAPONSWORD)? LootSetType.SWORD : LootSetType.BOW;
 			
 			NBTTagCompound tag = new NBTTagCompound();
 			tag.setInteger("HideFlags", 2);
@@ -54,6 +57,9 @@ public class MLItemWeaponCase extends MLItem
 			mlTag.setFloat(MLItem.LOOT_TAG_SPEED, case_rarity.getSpeed(itemRand));
 			mlTag.setInteger(MLItem.LOOT_TAG_DURABILITY, case_rarity.getDurability(itemRand));
 			
+			mlTag.setFloat(MLItem.LOOT_TAG_DRAWSPEED, case_rarity.getSpeed(itemRand) + 4.0F);
+			mlTag.setFloat(MLItem.LOOT_TAG_POWER, 1.0F + ((float)case_rarity.getDamage(itemRand) / 20.0F));
+			
 			int modifierCount = case_rarity.getModifierCount(itemRand);
 			
 			if (modifierCount > 0)
@@ -63,9 +69,9 @@ public class MLItemWeaponCase extends MLItem
 				
 				for (int m = 0; m < modifierCount; ++m)
 				{
-					LootWeaponEffect me = LootWeaponEffect.getRandomExcluding(itemRand, appliedEffects);
+					LootWeaponEffect me = LootWeaponEffect.getRandomExcluding(itemRand, type, appliedEffects);
 					
-					effectList.appendTag(me.getNBT());
+					effectList.appendTag(me.getNBT(itemRand));
 					appliedEffects.add(me);
 				}
 				
@@ -75,7 +81,12 @@ public class MLItemWeaponCase extends MLItem
 			tag.setTag(MLItem.LOOT_TAG, mlTag);
 			
 			loot.setTagCompound(tag);
-			loot.setStackDisplayName(case_rarity.getColor() + LootSet.getSwordName(itemRand));
+			
+			if (loot.getItem() == MLItems.WEAPONSWORD)
+				loot.setStackDisplayName(case_rarity.getColor() + LootSet.getSwordName(itemRand));
+			
+			if (loot.getItem() == MLItems.WEAPONBOW)
+				loot.setStackDisplayName(case_rarity.getColor() + LootSet.getBowName(itemRand));
 			
 			if (loot != null)
 			{
