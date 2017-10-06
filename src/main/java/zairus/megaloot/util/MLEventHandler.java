@@ -44,7 +44,7 @@ public class MLEventHandler
 		
 		if (sourceEntity != null && targetEntity != null && !sourceEntity.worldObj.isRemote)
 		{
-			if (sourceEntity instanceof EntityPlayer)
+			if (sourceEntity instanceof EntityPlayer && targetEntity instanceof EntityPlayer)
 			{
 				EntityPlayer player = (EntityPlayer)sourceEntity;
 				

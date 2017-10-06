@@ -9,7 +9,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "0.0.4-alpha"
+version = "0.0.5-alpha"
 group = "zairus.megaloot"
 archivesBaseName = "megaloot-1.10.2"
 
@@ -27,8 +27,7 @@ minecraft {
 dependencies {
 }
 
-processResources
-{
+processResources {
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
 
@@ -44,3 +43,4 @@ processResources
         exclude 'mcmod.info'
     }
 }
+

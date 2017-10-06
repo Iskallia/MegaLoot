@@ -54,6 +54,29 @@ public class LootSet
 			,"Starshot"
 	};
 	
+	public static final String[] RING_NAMES = {
+			"The Pearl"
+			,"Fire Stone"
+			,"Burning Stone"
+			,"The Ruby"
+			,"The Ruby Eye"
+			,"Hope"
+			,"Purity Hope"
+			,"The Onyx"
+			,"Jordan"
+			,"Breeze"
+			,"Wind"
+			,"The Ocelot"};
+	
+	public static final Map<LootSetType, String[]> LOOT_ITEM_NAMES = new HashMap<LootSetType, String[]>();
+	
+	static
+	{
+		LOOT_ITEM_NAMES.put(LootSetType.SWORD, SWORD_NAMES);
+		LOOT_ITEM_NAMES.put(LootSetType.BOW, BOW_NAMES);
+		LOOT_ITEM_NAMES.put(LootSetType.RING, RING_NAMES);
+	}
+	
 	protected static LootSet get(String name)
 	{
 		LootSet set = new LootSet();
@@ -69,14 +92,14 @@ public class LootSet
 		return this.id;
 	}
 	
-	public static String getSwordName(Random rand)
+	public static String getNameForType(LootSetType type, Random rand)
 	{
-		return SWORD_NAMES[rand.nextInt(SWORD_NAMES.length)];
-	}
-	
-	public static String getBowName(Random rand)
-	{
-		return BOW_NAMES[rand.nextInt(BOW_NAMES.length)];
+		if (!LOOT_ITEM_NAMES.containsKey(type))
+			return "";
+		
+		String[] names = LOOT_ITEM_NAMES.get(type);
+		
+		return names[rand.nextInt(names.length)];
 	}
 	
 	public enum LootSetType

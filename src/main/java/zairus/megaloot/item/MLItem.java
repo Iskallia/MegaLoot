@@ -1,14 +1,21 @@
 package zairus.megaloot.item;
 
 import net.minecraft.item.Item;
+import zairus.megaloot.MegaLoot;
 
 public class MLItem extends Item
 {
+	protected MLItem()
+	{
+		this.setCreativeTab(MegaLoot.creativeTabMain);
+	}
+	
 	public static final String WEAPONCASE_COMMON_ID = "weaponcase_common";
 	public static final String WEAPONCASE_RARE_ID = "weaponcase_rare";
 	public static final String WEAPONCASE_EPIC_ID = "weaponcase_epic";
 	public static final String WEAPONSWORD_ID = "weaponsword";
 	public static final String WEAPONBOW_ID = "weaponbow";
+	public static final String BAUBLERING_ID = "baublering";
 	
 	public static final String LOOT_TAG = "MegaLoot";
 	public static final String LOOT_TAG_RARITY = "rarity";

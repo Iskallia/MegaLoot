@@ -39,9 +39,12 @@ public class MLItemWeaponCase extends MLItem
 		
 		for (int i = 0; i < 1; ++i)
 		{
-			ItemStack loot = LootItemHelper.getRandomLoot(itemRand); // new ItemStack(MLItems.WEAPONSWORD);
+			ItemStack loot = LootItemHelper.getRandomLoot(itemRand);
 			
-			LootSetType type = (loot.getItem() == MLItems.WEAPONSWORD)? LootSetType.SWORD : LootSetType.BOW;
+			LootSetType type = MLItems.getItemType(loot.getItem()); // (loot.getItem() == MLItems.WEAPONSWORD)? LootSetType.SWORD : (loot.getItem() == MLItems.WEAPONBOW)? LootSetType.BOW : LootSetType.RING;
+			
+			if (type == null)
+				type = LootSetType.SWORD;
 			
 			NBTTagCompound tag = new NBTTagCompound();
 			tag.setInteger("HideFlags", 2);
@@ -61,6 +64,9 @@ public class MLItemWeaponCase extends MLItem
 			mlTag.setFloat(MLItem.LOOT_TAG_POWER, 1.0F + ((float)case_rarity.getDamage(itemRand) / 20.0F));
 			
 			int modifierCount = case_rarity.getModifierCount(itemRand);
+			
+			if (type == LootSetType.RING && modifierCount == 0)
+				modifierCount = 1;
 			
 			if (modifierCount > 0)
 			{
@@ -82,11 +88,10 @@ public class MLItemWeaponCase extends MLItem
 			
 			loot.setTagCompound(tag);
 			
-			if (loot.getItem() == MLItems.WEAPONSWORD)
-				loot.setStackDisplayName(case_rarity.getColor() + LootSet.getSwordName(itemRand));
+			String loot_name = LootSet.getNameForType(type, itemRand);
 			
-			if (loot.getItem() == MLItems.WEAPONBOW)
-				loot.setStackDisplayName(case_rarity.getColor() + LootSet.getBowName(itemRand));
+			if (loot_name.length() > 0)
+				loot.setStackDisplayName(case_rarity.getColor() + loot_name);
 			
 			if (loot != null)
 			{

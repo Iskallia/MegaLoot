@@ -33,6 +33,12 @@ public class LootWeaponEffect
 	public static final LootWeaponEffect MULTISHOT = create("multishot", null).setAmplifier(2, 6).setItemTypes(LootSetType.BOW);
 	public static final LootWeaponEffect LEECHLIFE = create("leechlife", null).setAmplifier(1, 100).setItemTypes(LootSetType.SWORD);
 	
+	public static final LootWeaponEffect SPEED = create("speed", MobEffects.SPEED).setAmplifier(0, 2).setItemTypes(LootSetType.RING);
+	public static final LootWeaponEffect STRENGTH = create("strength", MobEffects.STRENGTH).setAmplifier(0, 2).setItemTypes(LootSetType.RING);
+	public static final LootWeaponEffect JUMP = create("jump", MobEffects.JUMP_BOOST).setAmplifier(0, 2).setItemTypes(LootSetType.RING);
+	public static final LootWeaponEffect RESISTANCE = create("resistance", MobEffects.RESISTANCE).setAmplifier(0, 2).setItemTypes(LootSetType.RING);
+	public static final LootWeaponEffect HASTE = create("haste", MobEffects.HASTE).setAmplifier(0, 4).setItemTypes(LootSetType.RING);
+	
 	private String id;
 	private Potion effect;
 	private int durationMin = 100;
@@ -224,7 +230,12 @@ public class LootWeaponEffect
 	
 	public String getAmplifierString(ItemStack stack, String effectId)
 	{
-		return TextFormatting.BOLD + "" + (getAmplifierFromStack(stack, effectId)) + "" + TextFormatting.RESET + ""  + TextFormatting.AQUA + "";
+		return getAmplifierString(stack, effectId, 0);
+	}
+	
+	public String getAmplifierString(ItemStack stack, String effectId, int add)
+	{
+		return TextFormatting.BOLD + "" + (getAmplifierFromStack(stack, effectId) + add) + "" + TextFormatting.RESET + ""  + TextFormatting.AQUA + "";
 	}
 	
 	public String getDurationString(ItemStack stack, String effectId)

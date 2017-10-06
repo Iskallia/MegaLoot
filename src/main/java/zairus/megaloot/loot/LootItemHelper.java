@@ -24,6 +24,7 @@ public class LootItemHelper
 		
 		items.add(MLItems.WEAPONSWORD);
 		items.add(MLItems.WEAPONBOW);
+		items.add(MLItems.BAUBLERING);
 		
 		ItemStack stack = new ItemStack(items.get(rand.nextInt(items.size())));
 		
@@ -110,15 +111,27 @@ public class LootItemHelper
 	@SideOnly(Side.CLIENT)
 	public static void addInformation(ItemStack stack, List<String> tooltip)
 	{
+		addInformation(stack, tooltip, true);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static void addInformation(ItemStack stack, List<String> tooltip, boolean show_durability)
+	{
 		int durability = stack.getMaxDamage();
 		
 		List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
 		for (LootWeaponEffect effect : effects)
 		{
-			tooltip.add(TextFormatting.RESET + "" + TextFormatting.AQUA + I18n.translateToLocalFormatted("weaponeffect." + effect.getId() + ".description", new Object[] { effect.getDurationString(stack, effect.getId()), effect.getAmplifierString(stack, effect.getId()) }));
+			tooltip.add(
+					TextFormatting.RESET + "" + TextFormatting.AQUA + I18n.translateToLocalFormatted("weaponeffect." + effect.getId() + ".description",
+					new Object[] { 
+							effect.getDurationString(stack, effect.getId()), 
+							effect.getAmplifierString(stack, effect.getId()), 
+							effect.getAmplifierString(stack, effect.getId(), 1) }));
 		}
 		
-		tooltip.add(durability + " Durability");
+		if (show_durability)
+			tooltip.add(durability + " Durability");
 		
 		int kills = LootItemHelper.getLootIntValue(stack, MLItem.LOOT_TAG_KILLS);
 		if (kills > 0)
