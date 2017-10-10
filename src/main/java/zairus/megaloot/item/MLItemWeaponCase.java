@@ -41,7 +41,7 @@ public class MLItemWeaponCase extends MLItem
 		{
 			ItemStack loot = LootItemHelper.getRandomLoot(itemRand);
 			
-			LootSetType type = MLItems.getItemType(loot.getItem()); // (loot.getItem() == MLItems.WEAPONSWORD)? LootSetType.SWORD : (loot.getItem() == MLItems.WEAPONBOW)? LootSetType.BOW : LootSetType.RING;
+			LootSetType type = MLItems.getItemType(loot.getItem());
 			
 			if (type == null)
 				type = LootSetType.SWORD;

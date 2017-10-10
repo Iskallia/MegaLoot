@@ -16,6 +16,10 @@ public class MLItem extends Item
 	public static final String WEAPONSWORD_ID = "weaponsword";
 	public static final String WEAPONBOW_ID = "weaponbow";
 	public static final String BAUBLERING_ID = "baublering";
+	public static final String ARMOR_BOOTS_ID = "armor_boots";
+	public static final String ARMOR_LEGGINGS_D = "armor_leggings";
+	public static final String ARMOR_CHESTPLATE_ID = "armor_chestplate";
+	public static final String ARMOR_HELMET_ID = "armor_helmet";
 	
 	public static final String LOOT_TAG = "MegaLoot";
 	public static final String LOOT_TAG_RARITY = "rarity";

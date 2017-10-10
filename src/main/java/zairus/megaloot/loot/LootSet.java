@@ -4,11 +4,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import net.minecraft.client.model.ModelBiped;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import zairus.megaloot.client.model.MLModelArmorSets;
+
 public class LootSet
 {
 	public static final Map<String, LootSet> REGISTRY = new HashMap<String, LootSet>();
 	
-	public static final LootSet SET1 = get("Set1");
+	public static final LootSet VIKING = get("viking");
+	
+	//Viking set
+	//Samuray set
+	//Dragon lord set
+	//Knight set (big shoulders)
 	
 	protected String id;
 	
@@ -90,6 +100,22 @@ public class LootSet
 	public String getId()
 	{
 		return this.id;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static ModelBiped getArmorModel(LootSet set, LootSetType type)
+	{
+		Map<LootSet, Map<LootSetType, ModelBiped>> armorByType = new HashMap<LootSet, Map<LootSetType, ModelBiped>>();
+		
+		Map<LootSetType, ModelBiped> vikingSet = new HashMap<LootSetType, ModelBiped>();
+		vikingSet.put(LootSetType.ARMOR_HEAD, MLModelArmorSets.ARMOR_VIKING_HELMET);
+		vikingSet.put(LootSetType.ARMOR_CHEST, MLModelArmorSets.ARMOR_VIKING_CHESTPLATE);
+		vikingSet.put(LootSetType.ARMOR_LEGS, MLModelArmorSets.ARMOR_VIKING_LEGGINGS);
+		vikingSet.put(LootSetType.ARMOR_FEET, MLModelArmorSets.ARMOR_VIKING_BOOTS);
+		
+		armorByType.put(LootSet.VIKING, vikingSet);
+		
+		return armorByType.get(set).get(type);
 	}
 	
 	public static String getNameForType(LootSetType type, Random rand)
