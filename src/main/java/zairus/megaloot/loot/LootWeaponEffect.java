@@ -9,6 +9,8 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,17 +32,22 @@ public class LootWeaponEffect
 	public static final LootWeaponEffect WEAKNESS = create("weakness", MobEffects.WEAKNESS).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
 	public static final LootWeaponEffect SLOWNESS = create("slowness", MobEffects.SLOWNESS).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
 	public static final LootWeaponEffect BLINDNESS = create("blindness", MobEffects.BLINDNESS).setDuration(1, 2).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
-	public static final LootWeaponEffect MULTISHOT = create("multishot", null).setAmplifier(2, 6).setItemTypes(LootSetType.BOW);
-	public static final LootWeaponEffect LEECHLIFE = create("leechlife", null).setAmplifier(1, 100).setItemTypes(LootSetType.SWORD);
+	public static final LootWeaponEffect MULTISHOT = create("multishot").setAmplifier(2, 6).setItemTypes(LootSetType.BOW);
+	public static final LootWeaponEffect LEECHLIFE = create("leechlife").setAmplifier(1, 100).setItemTypes(LootSetType.SWORD);
 	
-	public static final LootWeaponEffect SPEED = create("speed", MobEffects.SPEED).setAmplifier(0, 2).setItemTypes(LootSetType.RING);
-	public static final LootWeaponEffect STRENGTH = create("strength", MobEffects.STRENGTH).setAmplifier(0, 2).setItemTypes(LootSetType.RING);
-	public static final LootWeaponEffect JUMP = create("jump", MobEffects.JUMP_BOOST).setAmplifier(0, 2).setItemTypes(LootSetType.RING);
-	public static final LootWeaponEffect RESISTANCE = create("resistance", MobEffects.RESISTANCE).setAmplifier(0, 2).setItemTypes(LootSetType.RING);
-	public static final LootWeaponEffect HASTE = create("haste", MobEffects.HASTE).setAmplifier(0, 4).setItemTypes(LootSetType.RING);
+	public static final LootWeaponEffect SPEED = create("speed", MobEffects.SPEED).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
+	public static final LootWeaponEffect STRENGTH = create("strength", MobEffects.STRENGTH).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
+	public static final LootWeaponEffect JUMP = create("jump", MobEffects.JUMP_BOOST).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
+	public static final LootWeaponEffect RESISTANCE = create("resistance", MobEffects.RESISTANCE).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
+	public static final LootWeaponEffect HASTE = create("haste", MobEffects.HASTE).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
+	
+	public static final LootWeaponEffect HEALTH_BOOST = create("healthboost", SharedMonsterAttributes.MAX_HEALTH).setAmplifier(1, 4).setItemTypes(LootSetType.ARMOR_HEAD, LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS, LootSetType.ARMOR_FEET);
+	public static final LootWeaponEffect KNOCKBACK_RESISTANCE = create("knockbackresistance", SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setAmplifier(1, 1).setItemTypes(LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS);
+	public static final LootWeaponEffect LUCK = create("luck", SharedMonsterAttributes.LUCK).setAmplifier(1, 1024).setItemTypes(LootSetType.ARMOR_HEAD);
 	
 	private String id;
 	private Potion effect;
+	private IAttribute attribute;
 	private int durationMin = 100;
 	private int durationMax = 300;
 	private int amplifierMin = 0;
@@ -164,12 +171,28 @@ public class LootWeaponEffect
 		return list;
 	}
 	
+	protected static LootWeaponEffect create(String id)
+	{
+		return create(id, null, null);
+	}
+	
+	protected static LootWeaponEffect create(String id, IAttribute attribute)
+	{
+		return create(id, null, attribute);
+	}
+	
 	protected static LootWeaponEffect create(String id, Potion effect)
+	{
+		return create(id, effect, null);
+	}
+	
+	protected static LootWeaponEffect create(String id, Potion effect, IAttribute attribute)
 	{
 		LootWeaponEffect weaponEffect = new LootWeaponEffect();
 		
 		weaponEffect.id = id;
 		weaponEffect.effect = effect;
+		weaponEffect.attribute = attribute;
 		
 		REGISTRY.put(id, weaponEffect);
 		
@@ -208,6 +231,12 @@ public class LootWeaponEffect
 			amplifier += rand.nextInt(this.amplifierMax - amplifier + 1);
 		
 		return amplifier;
+	}
+	
+	@Nullable
+	public IAttribute getAttribute()
+	{
+		return this.attribute;
 	}
 	
 	@Nullable

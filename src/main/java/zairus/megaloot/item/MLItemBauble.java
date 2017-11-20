@@ -17,7 +17,6 @@ import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import zairus.megaloot.loot.LootItemHelper;
-import zairus.megaloot.loot.LootWeaponEffect;
 
 @Optional.Interface( modid = "Baubles", iface = "baubles.api.IBauble" )
 public class MLItemBauble extends MLItem implements IBauble
@@ -47,16 +46,6 @@ public class MLItemBauble extends MLItem implements IBauble
 			EntityPlayer player = (EntityPlayer)entity;
 			
 			applyEffects(stack, player);
-		}
-	}
-	
-	private void applyEffects(ItemStack stack, EntityPlayer player)
-	{
-		List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
-		
-		for (LootWeaponEffect effect : effects)
-		{
-			player.addPotionEffect(effect.getPotionEffect(2, LootWeaponEffect.getAmplifierFromStack(stack, effect.getId())));
 		}
 	}
 	

@@ -1,6 +1,5 @@
 package zairus.megaloot.client.model;
 
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
@@ -8,28 +7,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import zairus.megaloot.loot.LootSet.LootSetType;
 
 @SideOnly(Side.CLIENT)
-public class MLModelArmorViking extends ModelBiped
+public class MLModelArmorViking extends MLModelArmorBase
 {
-	public MLModelArmorViking()
-	{
-		this(0.0625F, LootSetType.ARMOR_HEAD);
-	}
-	
 	public MLModelArmorViking(float scale, LootSetType partType)
 	{
-		super(scale);
-		
-		createModel(scale, partType);
+		super(scale, partType);
 	}
 	
-	private void createModel(float scale, LootSetType partType)
+	@Override
+	protected void createModel(float scale, LootSetType partType)
 	{
-		this.textureWidth = 64;
-		this.textureHeight = 64;
-		
 		// ## Helmet
 		
-		this.bipedHead = new ModelRenderer(this, 0, 0);
 		this.bipedHeadwear.isHidden = true;
 		
 		if (partType == LootSetType.ARMOR_HEAD)
@@ -44,15 +33,6 @@ public class MLModelArmorViking extends ModelBiped
 		}
 		
 		// ## Chestplate
-		
-		this.bipedBody = new ModelRenderer(this, 16, 16);
-		this.bipedRightArm = new ModelRenderer(this, 40, 16);
-		this.bipedLeftArm = new ModelRenderer(this, 40, 16);
-		this.bipedLeftArm.mirror = true;
-		
-		this.bipedBody.setRotationPoint(0.0F, 0.0F + 0, 0.0F);
-		this.bipedLeftArm.setRotationPoint(5.0F, 2.0F + 0, 0.0F);
-		this.bipedRightArm.setRotationPoint(-5.0F, 2.0F + 0, 0.0F);
 		
 		if (partType == LootSetType.ARMOR_CHEST)
 		{
@@ -70,13 +50,6 @@ public class MLModelArmorViking extends ModelBiped
 		}
 		
 		// ## Leggings
-		
-		this.bipedRightLeg = new ModelRenderer(this, 0, 48);
-		this.bipedLeftLeg = new ModelRenderer(this, 0, 48);
-		this.bipedLeftLeg.mirror = true;
-		
-		this.bipedRightLeg.setRotationPoint(-1.9F, 12.0F + 0, 0.0F);
-		this.bipedLeftLeg.setRotationPoint(1.9F, 12.0F + 0, 0.0F);
 		
 		if (partType == LootSetType.ARMOR_LEGS)
 		{
@@ -102,23 +75,9 @@ public class MLModelArmorViking extends ModelBiped
 		}
 	}
 	
-	public void setRotation(ModelRenderer model, float x, float y, float z)
-	{
-		model.rotateAngleX = x;
-		model.rotateAngleY = y;
-		model.rotateAngleZ = z;
-	}
-	
 	@Override
-	public void setRotationAngles(float f, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale, Entity entity)
+	protected void update(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
 	{
-		super.setRotationAngles(f, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entity);
-	}
-	
-	@Override
-	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
-	{
-		super.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-		setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entity);
+		;
 	}
 }

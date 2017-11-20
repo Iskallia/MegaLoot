@@ -14,11 +14,9 @@ public class LootSet
 	public static final Map<String, LootSet> REGISTRY = new HashMap<String, LootSet>();
 	
 	public static final LootSet VIKING = get("viking");
-	
-	//Viking set
-	//Samuray set
-	//Dragon lord set
-	//Knight set (big shoulders)
+	public static final LootSet DRAGON = get("dragon");
+	public static final LootSet KNIGHT = get("knight");
+	public static final LootSet SAMURAI = get("samurai");
 	
 	protected String id;
 	
@@ -107,13 +105,37 @@ public class LootSet
 	{
 		Map<LootSet, Map<LootSetType, ModelBiped>> armorByType = new HashMap<LootSet, Map<LootSetType, ModelBiped>>();
 		
-		Map<LootSetType, ModelBiped> vikingSet = new HashMap<LootSetType, ModelBiped>();
-		vikingSet.put(LootSetType.ARMOR_HEAD, MLModelArmorSets.ARMOR_VIKING_HELMET);
-		vikingSet.put(LootSetType.ARMOR_CHEST, MLModelArmorSets.ARMOR_VIKING_CHESTPLATE);
-		vikingSet.put(LootSetType.ARMOR_LEGS, MLModelArmorSets.ARMOR_VIKING_LEGGINGS);
-		vikingSet.put(LootSetType.ARMOR_FEET, MLModelArmorSets.ARMOR_VIKING_BOOTS);
+		Map<LootSetType, ModelBiped> armorSet = new HashMap<LootSetType, ModelBiped>();
+		armorSet.put(LootSetType.ARMOR_HEAD, MLModelArmorSets.ARMOR_VIKING_HELMET);
+		armorSet.put(LootSetType.ARMOR_CHEST, MLModelArmorSets.ARMOR_VIKING_CHESTPLATE);
+		armorSet.put(LootSetType.ARMOR_LEGS, MLModelArmorSets.ARMOR_VIKING_LEGGINGS);
+		armorSet.put(LootSetType.ARMOR_FEET, MLModelArmorSets.ARMOR_VIKING_BOOTS);
 		
-		armorByType.put(LootSet.VIKING, vikingSet);
+		armorByType.put(LootSet.VIKING, armorSet);
+		
+		armorSet = new HashMap<LootSetType, ModelBiped>();
+		armorSet.put(LootSetType.ARMOR_HEAD, MLModelArmorSets.ARMOR_DRAGON_HELMET);
+		armorSet.put(LootSetType.ARMOR_CHEST, MLModelArmorSets.ARMOR_DRAGON_CHESTPLATE);
+		armorSet.put(LootSetType.ARMOR_LEGS, MLModelArmorSets.ARMOR_DRAGON_LEGGINGS);
+		armorSet.put(LootSetType.ARMOR_FEET, MLModelArmorSets.ARMOR_DRAGON_BOOTS);
+		
+		armorByType.put(LootSet.DRAGON, armorSet);
+		
+		armorSet = new HashMap<LootSetType, ModelBiped>();
+		armorSet.put(LootSetType.ARMOR_HEAD, MLModelArmorSets.ARMOR_KNIGHT_HELMET);
+		armorSet.put(LootSetType.ARMOR_CHEST, MLModelArmorSets.ARMOR_KNIGHT_CHESTPLATE);
+		armorSet.put(LootSetType.ARMOR_LEGS, MLModelArmorSets.ARMOR_KNIGHT_LEGGINGS);
+		armorSet.put(LootSetType.ARMOR_FEET, MLModelArmorSets.ARMOR_KNIGHT_BOOTS);
+		
+		armorByType.put(LootSet.KNIGHT, armorSet);
+		
+		armorSet = new HashMap<LootSetType, ModelBiped>();
+		armorSet.put(LootSetType.ARMOR_HEAD, MLModelArmorSets.ARMOR_SAMURAI_HELMET);
+		armorSet.put(LootSetType.ARMOR_CHEST, MLModelArmorSets.ARMOR_SAMURAI_CHESTPLATE);
+		armorSet.put(LootSetType.ARMOR_LEGS, MLModelArmorSets.ARMOR_SAMURAI_LEGGINGS);
+		armorSet.put(LootSetType.ARMOR_FEET, MLModelArmorSets.ARMOR_SAMURAI_BOOTS);
+		
+		armorByType.put(LootSet.SAMURAI, armorSet);
 		
 		return armorByType.get(set).get(type);
 	}

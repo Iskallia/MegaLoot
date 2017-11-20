@@ -77,8 +77,11 @@ public class MLItemWeaponCase extends MLItem
 				{
 					LootWeaponEffect me = LootWeaponEffect.getRandomExcluding(itemRand, type, appliedEffects);
 					
-					effectList.appendTag(me.getNBT(itemRand));
-					appliedEffects.add(me);
+					if (me != null)
+					{
+						effectList.appendTag(me.getNBT(itemRand));
+						appliedEffects.add(me);
+					}
 				}
 				
 				mlTag.setTag(MLItem.LOOT_TAG_EFFECTLIST, effectList);

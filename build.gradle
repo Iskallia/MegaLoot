@@ -9,7 +9,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "0.0.5-alpha"
+version = "0.0.7-alpha"
 group = "zairus.megaloot"
 archivesBaseName = "megaloot-1.10.2"
 

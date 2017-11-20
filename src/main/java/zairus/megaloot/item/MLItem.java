@@ -1,7 +1,16 @@
 package zairus.megaloot.item;
 
+import java.util.List;
+
+import com.google.common.collect.Multimap;
+
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import zairus.megaloot.MegaLoot;
+import zairus.megaloot.loot.LootWeaponEffect;
 
 public class MLItem extends Item
 {
@@ -33,4 +42,29 @@ public class MLItem extends Item
 	public static final String LOOT_TAG_DRAWSPEED = "drawspeed";
 	public static final String LOOT_TAG_MULTISHOT = "miltishot";
 	public static final String LOOT_TAG_POWER = "power";
+	
+	@Override
+	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack)
+	{
+		Multimap<String, AttributeModifier> modifiers = modifiersForStack(slot, stack, super.getAttributeModifiers(slot, stack));
+		
+		return modifiers;
+	}
+	
+	public static void applyEffects(ItemStack stack, EntityPlayer player)
+	{
+		List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
+		
+		for (LootWeaponEffect effect : effects)
+		{
+			player.addPotionEffect(effect.getPotionEffect(2, LootWeaponEffect.getAmplifierFromStack(stack, effect.getId())));
+		}
+	}
+	
+	public static Multimap<String, AttributeModifier> modifiersForStack(EntityEquipmentSlot slot, ItemStack stack, Multimap<String, AttributeModifier> initial)
+	{
+		Multimap<String, AttributeModifier> modifiers = initial;
+		
+		return modifiers;
+	}
 }
