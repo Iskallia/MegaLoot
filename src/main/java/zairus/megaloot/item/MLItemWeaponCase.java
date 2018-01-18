@@ -91,6 +91,8 @@ public class MLItemWeaponCase extends MLItem
 			
 			loot.setTagCompound(tag);
 			
+			LootItemHelper.setLootStringValue(loot, MLItem.LOOT_TAG_LOOTSET, LootSet.getRandom(itemRand).getId());
+			
 			String loot_name = LootSet.getNameForType(type, itemRand);
 			
 			if (loot_name.length() > 0)

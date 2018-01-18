@@ -25,8 +25,8 @@ public class LootWeaponEffect
 {
 	public static final Map<String, LootWeaponEffect> REGISTRY = new HashMap<String, LootWeaponEffect>();
 	
-	public static final LootWeaponEffect WITHERING = create("wither", MobEffects.WITHER).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
-	public static final LootWeaponEffect POISON = create("poison", MobEffects.POISON).setDuration(1, 6).setAmplifier(0, 1).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect WITHERING = create("wither", MobEffects.WITHER).setDuration(1, 2).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect POISON = create("poison", MobEffects.POISON).setDuration(1, 3).setAmplifier(0, 1).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
 	public static final LootWeaponEffect HUNGER = create("hunger", MobEffects.HUNGER).setDuration(1, 10).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
 	public static final LootWeaponEffect LEVITATION = create("levitation", MobEffects.LEVITATION).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
 	public static final LootWeaponEffect WEAKNESS = create("weakness", MobEffects.WEAKNESS).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);

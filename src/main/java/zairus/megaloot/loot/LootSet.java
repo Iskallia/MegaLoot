@@ -1,6 +1,8 @@
 package zairus.megaloot.loot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -93,6 +95,25 @@ public class LootSet
 		REGISTRY.put(name, set);
 		
 		return set;
+	}
+	
+	public static LootSet getRandom(Random rand)
+	{
+		List<String> lootSetKeys = new ArrayList<String>(REGISTRY.keySet());
+		
+		String setId = lootSetKeys.get(rand.nextInt(lootSetKeys.size()));
+		
+		return getById(setId);
+	}
+	
+	public static LootSet getById(String id)
+	{
+		LootSet lootSet = LootSet.VIKING;
+		
+		if (id.length() > 0 && REGISTRY.containsKey(id))
+			lootSet = REGISTRY.get(id);
+		
+		return lootSet;
 	}
 	
 	public String getId()

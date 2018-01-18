@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import zairus.megaloot.MegaLoot;
@@ -32,13 +33,21 @@ public class MLItemArmor extends ItemArmor
 	@SideOnly(Side.CLIENT)
 	public net.minecraft.client.model.ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, net.minecraft.client.model.ModelBiped _default)
 	{
-		return LootSet.getArmorModel(LootSet.VIKING, MLItems.getItemType(itemStack.getItem()));
+		String lootSetId = LootItemHelper.getLootStringValue(itemStack, MLItem.LOOT_TAG_LOOTSET);
+		
+		return LootSet.getArmorModel(LootSet.getById(lootSetId), MLItems.getItemType(itemStack.getItem()));
 	}
 	
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type)
 	{
-		return "megaloot:textures/models/armor/1.png";
+		String lootSetId = LootItemHelper.getLootStringValue(stack, MLItem.LOOT_TAG_LOOTSET);
+		String textureString = "megaloot:textures/models/armor/1.png";
+		
+		if (lootSetId != null && lootSetId.length() > 0)
+			textureString = "megaloot:textures/models/armor/" + lootSetId + ".png";
+		
+		return textureString;
 	}
 	
 	@Override
@@ -68,6 +77,10 @@ public class MLItemArmor extends ItemArmor
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
 	{
+		tooltip.add("");
+		tooltip.add(TextFormatting.GRAY + "Armor set " + TextFormatting.BOLD + "" + LootItemHelper.getLootStringValue(stack, MLItem.LOOT_TAG_LOOTSET));
+		tooltip.add("");
+		
 		LootItemHelper.addInformation(stack, tooltip, false);
 	}
 }

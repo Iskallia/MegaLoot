@@ -31,6 +31,7 @@ public class MLItem extends Item
 	public static final String ARMOR_HELMET_ID = "armor_helmet";
 	
 	public static final String LOOT_TAG = "MegaLoot";
+	public static final String LOOT_TAG_LOOTSET = "loot_set";
 	public static final String LOOT_TAG_RARITY = "rarity";
 	public static final String LOOT_TAG_MODEL = "model";
 	public static final String LOOT_TAG_DAMAGE = "damage";

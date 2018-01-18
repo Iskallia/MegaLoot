@@ -102,6 +102,32 @@ public class LootItemHelper
 		stack.getTagCompound().getCompoundTag(MLItem.LOOT_TAG).setFloat(key, value);
 	}
 	
+	public static String getLootStringValue(ItemStack stack, String key)
+	{
+		String value = "";
+		
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(MLItem.LOOT_TAG))
+		{
+			if (stack.getTagCompound().getCompoundTag(MLItem.LOOT_TAG).hasKey(key))
+			{
+				value = stack.getTagCompound().getCompoundTag(MLItem.LOOT_TAG).getString(key);
+			}
+		}
+		
+		return value;
+	}
+	
+	public static void setLootStringValue(ItemStack stack, String key, String value)
+	{
+		if (!stack.hasTagCompound())
+			stack.setTagCompound(new NBTTagCompound());
+		
+		if (!stack.getTagCompound().hasKey(MLItem.LOOT_TAG))
+			stack.getTagCompound().setTag(MLItem.LOOT_TAG, new NBTTagCompound());
+		
+		stack.getTagCompound().getCompoundTag(MLItem.LOOT_TAG).setString(key, value);
+	}
+	
 	public static int getMaxDamage(ItemStack stack)
 	{
 		int maxDamage = LootItemHelper.getLootIntValue(stack, MLItem.LOOT_TAG_DURABILITY);
