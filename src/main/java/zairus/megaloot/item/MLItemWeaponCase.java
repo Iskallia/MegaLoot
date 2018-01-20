@@ -33,8 +33,10 @@ public class MLItemWeaponCase extends MLItem
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand)
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
 	{
+		ItemStack itemStack = player.getHeldItem(hand);
+		
 		world.playSound((EntityPlayer)null, player.getPosition(), MLSoundEvents.CASE_OPEN, SoundCategory.PLAYERS, 1.0F, 1.2F / (world.rand.nextFloat() * 0.2f + 0.9f));
 		
 		for (int i = 0; i < 1; ++i)
@@ -115,7 +117,7 @@ public class MLItemWeaponCase extends MLItem
 			}
 		}
 		
-		--itemStack.stackSize;
+		itemStack.shrink(1);
 		
 		return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStack);
 	}

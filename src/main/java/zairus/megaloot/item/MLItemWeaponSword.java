@@ -6,6 +6,8 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.Multimap;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -87,11 +89,11 @@ public class MLItemWeaponSword extends ItemSword
 		
 		if (slot == EntityEquipmentSlot.MAINHAND)
 		{
-			multimap.removeAll(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName());
-			multimap.removeAll(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName());
+			multimap.removeAll(SharedMonsterAttributes.ATTACK_DAMAGE.getName());
+			multimap.removeAll(SharedMonsterAttributes.ATTACK_SPEED.getName());
 			
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)attackDamage, 0));
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)attackSpeed, 0));
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)attackDamage, 0));
+			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)attackSpeed, 0));
 		}
 		
 		return multimap;
@@ -99,11 +101,13 @@ public class MLItemWeaponSword extends ItemSword
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag)
 	{
 		int attackDamage = LootItemHelper.getLootIntValue(stack, MLItem.LOOT_TAG_DAMAGE);
 		float speedDisplay = LootItemHelper.getLootFloatValue(stack, MLItem.LOOT_TAG_SPEED);
 		double sp1 = (double)speedDisplay;
+		
+		EntityPlayer player = Minecraft.getMinecraft().player;
 		
 		if (player != null)
 		{

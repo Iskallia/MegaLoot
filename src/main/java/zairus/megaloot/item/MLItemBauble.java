@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -51,7 +52,7 @@ public class MLItemBauble extends MLItem implements IBauble
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flagIn)
 	{
 		tooltip.add("");
 		

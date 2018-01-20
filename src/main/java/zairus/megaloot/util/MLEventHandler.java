@@ -39,10 +39,10 @@ public class MLEventHandler
 	@SubscribeEvent
 	public void onEntityAttacked(LivingAttackEvent event)
 	{
-		Entity sourceEntity = event.getSource().getSourceOfDamage();
+		Entity sourceEntity = event.getSource().getTrueSource();
 		Entity targetEntity = event.getEntityLiving();
 		
-		if (sourceEntity != null && targetEntity != null && !sourceEntity.worldObj.isRemote)
+		if (sourceEntity != null && targetEntity != null && !sourceEntity.world.isRemote)
 		{
 			if (sourceEntity instanceof EntityPlayer && targetEntity instanceof EntityPlayer)
 			{

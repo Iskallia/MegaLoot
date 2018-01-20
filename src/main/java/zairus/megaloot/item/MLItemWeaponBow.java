@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -121,8 +122,10 @@ public class MLItemWeaponBow extends ItemBow
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand)
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
 	{
+		ItemStack itemStack = player.getHeldItem(hand);
+		
 		boolean flag = this.findAmmo(player) != null;
 		
 		ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemStack, world, player, hand, flag);
@@ -230,7 +233,7 @@ public class MLItemWeaponBow extends ItemBow
 						entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
 					}
 					
-					entityarrow.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
+					entityarrow.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 					
 					if (f == 1.0F)
 						entityarrow.setIsCritical(true);
@@ -248,7 +251,7 @@ public class MLItemWeaponBow extends ItemBow
 					if (flag1 || i > 0)
 						entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
 					
-					world.spawnEntityInWorld(entityarrow);
+					world.spawnEntity(entityarrow);
 				}
 				
 				world.playSound(
@@ -263,9 +266,9 @@ public class MLItemWeaponBow extends ItemBow
 				
 				if (!flag1)
 				{
-					--itemstack.stackSize;
+					itemstack.shrink(1);
 					
-					if (itemstack.stackSize == 0)
+					if (itemstack.isEmpty())
 					{
 						entityplayer.inventory.deleteStack(itemstack);
 					}
@@ -278,7 +281,7 @@ public class MLItemWeaponBow extends ItemBow
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flagIn)
 	{
 		tooltip.add("");
 		tooltip.add(TextFormatting.GRAY + "Draw speed modifier " + TextFormatting.BOLD + "" + ItemStack.DECIMALFORMAT.format(LootItemHelper.getLootFloatValue(stack, MLItem.LOOT_TAG_DRAWSPEED)));

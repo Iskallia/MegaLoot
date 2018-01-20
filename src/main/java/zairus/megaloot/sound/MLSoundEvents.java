@@ -2,7 +2,6 @@ package zairus.megaloot.sound;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import zairus.megaloot.MLConstants;
 
 public class MLSoundEvents
@@ -17,7 +16,6 @@ public class MLSoundEvents
 	public static SoundEvent registerSound(ResourceLocation location)
 	{
 		SoundEvent sound = new SoundEvent(location).setRegistryName(location);
-		GameRegistry.register(sound);
 		
 		return sound;
 	}

@@ -3,7 +3,7 @@ package zairus.megaloot;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -26,9 +26,9 @@ public class MegaLoot
 	
 	public static CreativeTabs creativeTabMain = new CreativeTabs("megaLootTabMain") {
 		@Override
-		public Item getTabIconItem()
+		public ItemStack getTabIconItem()
 		{
-			return MLItems.WEAPONCASE_COMMON;
+			return new ItemStack(MLItems.WEAPONCASE_COMMON);
 		}
 	};
 	
@@ -50,8 +50,6 @@ public class MegaLoot
 		MLEventHandler eventHandler = new MLEventHandler();
 		
 		MinecraftForge.EVENT_BUS.register(eventHandler);
-		
-		MLItems.register();
 	}
 	
 	@Mod.EventHandler
