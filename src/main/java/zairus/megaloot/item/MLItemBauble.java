@@ -14,12 +14,10 @@ import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import zairus.megaloot.loot.LootItemHelper;
 
-@Optional.Interface( modid = "Baubles", iface = "baubles.api.IBauble" )
 public class MLItemBauble extends MLItem implements IBauble
 {
 	protected MLItemBauble()
