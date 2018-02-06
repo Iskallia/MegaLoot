@@ -25,6 +25,9 @@ public class MLItems
 	public static final Item ARMOR_LEGGINGS;
 	public static final Item ARMOR_CHESTPLATE;
 	public static final Item ARMOR_HELMET;
+	public static final Item TOOL_AXE;
+	public static final Item TOOL_PICKAXE;
+	public static final Item TOOL_SHOVEL;
 	
 	public static final Map<Item, LootSetType> ITEMTYPEREGISTRY = new HashMap<Item, LootSetType>();
 	
@@ -40,6 +43,9 @@ public class MLItems
 		ARMOR_LEGGINGS = initItem(new MLItemArmor(EntityEquipmentSlot.LEGS), MLItem.ARMOR_LEGGINGS_D);
 		ARMOR_CHESTPLATE = initItem(new MLItemArmor(EntityEquipmentSlot.CHEST), MLItem.ARMOR_CHESTPLATE_ID);
 		ARMOR_HELMET = initItem(new MLItemArmor(EntityEquipmentSlot.HEAD), MLItem.ARMOR_HELMET_ID);
+		TOOL_AXE = initItem(new MLItemToolAxe(), MLItem.TOOL_AXE_ID);
+		TOOL_PICKAXE = initItem(new MLItemToolPickaxe(), MLItem.TOOL_PICKAXE_ID);
+		TOOL_SHOVEL = initItem(new MLItemToolShovel(), MLItem.TOOL_SHOVEL_ID);
 		
 		ITEMTYPEREGISTRY.put(WEAPONSWORD, LootSetType.SWORD);
 		ITEMTYPEREGISTRY.put(WEAPONBOW, LootSetType.BOW);
@@ -48,6 +54,9 @@ public class MLItems
 		ITEMTYPEREGISTRY.put(ARMOR_LEGGINGS, LootSetType.ARMOR_LEGS);
 		ITEMTYPEREGISTRY.put(ARMOR_CHESTPLATE, LootSetType.ARMOR_CHEST);
 		ITEMTYPEREGISTRY.put(ARMOR_HELMET, LootSetType.ARMOR_HEAD);
+		ITEMTYPEREGISTRY.put(TOOL_AXE, LootSetType.TOOL);
+		ITEMTYPEREGISTRY.put(TOOL_PICKAXE, LootSetType.TOOL);
+		ITEMTYPEREGISTRY.put(TOOL_SHOVEL, LootSetType.TOOL);
 	}
 	
 	@Nullable
@@ -76,5 +85,8 @@ public class MLItems
 		MegaLoot.proxy.registerItem(ARMOR_LEGGINGS, MLItem.ARMOR_LEGGINGS_D, 0, true);
 		MegaLoot.proxy.registerItem(ARMOR_CHESTPLATE, MLItem.ARMOR_CHESTPLATE_ID, 0, true);
 		MegaLoot.proxy.registerItem(ARMOR_HELMET, MLItem.ARMOR_HELMET_ID, 0, true);
+		MegaLoot.proxy.registerItem(TOOL_AXE, MLItem.TOOL_AXE_ID, 0, true);
+		MegaLoot.proxy.registerItem(TOOL_PICKAXE, MLItem.TOOL_PICKAXE_ID, 0, true);
+		MegaLoot.proxy.registerItem(TOOL_SHOVEL, MLItem.TOOL_SHOVEL_ID, 0, true);
 	}
 }

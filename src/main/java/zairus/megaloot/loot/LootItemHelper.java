@@ -29,6 +29,9 @@ public class LootItemHelper
 		items.add(MLItems.ARMOR_CHESTPLATE);
 		items.add(MLItems.ARMOR_LEGGINGS);
 		items.add(MLItems.ARMOR_BOOTS);
+		items.add(MLItems.TOOL_AXE);
+		items.add(MLItems.TOOL_PICKAXE);
+		items.add(MLItems.TOOL_SHOVEL);
 		
 		ItemStack stack = new ItemStack(items.get(rand.nextInt(items.size())));
 		

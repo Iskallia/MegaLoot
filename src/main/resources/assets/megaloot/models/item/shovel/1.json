@@ -1,0 +1,6 @@
+{
+	"parent": "megaloot:item/tool_shovel",
+	"textures": {
+		"layer0": "megaloot:items/shovel/1"
+	}
+}

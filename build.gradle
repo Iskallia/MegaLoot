@@ -18,7 +18,7 @@ repositories {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "0.0.9"
+version = "0.0.12"
 group = "zairus.megaloot"
 archivesBaseName = "megaloot-1.10.2"
 
