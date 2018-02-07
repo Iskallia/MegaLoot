@@ -23,23 +23,24 @@ import zairus.megaloot.loot.LootSet.LootSetType;
 
 public class LootWeaponEffect
 {
-	public static final Map<String, LootWeaponEffect> REGISTRY = new HashMap<String, LootWeaponEffect>();
+public static final Map<String, LootWeaponEffect> REGISTRY = new HashMap<String, LootWeaponEffect>();
 	
-	public static final LootWeaponEffect WITHERING = create("wither", MobEffects.WITHER).setDuration(1, 2).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
-	public static final LootWeaponEffect POISON = create("poison", MobEffects.POISON).setDuration(1, 3).setAmplifier(0, 1).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
-	public static final LootWeaponEffect HUNGER = create("hunger", MobEffects.HUNGER).setDuration(1, 10).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
-	public static final LootWeaponEffect LEVITATION = create("levitation", MobEffects.LEVITATION).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
-	public static final LootWeaponEffect WEAKNESS = create("weakness", MobEffects.WEAKNESS).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
-	public static final LootWeaponEffect SLOWNESS = create("slowness", MobEffects.SLOWNESS).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
-	public static final LootWeaponEffect BLINDNESS = create("blindness", MobEffects.BLINDNESS).setDuration(1, 2).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect WITHERING = create("wither", MobEffects.WITHER).setDuration(1, 2).setItemTypes(LootSetType.SWORD, LootSetType.BOW, LootSetType.TOOL);
+	public static final LootWeaponEffect POISON = create("poison", MobEffects.POISON).setDuration(1, 3).setAmplifier(0, 1).setItemTypes(LootSetType.SWORD, LootSetType.BOW, LootSetType.TOOL);
+	public static final LootWeaponEffect HUNGER = create("hunger", MobEffects.HUNGER).setDuration(1, 10).setItemTypes(LootSetType.SWORD, LootSetType.BOW, LootSetType.TOOL);
+	public static final LootWeaponEffect LEVITATION = create("levitation", MobEffects.LEVITATION).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW, LootSetType.TOOL);
+	public static final LootWeaponEffect WEAKNESS = create("weakness", MobEffects.WEAKNESS).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW, LootSetType.TOOL);
+	public static final LootWeaponEffect SLOWNESS = create("slowness", MobEffects.SLOWNESS).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW, LootSetType.TOOL);
+	public static final LootWeaponEffect BLINDNESS = create("blindness", MobEffects.BLINDNESS).setDuration(1, 2).setItemTypes(LootSetType.SWORD, LootSetType.BOW, LootSetType.TOOL);
 	public static final LootWeaponEffect MULTISHOT = create("multishot").setAmplifier(2, 6).setItemTypes(LootSetType.BOW);
-	public static final LootWeaponEffect LEECHLIFE = create("leechlife").setAmplifier(1, 100).setItemTypes(LootSetType.SWORD);
+	public static final LootWeaponEffect LEECHLIFE = create("leechlife").setAmplifier(1, 100).setItemTypes(LootSetType.SWORD, LootSetType.TOOL);
 	
 	public static final LootWeaponEffect SPEED = create("speed", MobEffects.SPEED).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
 	public static final LootWeaponEffect STRENGTH = create("strength", MobEffects.STRENGTH).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
 	public static final LootWeaponEffect JUMP = create("jump", MobEffects.JUMP_BOOST).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
 	public static final LootWeaponEffect RESISTANCE = create("resistance", MobEffects.RESISTANCE).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
 	public static final LootWeaponEffect HASTE = create("haste", MobEffects.HASTE).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
+	public static final LootWeaponEffect FIRE_RESISTANT = create("fire_resistance", MobEffects.FIRE_RESISTANCE);
 	
 	public static final LootWeaponEffect HEALTH_BOOST = create("healthboost", SharedMonsterAttributes.MAX_HEALTH).setAmplifier(1, 4).setItemTypes(LootSetType.ARMOR_HEAD, LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS, LootSetType.ARMOR_FEET);
 	public static final LootWeaponEffect KNOCKBACK_RESISTANCE = create("knockbackresistance", SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setAmplifier(1, 1).setItemTypes(LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS);

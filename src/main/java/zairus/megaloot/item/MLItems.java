@@ -45,6 +45,12 @@ public class MLItems
 	public static final Item ARMOR_CHESTPLATE;
 	@ObjectHolder(MLItem.ARMOR_HELMET_ID)
 	public static final Item ARMOR_HELMET;
+	@ObjectHolder(MLItem.TOOL_AXE_ID)
+	public static final Item TOOL_AXE;
+	@ObjectHolder(MLItem.TOOL_PICKAXE_ID)
+	public static final Item TOOL_PICKAXE;
+	@ObjectHolder(MLItem.TOOL_SHOVEL_ID)
+	public static final Item TOOL_SHOVEL;
 	
 	static
 	{
@@ -58,6 +64,9 @@ public class MLItems
 		ARMOR_LEGGINGS = initItem(new MLItemArmor(EntityEquipmentSlot.LEGS), MLItem.ARMOR_LEGGINGS_D);
 		ARMOR_CHESTPLATE = initItem(new MLItemArmor(EntityEquipmentSlot.CHEST), MLItem.ARMOR_CHESTPLATE_ID);
 		ARMOR_HELMET = initItem(new MLItemArmor(EntityEquipmentSlot.HEAD), MLItem.ARMOR_HELMET_ID);
+		TOOL_AXE = initItem(new MLItemToolAxe(), MLItem.TOOL_AXE_ID);
+		TOOL_PICKAXE = initItem(new MLItemToolPickaxe(), MLItem.TOOL_PICKAXE_ID);
+		TOOL_SHOVEL = initItem(new MLItemToolShovel(), MLItem.TOOL_SHOVEL_ID);
 		
 		MLItemTypeRegistry.register(WEAPONSWORD, LootSetType.SWORD);
 		MLItemTypeRegistry.register(WEAPONBOW, LootSetType.BOW);
@@ -66,6 +75,9 @@ public class MLItems
 		MLItemTypeRegistry.register(ARMOR_LEGGINGS, LootSetType.ARMOR_LEGS);
 		MLItemTypeRegistry.register(ARMOR_CHESTPLATE, LootSetType.ARMOR_CHEST);
 		MLItemTypeRegistry.register(ARMOR_HELMET, LootSetType.ARMOR_HEAD);
+		MLItemTypeRegistry.register(TOOL_AXE, LootSetType.TOOL);
+		MLItemTypeRegistry.register(TOOL_PICKAXE, LootSetType.TOOL);
+		MLItemTypeRegistry.register(TOOL_SHOVEL, LootSetType.TOOL);
 	}
 	
 	public static void initialize()
@@ -87,6 +99,9 @@ public class MLItems
 				,ARMOR_LEGGINGS
 				,ARMOR_CHESTPLATE
 				,ARMOR_HELMET
+				,TOOL_AXE
+				,TOOL_PICKAXE
+				,TOOL_SHOVEL
 		};
 		
 		for (final Item item : items)
@@ -137,6 +152,9 @@ public class MLItems
 					,ARMOR_LEGGINGS
 					,ARMOR_CHESTPLATE
 					,ARMOR_HELMET
+					,TOOL_AXE
+					,TOOL_PICKAXE
+					,TOOL_SHOVEL
 			};
 			
 			final IForgeRegistry<Item> registry = event.getRegistry();

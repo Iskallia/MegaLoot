@@ -53,7 +53,7 @@ public class MLItemWeaponCase extends MLItem
 			
 			NBTTagCompound mlTag = new NBTTagCompound();
 			
-			int model = 1 + itemRand.nextInt(24);
+			int model = 1 + itemRand.nextInt(type.models);
 			
 			mlTag.setInteger(MLItem.LOOT_TAG_MODEL, model);
 			

@@ -290,4 +290,28 @@ public class MLItemWeaponBow extends ItemBow
 		
 		LootItemHelper.addInformation(stack, tooltip);
 	}
+	
+	public boolean updatesFOV()
+	{
+		return true;
+	}
+	
+	public int getFOVDuration(ItemStack stack)
+	{
+		float drawSpeed = LootItemHelper.getLootFloatValue(stack, MLItem.LOOT_TAG_DRAWSPEED);
+		
+		return (int)(10000.0f / drawSpeed);
+	}
+	
+	public float getFOVValue(ItemStack stack)
+	{
+		float drawSpeed = LootItemHelper.getLootFloatValue(stack, MLItem.LOOT_TAG_DRAWSPEED);
+		
+		return 0.4f * (drawSpeed * 1.3f);
+	}
+	
+	public float getFOVSpeedFactor(ItemStack stack)
+	{
+		return 350.0f;
+	}
 }

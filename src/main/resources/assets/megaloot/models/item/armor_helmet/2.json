@@ -1,0 +1,6 @@
+{
+	"parent": "megaloot:item/armor_helmet",
+	"textures": {
+		"layer0": "megaloot:items/armor_helmet/2"
+	}
+}

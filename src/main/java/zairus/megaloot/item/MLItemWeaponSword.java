@@ -25,7 +25,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import zairus.megaloot.MegaLoot;
 import zairus.megaloot.loot.LootItemHelper;
-import zairus.megaloot.loot.LootWeaponEffect;
 
 public class MLItemWeaponSword extends ItemSword
 {
@@ -59,22 +58,7 @@ public class MLItemWeaponSword extends ItemSword
 	{
 		boolean hit = super.hitEntity(stack, target, attacker);
 		
-		if (target instanceof EntityPlayer && target.getHealth() <= 0.0)
-		{
-			int kills = LootItemHelper.getLootIntValue(stack, MLItem.LOOT_TAG_KILLS);
-			kills++;
-			LootItemHelper.setLootIntValue(stack, MLItem.LOOT_TAG_KILLS, kills);
-		}
-		
-		List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
-		
-		if (effects.size() > 0)
-		{
-			for (LootWeaponEffect effect : effects)
-			{
-				effect.onHit(LootWeaponEffect.getDurationFromStack(stack, effect.getId()), LootWeaponEffect.getAmplifierFromStack(stack, effect.getId()), target, attacker);
-			}
-		}
+		MLItem.handleEffectsAfterHit(stack, target, attacker);
 		
 		return hit;
 	}

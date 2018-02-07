@@ -1,0 +1,6 @@
+{
+	"parent": "megaloot:item/tool_axe",
+	"textures": {
+		"layer0": "megaloot:items/axe/3"
+	}
+}

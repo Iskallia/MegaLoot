@@ -4,12 +4,14 @@ import java.util.List;
 
 import com.google.common.collect.Multimap;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import zairus.megaloot.MegaLoot;
+import zairus.megaloot.loot.LootItemHelper;
 import zairus.megaloot.loot.LootWeaponEffect;
 
 public class MLItem extends Item
@@ -29,6 +31,9 @@ public class MLItem extends Item
 	public static final String ARMOR_LEGGINGS_D = "armor_leggings";
 	public static final String ARMOR_CHESTPLATE_ID = "armor_chestplate";
 	public static final String ARMOR_HELMET_ID = "armor_helmet";
+	public static final String TOOL_AXE_ID = "tool_axe";
+	public static final String TOOL_PICKAXE_ID = "tool_pickaxe";
+	public static final String TOOL_SHOVEL_ID = "tool_shovel";
 	
 	public static final String LOOT_TAG = "MegaLoot";
 	public static final String LOOT_TAG_LOOTSET = "loot_set";
@@ -67,5 +72,25 @@ public class MLItem extends Item
 		Multimap<String, AttributeModifier> modifiers = initial;
 		
 		return modifiers;
+	}
+	
+	public static void handleEffectsAfterHit(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
+	{
+		if (target instanceof EntityPlayer && target.getHealth() <= 0.0)
+		{
+			int kills = LootItemHelper.getLootIntValue(stack, MLItem.LOOT_TAG_KILLS);
+			kills++;
+			LootItemHelper.setLootIntValue(stack, MLItem.LOOT_TAG_KILLS, kills);
+		}
+		
+		List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
+		
+		if (effects.size() > 0)
+		{
+			for (LootWeaponEffect effect : effects)
+			{
+				effect.onHit(LootWeaponEffect.getDurationFromStack(stack, effect.getId()), LootWeaponEffect.getAmplifierFromStack(stack, effect.getId()), target, attacker);
+			}
+		}
 	}
 }

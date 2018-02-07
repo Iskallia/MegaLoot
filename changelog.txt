@@ -1,0 +1,22 @@
+
+Minecraft 1.10.2
+
+Version 0.0.12
+-Completed dragon armor model (thanks jimlthedude).
+-Added tools: Axes, Pickaxes and Shovels.
+-Fixed armor items not showing correct texture for armor type.
+-Fixed health attributes not been stacked.
+-Fixed armor rendering in armor stand.
+-Added armor set bonus
+-Added configuration to set how many armor pieces are needed for bonus set.
+-Added bow FOV effect when aiming.
+-Corrected setting the model index for weapons and tools when opening a weapon case.
+-Added weapon cases spawning in loot chests.
+
+Minecraft 1.12.2
+
+Version 0.1.3
+-Ported changes from 1.10.2-0.0.12
+
+Version 0.1.4
+-Fixed crash when collecting armor in multi player

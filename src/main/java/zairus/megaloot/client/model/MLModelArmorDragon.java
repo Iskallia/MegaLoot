@@ -30,22 +30,26 @@ public class MLModelArmorDragon extends MLModelArmorBase
 		
 		if (partType == LootSetType.ARMOR_CHEST)
 		{
-			this.bipedBody.addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, 0.0F);
+			this.bipedBody.addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, scale);
 			
 			this.bipedRightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, scale);
 			ModelRenderer bipedRightShoulder = new ModelRenderer(this, 32, 32);
-			bipedRightShoulder.addBox(-4.0F, -2.0F, -2.5F, 5, 5, 5, scale);
-			bipedRightShoulder.addBox(-7.0F, -5.0F, -0.5F, 5, 1, 1, scale);
-			bipedRightShoulder.addBox(-5.0F, -3.0F, -1.5F, 5, 1, 3, scale);
-			bipedRightShoulder.addBox(-6.0F, -4.0F, -0.5F, 5, 1, 1, scale);
+			bipedRightShoulder.addBox(-4.0F, -2.1F, -2.5F, 5, 5, 5, scale);
+			ModelRenderer shoulderDecor = new ModelRenderer(this, 32, 43);
+			shoulderDecor.addBox(-7.0F, -5.0F, -0.5F, 5, 1, 1, scale);
+			shoulderDecor.addBox(-5.0F, -3.0F, -1.5F, 5, 1, 3, scale);
+			shoulderDecor.addBox(-6.0F, -4.0F, -0.5F, 5, 1, 1, scale);
+			bipedRightShoulder.addChild(shoulderDecor);
 			this.bipedRightArm.addChild(bipedRightShoulder);
 			
 			this.bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, scale);
 			ModelRenderer bipedLeftShoulder = new ModelRenderer(this, 32, 32);
-			bipedLeftShoulder.addBox(-1.0F, -2.0F, -2.5F, 5, 5, 5, scale);
-			bipedLeftShoulder.addBox(0.0F, -3.0F, -1.5F, 5, 1, 3, scale);
-			bipedLeftShoulder.addBox(1.0F, -4.0F, -0.5F, 5, 1, 1, scale);
-			bipedLeftShoulder.addBox(2.0F, -5.0F, -0.5F, 5, 1, 1, scale);
+			bipedLeftShoulder.addBox(-1.0F, -2.1F, -2.5F, 5, 5, 5, scale);
+			shoulderDecor = new ModelRenderer(this, 32, 43);
+			shoulderDecor.addBox(0.0F, -3.0F, -1.5F, 5, 1, 3, scale);
+			shoulderDecor.addBox(1.0F, -4.0F, -0.5F, 5, 1, 1, scale);
+			shoulderDecor.addBox(2.0F, -5.0F, -0.5F, 5, 1, 1, scale);
+			bipedLeftShoulder.addChild(shoulderDecor);
 			this.bipedLeftArm.addChild(bipedLeftShoulder);
 		}
 		
@@ -53,6 +57,11 @@ public class MLModelArmorDragon extends MLModelArmorBase
 		
 		if (partType == LootSetType.ARMOR_LEGS)
 		{
+			ModelRenderer bodyBelt = new ModelRenderer(this, 16, 49);
+			bodyBelt.addBox(-4.0F, 7.0F, -2.0F, 8, 5, 4, scale);
+			
+			this.bipedBody.addChild(bodyBelt);
+			
 			this.bipedRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, scale);
 			
 			this.bipedLeftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, scale);

@@ -1,0 +1,6 @@
+{
+	"parent": "megaloot:item/armor_boots",
+	"textures": {
+		"layer0": "megaloot:items/armor_boots/4"
+	}
+}

@@ -13,12 +13,15 @@ import zairus.megaloot.client.model.MLModelArmorSets;
 
 public class LootSet
 {
-	public static final Map<String, LootSet> REGISTRY = new HashMap<String, LootSet>();
+public static final Map<String, LootSet> REGISTRY = new HashMap<String, LootSet>();
 	
-	public static final LootSet VIKING = get("viking");
-	public static final LootSet DRAGON = get("dragon");
-	public static final LootSet KNIGHT = get("knight");
-	public static final LootSet SAMURAI = get("samurai");
+	public static final LootSet VIKING = get("viking", LootWeaponEffect.STRENGTH);
+	public static final LootSet DRAGON = get("dragon", LootWeaponEffect.FIRE_RESISTANT);
+	public static final LootSet KNIGHT = get("knight", LootWeaponEffect.RESISTANCE);
+	public static final LootSet SAMURAI = get("samurai", LootWeaponEffect.SPEED);
+	
+	public final int itemModel;
+	public final LootWeaponEffect bonusEffect;
 	
 	protected String id;
 	
@@ -78,6 +81,14 @@ public class LootSet
 			,"Wind"
 			,"The Ocelot"};
 	
+	public static final String[] TOOL_NAMES = {
+			"Balanced tool"
+			,"Crafter's aid"
+			,"Builder dream"
+			,"Inspiration"
+			,"Solid grip"
+	};
+	
 	public static final Map<LootSetType, String[]> LOOT_ITEM_NAMES = new HashMap<LootSetType, String[]>();
 	
 	static
@@ -85,11 +96,18 @@ public class LootSet
 		LOOT_ITEM_NAMES.put(LootSetType.SWORD, SWORD_NAMES);
 		LOOT_ITEM_NAMES.put(LootSetType.BOW, BOW_NAMES);
 		LOOT_ITEM_NAMES.put(LootSetType.RING, RING_NAMES);
+		LOOT_ITEM_NAMES.put(LootSetType.TOOL, TOOL_NAMES);
 	}
 	
-	protected static LootSet get(String name)
+	protected LootSet(int itemModel, LootWeaponEffect bonus)
 	{
-		LootSet set = new LootSet();
+		this.itemModel = itemModel;
+		this.bonusEffect = bonus;
+	}
+	
+	protected static LootSet get(String name, LootWeaponEffect bonus)
+	{
+		LootSet set = new LootSet(REGISTRY.size() + 1, bonus);
 		set.id = name;
 		
 		REGISTRY.put(name, set);
@@ -173,13 +191,21 @@ public class LootSet
 	
 	public enum LootSetType
 	{
-		SWORD,
-		BOW,
-		RING,
-		ARMOR_FEET,
-		ARMOR_LEGS,
-		ARMOR_CHEST,
-		ARMOR_HEAD
+		SWORD(24),
+		BOW(12),
+		RING(13),
+		ARMOR_FEET(4),
+		ARMOR_LEGS(4),
+		ARMOR_CHEST(4),
+		ARMOR_HEAD(4),
+		TOOL(12);
+		
+		public final int models;
+		
+		private LootSetType(int totalModels)
+		{
+			this.models = totalModels;
+		}
 	}
 	
 	public class LootSetElement
