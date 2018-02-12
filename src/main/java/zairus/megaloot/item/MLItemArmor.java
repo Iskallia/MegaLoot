@@ -92,7 +92,7 @@ public class MLItemArmor extends ItemArmor
 	{
 		Multimap<String, AttributeModifier> modifiers = MLItem.modifiersForStack(slot, stack, super.getAttributeModifiers(slot, stack));
 		
-		if (this.getEquipmentSlot() == slot)
+		if (this.armorType == slot)
 		{
 			modifiers.put(SharedMonsterAttributes.ARMOR.getAttributeUnlocalizedName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", (double)this.damageReduceAmount, 0));
 			modifiers.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getAttributeUnlocalizedName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor toughness", (double)this.toughness, 0));
