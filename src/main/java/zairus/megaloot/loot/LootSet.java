@@ -13,7 +13,7 @@ import zairus.megaloot.client.model.MLModelArmorSets;
 
 public class LootSet
 {
-public static final Map<String, LootSet> REGISTRY = new HashMap<String, LootSet>();
+	public static final Map<String, LootSet> REGISTRY = new HashMap<String, LootSet>();
 	
 	public static final LootSet VIKING = get("viking", LootWeaponEffect.STRENGTH);
 	public static final LootSet DRAGON = get("dragon", LootWeaponEffect.FIRE_RESISTANT);
@@ -50,7 +50,47 @@ public static final Map<String, LootSet> REGISTRY = new HashMap<String, LootSet>
 			,"Phase Blade"
 			,"Crystal Wing"
 			,"Wakizashi"
-			,"Wizard Spike"};
+			,"Wizard Spike"
+			,"Knightfall"
+			,"Catastrophe"
+			,"Ragespike"
+			,"Improved Reaver"
+			,"Mourning Etcher"
+			,"Dragonbreath Copper Greatsword"
+			,"Rusty Diamond Katana"
+			,"Heartstriker, Guardian of Grace"
+			,"The Black Blade, Cry of Pride"
+			,"Nethersbane, Reaper of the Lost"
+			,"Massacre"
+			,"Lightning"
+			,"Silencer"
+			,"Grieving Carver"
+			,"Renewed Scimitar"
+			,"Crazed Silver Slicer"
+			,"Annihilation Gold Claymore"
+			,"Stormcaller, Betrayer of Summoning"
+			,"Warmonger, Vengeance of the Dreadlord"
+			,"Rigormortis, Bond of Agony"
+			,"The Ambassador"
+			,"Endbringer"
+			,"Blight's Plight"
+			,"Rusty Guardian"
+			,"Stormfury Skewer"
+			,"Trainee's Iron Guardian"
+			,"Cataclysm Steel Doomblade"
+			,"Lightning, Hope of the Forsaken"
+			,"Suspension, Pact of Ashes"
+			,"The Black Blade, Warglaive of Anguish"
+			,"Hope's End"
+			,"Requiem"
+			,"Blight's Plight"
+			,"Tyrannical Protector"
+			,"Isolated Greatsword"
+			,"Heartless Glass Sculptor"
+			,"Exiled Adamantite Shortsword"
+			,"Massacre, Blessed Blade of Delusions"
+			,"Brutality, Longsword of Decay"
+			,"Toothpick, Skewer of the Incoming Storm"};
 	
 	public static final String[] BOW_NAMES = {
 			"Long Bow"
@@ -82,11 +122,46 @@ public static final Map<String, LootSet> REGISTRY = new HashMap<String, LootSet>
 			,"The Ocelot"};
 	
 	public static final String[] TOOL_NAMES = {
-			"Balanced tool"
-			,"Crafter's aid"
-			,"Builder dream"
-			,"Inspiration"
-			,"Solid grip"
+			"The Pawpaw"
+			,"The Single Wing"
+			,"The Godzilla"
+			,"The Picker"
+			,"The Little Green"
+			,"The Big Buddy"
+			,"The Guzzler"
+			,"The Wiggle Stick"
+			,"The Kicker"
+			,"The Ground Crusher"
+			,"The Slacker"
+			,"The Kicker"
+			,"The Sludge"
+			,"The Commander"
+			,"The Flat Nose"
+			,"The Toothpick"
+			,"The Measurer"
+			,"The Belly"
+			,"The Clicker"
+			,"The Parrot"
+			,"The Bigwig"
+			,"The Drag Bag"
+			,"The Chicken Beak"
+			,"The Whiskers"
+			,"The Fury"
+			,"The Pokey"
+			,"The Wedger"
+			,"The Friendly One"
+			,"The Goofy Hook"
+			,"The Gobbler"
+			,"The Dislocator"
+			,"The Winger"
+			,"The Knockout"
+			,"The Pully"
+			,"The Prickle"
+			,"The Killer"
+			,"The Band Aid"
+			,"The Punisher"
+			,"The Spiker"
+			,"The Weeping Bell"
 	};
 	
 	public static final Map<LootSetType, String[]> LOOT_ITEM_NAMES = new HashMap<LootSetType, String[]>();
@@ -191,20 +266,27 @@ public static final Map<String, LootSet> REGISTRY = new HashMap<String, LootSet>
 	
 	public enum LootSetType
 	{
-		SWORD(24),
-		BOW(12),
-		RING(13),
-		ARMOR_FEET(4),
-		ARMOR_LEGS(4),
-		ARMOR_CHEST(4),
-		ARMOR_HEAD(4),
-		TOOL(12);
+		SWORD("sword", 76),
+		BOW("bow", 12),
+		RING("ring", 13),
+		ARMOR_FEET("armor_feet", 4),
+		ARMOR_LEGS("armor_legs", 4),
+		ARMOR_CHEST("armor_chest", 4),
+		ARMOR_HEAD("armor_head", 4),
+		TOOL("tool", 21);
 		
 		public final int models;
+		private String id;
 		
-		private LootSetType(int totalModels)
+		private LootSetType(String typeId, int totalModels)
 		{
+			this.id = typeId;
 			this.models = totalModels;
+		}
+		
+		public String getId()
+		{
+			return this.id;
 		}
 	}
 	

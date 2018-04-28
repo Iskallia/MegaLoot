@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=south": { "model": "megaloot:evolution_chamber" },
+        "facing=west": { "model": "megaloot:evolution_chamber", "y": 90 },
+        "facing=north": { "model": "megaloot:evolution_chamber", "y": 180 },
+        "facing=east": { "model": "megaloot:evolution_chamber", "y": 270 }
+    }
+}

@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -33,6 +34,7 @@ public class MLItemWeaponSword extends ItemSword
 		super(ToolMaterial.DIAMOND);
 		
 		this.setCreativeTab(MegaLoot.creativeTabMain);
+		this.setNoRepair();
 		
 		this.addPropertyOverride(new ResourceLocation("model"), new IItemPropertyGetter() {
 			@SideOnly(Side.CLIENT)
@@ -45,6 +47,18 @@ public class MLItemWeaponSword extends ItemSword
 				return model;
 			}
 		});
+	}
+	
+	@Override
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	{
+		return false;
+	}
+	
+	@Override
+	public String getItemStackDisplayName(ItemStack stack)
+	{
+		return MLItem.getMegaLootDisplayName(stack, super.getItemStackDisplayName(stack));
 	}
 	
 	@Override
@@ -68,19 +82,7 @@ public class MLItemWeaponSword extends ItemSword
 	{
 		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot, stack);
 		
-		int attackDamage = LootItemHelper.getLootIntValue(stack, MLItem.LOOT_TAG_DAMAGE);
-		float attackSpeed = LootItemHelper.getLootFloatValue(stack, MLItem.LOOT_TAG_SPEED);
-		
-		if (slot == EntityEquipmentSlot.MAINHAND)
-		{
-			multimap.removeAll(SharedMonsterAttributes.ATTACK_DAMAGE.getName());
-			multimap.removeAll(SharedMonsterAttributes.ATTACK_SPEED.getName());
-			
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)attackDamage, 0));
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)attackSpeed, 0));
-		}
-		
-		return multimap;
+		return MLItem.modifiersForStack(slot, stack, multimap, "Weapon modifier");
 	}
 	
 	@Override
@@ -100,11 +102,19 @@ public class MLItemWeaponSword extends ItemSword
 		
 		attackDamage += EnchantmentHelper.getModifierForCreature(stack, EnumCreatureAttribute.UNDEFINED);
 		
-		tooltip.add("");
-		tooltip.add(TextFormatting.GRAY + "" + attackDamage + " Damage | " + ItemStack.DECIMALFORMAT.format(sp1) + " Atack Speed");
-		tooltip.add(TextFormatting.WHITE + ItemStack.DECIMALFORMAT.format(((float)attackDamage * sp1)) + " DPS");
-		tooltip.add("");
-		
-		LootItemHelper.addInformation(stack, tooltip);
+		if (GuiScreen.isShiftKeyDown())
+		{
+			tooltip.add(TextFormatting.WHITE + ItemStack.DECIMALFORMAT.format(((float)attackDamage * sp1)) + " DPS");
+			
+			LootItemHelper.addInformation(stack, tooltip);
+		}
+		else
+		{
+			tooltip.add(TextFormatting.RESET + "" + "Sword");
+			
+			tooltip.add(TextFormatting.GRAY + "" + attackDamage + " Damage | " + ItemStack.DECIMALFORMAT.format(sp1) + " Atack Speed");
+			
+			tooltip.add(TextFormatting.AQUA + "" + TextFormatting.ITALIC + "Shift" + TextFormatting.DARK_GRAY + " for more...");
+		}
 	}
 }

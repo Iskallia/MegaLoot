@@ -1,7 +1,7 @@
 {
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "megaloot:items/shovel/1"
+		"layer0": "megaloot:items/sword/1"
 	},
 	"overrides": [
 		{
@@ -75,6 +75,24 @@
 				"model": 12
 			},
 			"model": "megaloot:item/shovel/12"
+		},
+		{
+			"predicate": {
+				"model": 13
+			},
+			"model": "megaloot:item/shovel/13"
+		},
+		{
+			"predicate": {
+				"model": 14
+			},
+			"model": "megaloot:item/shovel/14"
+		},
+		{
+			"predicate": {
+				"model": 15
+			},
+			"model": "megaloot:item/shovel/15"
 		}
 	]
 }

@@ -10,8 +10,12 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import zairus.megaloot.gui.MLGuiHandler;
 import zairus.megaloot.item.MLItems;
+import zairus.megaloot.item.crafting.MLCraftingRecipes;
 import zairus.megaloot.util.MLEventHandler;
+import zairus.megaloot.util.network.PacketPipeline;
 
 @Mod(modid = MLConstants.MOD_ID, name = MLConstants.MOD_NAME, version = MLConstants.MOD_VERSION)
 public class MegaLoot
@@ -20,6 +24,8 @@ public class MegaLoot
 	
 	@SidedProxy(clientSide = MLConstants.MOD_CLIENT_PROXY, serverSide = MLConstants.MOD_COMMON_PROXY)
 	public static MLProxy proxy;
+	
+	public static PacketPipeline packetPipeline = new PacketPipeline();
 	
 	@Mod.Instance(MLConstants.MOD_ID)
 	public static MegaLoot instance;
@@ -46,10 +52,15 @@ public class MegaLoot
 	public void init(FMLInitializationEvent event)
 	{
 		MegaLoot.proxy.init(event);
+		MegaLoot.proxy.initBuiltinShapes();
+		MegaLoot.packetPipeline.initalise();
 		
 		MLEventHandler eventHandler = new MLEventHandler();
 		
 		MinecraftForge.EVENT_BUS.register(eventHandler);
+		NetworkRegistry.INSTANCE.registerGuiHandler(MegaLoot.instance, new MLGuiHandler());
+		
+		MLCraftingRecipes.addRecipes();
 	}
 	
 	@Mod.EventHandler

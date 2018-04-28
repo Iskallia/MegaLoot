@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import java.util.Map.Entry;
 
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Multimap;
 
 import net.minecraft.block.BlockDispenser;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -23,6 +24,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -32,15 +34,16 @@ import zairus.megaloot.loot.LootItemHelper;
 import zairus.megaloot.loot.LootSet;
 import zairus.megaloot.loot.LootWeaponEffect;
 
+@SuppressWarnings("deprecation")
 public class MLItemArmor extends ItemArmor
 {
-	private static final UUID[] ARMOR_MODIFIERS = new UUID[] {UUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6B"), UUID.fromString("D8499B04-0E66-4726-AB29-64469D734E0D"), UUID.fromString("9F3D476D-C118-4544-8365-64846904B48E"), UUID.fromString("2AD3F246-FEE1-4E67-B886-69FD380BB150")};
-	
 	protected MLItemArmor(EntityEquipmentSlot equipmentSlot)
 	{
 		super(ArmorMaterial.DIAMOND, 3, equipmentSlot);
 		
 		this.setCreativeTab(MegaLoot.creativeTabMain);
+		this.setNoRepair();
+		
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, DISPENSER_BEHAVIOR);
 		
 		this.addPropertyOverride(new ResourceLocation("model"), new IItemPropertyGetter() {
@@ -61,12 +64,24 @@ public class MLItemArmor extends ItemArmor
 	}
 	
 	@Override
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	{
+		return false;
+	}
+	
+	@Override
 	public String getUnlocalizedName(ItemStack stack)
 	{
 		String unlocalizedName = super.getUnlocalizedName(stack);
 		String lootSetId = LootItemHelper.getLootStringValue(stack, MLItem.LOOT_TAG_LOOTSET);
 		
 		return unlocalizedName + ((lootSetId.equals(""))? "" : ("." + lootSetId));
+	}
+	
+	@Override
+	public String getItemStackDisplayName(ItemStack stack)
+	{
+		return MLItem.getMegaLootDisplayName(stack, super.getItemStackDisplayName(stack));
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -92,23 +107,7 @@ public class MLItemArmor extends ItemArmor
 	@Override
 	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack)
 	{
-		Multimap<String, AttributeModifier> modifiers = MLItem.modifiersForStack(slot, stack, super.getAttributeModifiers(slot, stack));
-		
-		if (this.armorType == slot)
-		{
-			modifiers.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", (double)this.damageReduceAmount, 0));
-			modifiers.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor toughness", (double)this.toughness, 0));
-			
-			List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
-			
-			for (LootWeaponEffect effect : effects)
-			{
-				if (effect.getAttribute() != null)
-				{
-					modifiers.put(effect.getAttribute().getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", (double)LootWeaponEffect.getAmplifierFromStack(stack, effect.getId()), 0));
-				}
-			}
-		}
+		Multimap<String, AttributeModifier> modifiers = MLItem.modifiersForStack(slot, this.armorType, stack, super.getAttributeModifiers(slot, stack), "Armor modifier");
 		
 		return modifiers;
 	}
@@ -151,11 +150,78 @@ public class MLItemArmor extends ItemArmor
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flagIn)
 	{
-		tooltip.add("");
-		tooltip.add(TextFormatting.GRAY + "Armor set " + TextFormatting.BOLD + "" + LootItemHelper.getLootStringValue(stack, MLItem.LOOT_TAG_LOOTSET));
-		tooltip.add("");
-		
-		LootItemHelper.addInformation(stack, tooltip, false);
+		if (GuiScreen.isShiftKeyDown())
+		{
+			String set_id = LootItemHelper.getLootStringValue(stack, MLItem.LOOT_TAG_LOOTSET).toUpperCase();
+			
+			tooltip.add(TextFormatting.BOLD + "" + TextFormatting.WHITE + "" + set_id + TextFormatting.RESET + "" + TextFormatting.GRAY + " Set");
+			
+			LootSet set = LootSet.getById(set_id.toLowerCase());
+			
+			LootWeaponEffect effect = set.bonusEffect;
+			
+			tooltip.add("If wearing " + MLConfig.armorPiecesForBonus + " pieces:");
+			
+			tooltip.add(I18n.translateToLocalFormatted("weaponeffect." + effect.getId() + ".description",
+					new Object[] { 
+							effect.getDurationString(stack, effect.getId()), 
+							effect.getAmplifierString(stack, effect.getId()), 
+							effect.getAmplifierString(stack, effect.getId(), 1) }));
+			
+			LootItemHelper.addInformation(stack, tooltip, false);
+		}
+		else
+		{
+			for (EntityEquipmentSlot entityequipmentslot : EntityEquipmentSlot.values())
+			{
+				Multimap<String, AttributeModifier> multimap = stack.getAttributeModifiers(entityequipmentslot);
+				
+				if (!multimap.isEmpty() && entityequipmentslot != EntityEquipmentSlot.MAINHAND)
+				{
+					tooltip.add(I18n.translateToLocal("item.modifiers." + entityequipmentslot.getName()));
+					for (Entry<String, AttributeModifier> entry : multimap.entries())
+					{
+						if (entry.getKey().equals("generic.armorToughness") || entry.getKey().equals("generic.armor"))
+						{
+							AttributeModifier attributemodifier = entry.getValue();
+							double d0 = attributemodifier.getAmount();
+							
+							EntityPlayer player = Minecraft.getMinecraft().player;
+							
+							if (player != null)
+							{
+								;
+							}
+							
+							double d1;
+							
+							if (attributemodifier.getOperation() != 1 && attributemodifier.getOperation() != 2)
+								d1 = d0;
+							else
+								d1 = d0 * 100.0D;
+							
+							if (d0 > 0.0D)
+							{
+								tooltip.add(TextFormatting.BLUE + " " + I18n.translateToLocalFormatted("attribute.modifier.plus." + attributemodifier.getOperation(), ItemStack.DECIMALFORMAT.format(d1), I18n.translateToLocal("attribute.name." + (String)entry.getKey())));
+							}
+							else if (d0 < 0.0D)
+							{
+								d1 = d1 * -1.0D;
+								tooltip.add(TextFormatting.RED + " " + I18n.translateToLocalFormatted("attribute.modifier.take." + attributemodifier.getOperation(), ItemStack.DECIMALFORMAT.format(d1), I18n.translateToLocal("attribute.name." + (String)entry.getKey())));
+							}
+						}
+					}
+				}
+			}
+			
+			tooltip.add(TextFormatting.AQUA + "" + TextFormatting.ITALIC + "Shift" + TextFormatting.DARK_GRAY + " for more...");
+		}
+	}
+	
+	@Override
+	public int getMaxDamage(ItemStack stack)
+	{
+		return LootItemHelper.getMaxDamage(stack);
 	}
 	
 	private class BonusHelper

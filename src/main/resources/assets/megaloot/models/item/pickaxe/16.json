@@ -1,0 +1,6 @@
+{
+	"parent": "megaloot:item/tool_pickaxe",
+	"textures": {
+		"layer0": "megaloot:items/pickaxe/16"
+	}
+}

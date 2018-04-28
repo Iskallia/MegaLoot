@@ -1,7 +1,7 @@
 {
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "megaloot:items/axe/1"
+		"layer0": "megaloot:items/sword/1"
 	},
 	"overrides": [
 		{
@@ -75,6 +75,60 @@
 				"model": 12
 			},
 			"model": "megaloot:item/axe/12"
+		},
+		{
+			"predicate": {
+				"model": 13
+			},
+			"model": "megaloot:item/axe/13"
+		},
+		{
+			"predicate": {
+				"model": 14
+			},
+			"model": "megaloot:item/axe/14"
+		},
+		{
+			"predicate": {
+				"model": 15
+			},
+			"model": "megaloot:item/axe/15"
+		},
+		{
+			"predicate": {
+				"model": 16
+			},
+			"model": "megaloot:item/axe/16"
+		},
+		{
+			"predicate": {
+				"model": 17
+			},
+			"model": "megaloot:item/axe/17"
+		},
+		{
+			"predicate": {
+				"model": 18
+			},
+			"model": "megaloot:item/axe/18"
+		},
+		{
+			"predicate": {
+				"model": 19
+			},
+			"model": "megaloot:item/axe/19"
+		},
+		{
+			"predicate": {
+				"model": 20
+			},
+			"model": "megaloot:item/axe/20"
+		},
+		{
+			"predicate": {
+				"model": 21
+			},
+			"model": "megaloot:item/axe/21"
 		}
 	]
 }

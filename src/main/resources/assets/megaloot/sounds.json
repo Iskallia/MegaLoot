@@ -47,4 +47,36 @@
 			,{"name": "megaloot:bow_open4", "stream": false}
 		]
 	}
+	,"tool_repair": {
+		"category": "master"
+		,"sounds": [
+			{"name": "megaloot:tool_repair1", "stream": false}
+		]
+	}
+	,"tool_break": {
+		"category": "master"
+		,"sounds": [
+			{"name": "megaloot:tool_break1", "stream": false}
+			,{"name": "megaloot:tool_break2", "stream": false}
+			,{"name": "megaloot:tool_break3", "stream": false}
+			,{"name": "megaloot:tool_break4", "stream": false}
+			,{"name": "megaloot:tool_break5", "stream": false}
+			,{"name": "megaloot:tool_break6", "stream": false}
+			,{"name": "megaloot:tool_break7", "stream": false}
+		]
+	}
+	,"tool_put": {
+		"category": "master"
+		,"sounds": [
+			{"name": "megaloot:tool_put1", "stream": false}
+			,{"name": "megaloot:tool_put2", "stream": false}
+		]
+	}
+	,"tool_take": {
+		"category": "master"
+		,"sounds": [
+			{"name": "megaloot:tool_take1", "stream": false}
+			,{"name": "megaloot:tool_take2", "stream": false}
+		]
+	}
 }

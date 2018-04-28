@@ -1,5 +1,6 @@
 package zairus.megaloot.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.Entity;
@@ -12,51 +13,71 @@ import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraftforge.client.event.FOVUpdateEvent;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.LeftClickBlock;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import zairus.megaloot.MLConstants;
+import zairus.megaloot.MegaLoot;
+import zairus.megaloot.client.settings.MLKeyBindings;
 import zairus.megaloot.item.MLItemWeaponBow;
 import zairus.megaloot.item.MLItems;
+import zairus.megaloot.loot.ILootEffectAction;
 import zairus.megaloot.loot.LootWeaponEffect;
+import zairus.megaloot.util.network.MLPacketToolUse;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = MLConstants.MOD_ID)
 public class MLEventHandler
 {
 	@SubscribeEvent
+	public void onAnvilUpdate(AnvilUpdateEvent event)
+	{
+		ItemStack toRepair = event.getLeft();
+		ItemStack ingredient = event.getRight();
+		
+		if (toRepair.isEmpty() || ingredient.isEmpty())
+			return;
+		
+		List<Item> modItems = new ArrayList<Item>();
+		
+		modItems.add(MLItems.ARMOR_HELMET);
+		modItems.add(MLItems.ARMOR_CHESTPLATE);
+		modItems.add(MLItems.ARMOR_LEGGINGS);
+		modItems.add(MLItems.ARMOR_BOOTS);
+		modItems.add(MLItems.WEAPONSWORD);
+		modItems.add(MLItems.WEAPONBOW);
+		modItems.add(MLItems.TOOL_AXE);
+		modItems.add(MLItems.TOOL_PICKAXE);
+		modItems.add(MLItems.TOOL_SHOVEL);
+		
+		if (modItems.contains(toRepair.getItem()) && toRepair.getItem() == ingredient.getItem() && event.isCancelable())
+		{
+			event.setCanceled(true);
+		}
+	}
+	
+	@SubscribeEvent
 	public void onAnvilRepair(AnvilRepairEvent event)
 	{
-		ItemStack result = event.getItemResult();
-		
-		if (result.getItem() == MLItems.WEAPONSWORD)
-		{
-			if (result.hasDisplayName())
-			{
-				char colorChar = '\u00A7';
-				String name = result.getDisplayName();
-				char fChar = name.charAt(0);
-				
-				if (fChar != colorChar && (fChar == 'a' || fChar == 'b' || fChar == 'c' || fChar == 'd' || fChar == 'e' || fChar == 'f' || fChar == '0' || fChar == '1' || fChar == '2' || fChar == '3' || fChar == '4' || fChar == '5' || fChar == '6' || fChar == '7' || fChar == '8' || fChar == '9'))
-				{
-					result.setStackDisplayName(colorChar + name);
-				}
-			}
-		}
+		;
 	}
 	
 	@SubscribeEvent
 	public void onEntityAttacked(LivingAttackEvent event)
 	{
 		Entity sourceEntity = event.getSource().getTrueSource();
-		Entity targetEntity = event.getEntityLiving();
+		//Entity targetEntity = event.getEntityLiving();
 		
-		if (sourceEntity != null && targetEntity != null && !sourceEntity.world.isRemote)
+		if (sourceEntity != null && /*targetEntity != null &&*/ !sourceEntity.world.isRemote)
 		{
-			if (sourceEntity instanceof EntityPlayer && targetEntity instanceof EntityPlayer)
+			if (sourceEntity instanceof EntityPlayer /*&& targetEntity instanceof EntityPlayer*/)
 			{
 				EntityPlayer player = (EntityPlayer)sourceEntity;
 				
@@ -79,30 +100,87 @@ public class MLEventHandler
 	}
 	
 	@SubscribeEvent
+	public void onHarvest(BlockEvent.HarvestDropsEvent event)
+	{
+		EntityPlayer player = event.getHarvester();
+		
+		if (player != null && !player.world.isRemote)
+		{
+			List<Item> tools = new ArrayList<Item>();
+			tools.add(MLItems.TOOL_AXE);
+			tools.add(MLItems.TOOL_PICKAXE);
+			tools.add(MLItems.TOOL_SHOVEL);
+			
+			ItemStack tool = player.getHeldItemMainhand();
+			
+			if (tools.contains(tool.getItem()))
+			{
+				List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(tool);
+				
+				for (LootWeaponEffect effect : effects)
+				{
+					ILootEffectAction action = effect.getAction();
+					
+					if (action != null)
+					{
+						action.handleHarvest(player, tool, event.getDrops());
+					}
+				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onLeftClickBlock(LeftClickBlock event)
+	{
+		;
+	}
+	
+	@SubscribeEvent
 	public void onLootTableLoad(LootTableLoadEvent event)
 	{
+		final LootPool main = event.getTable().getPool("main");
+		
+		if (main == null)
+			return;
+		
 		if (
-				event.getName().equals(LootTableList.CHESTS_ABANDONED_MINESHAFT)
-				|| event.getName().equals(LootTableList.CHESTS_DESERT_PYRAMID)
-				|| event.getName().equals(LootTableList.CHESTS_END_CITY_TREASURE)
-				|| event.getName().equals(LootTableList.CHESTS_IGLOO_CHEST)
-				|| event.getName().equals(LootTableList.CHESTS_JUNGLE_TEMPLE)
-				|| event.getName().equals(LootTableList.CHESTS_NETHER_BRIDGE)
-				|| event.getName().equals(LootTableList.CHESTS_SIMPLE_DUNGEON)
-				|| event.getName().equals(LootTableList.CHESTS_SPAWN_BONUS_CHEST)
-				|| event.getName().equals(LootTableList.CHESTS_STRONGHOLD_CORRIDOR)
-				|| event.getName().equals(LootTableList.CHESTS_STRONGHOLD_CROSSING)
+				event.getName().equals(LootTableList.CHESTS_NETHER_BRIDGE)
 				|| event.getName().equals(LootTableList.CHESTS_STRONGHOLD_LIBRARY)
-				|| event.getName().equals(LootTableList.CHESTS_VILLAGE_BLACKSMITH))
+				|| event.getName().equals(LootTableList.CHESTS_STRONGHOLD_CROSSING)
+				|| event.getName().equals(LootTableList.CHESTS_STRONGHOLD_CORRIDOR)
+				|| event.getName().equals(LootTableList.CHESTS_JUNGLE_TEMPLE)
+				|| event.getName().equals(LootTableList.CHESTS_DESERT_PYRAMID))
 		{
-			final LootPool main = event.getTable().getPool("main");
-			
-			if (main != null)
-			{
-				addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 10);
-				addPoolEntry(main, MLItems.WEAPONCASE_RARE, 7);
-				addPoolEntry(main, MLItems.WEAPONCASE_EPIC, 5);
-			}
+			addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 5);
+			addPoolEntry(main, MLItems.WEAPONCASE_RARE, 3);
+			addPoolEntry(main, MLItems.WEAPONCASE_EPIC, 1);
+		}
+		else if (
+				event.getName().equals(LootTableList.CHESTS_IGLOO_CHEST)
+				|| event.getName().equals(LootTableList.CHESTS_END_CITY_TREASURE))
+		{
+			addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 6);
+			addPoolEntry(main, MLItems.WEAPONCASE_RARE, 4);
+			addPoolEntry(main, MLItems.WEAPONCASE_EPIC, 2);
+		}
+		else if (
+				event.getName().equals(LootTableList.CHESTS_SIMPLE_DUNGEON))
+		{
+			addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 3);
+			addPoolEntry(main, MLItems.WEAPONCASE_RARE, 1);
+		}
+		else if (
+				event.getName().equals(LootTableList.CHESTS_ABANDONED_MINESHAFT))
+		{
+			addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 3);
+			addPoolEntry(main, MLItems.WEAPONCASE_RARE, 1);
+		}
+		else if (
+				event.getName().equals(LootTableList.CHESTS_VILLAGE_BLACKSMITH))
+		{
+			addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 2);
+			addPoolEntry(main, MLItems.WEAPONCASE_RARE, 1);
 		}
 	}
 	
@@ -161,6 +239,16 @@ public class MLEventHandler
 		else
 		{
 			return 1.0f;
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void onKeyHandle(InputEvent.KeyInputEvent event)
+	{
+		if (MLKeyBindings.activateEffect.isPressed())
+		{
+			MegaLoot.packetPipeline.sendToServer(new MLPacketToolUse());
 		}
 	}
 }

@@ -1,0 +1,6 @@
+{
+	"parent": "megaloot:item/weaponsword",
+	"textures": {
+		"layer0": "megaloot:items/sword/53"
+	}
+}

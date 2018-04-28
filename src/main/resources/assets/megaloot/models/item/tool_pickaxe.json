@@ -1,7 +1,7 @@
 {
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "megaloot:items/pickaxe/1"
+		"layer0": "megaloot:items/sword/1"
 	},
 	"overrides": [
 		{
@@ -75,6 +75,30 @@
 				"model": 12
 			},
 			"model": "megaloot:item/pickaxe/12"
+		},
+		{
+			"predicate": {
+				"model": 13
+			},
+			"model": "megaloot:item/pickaxe/13"
+		},
+		{
+			"predicate": {
+				"model": 14
+			},
+			"model": "megaloot:item/pickaxe/14"
+		},
+		{
+			"predicate": {
+				"model": 15
+			},
+			"model": "megaloot:item/pickaxe/15"
+		},
+		{
+			"predicate": {
+				"model": 16
+			},
+			"model": "megaloot:item/pickaxe/16"
 		}
 	]
 }

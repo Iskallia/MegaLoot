@@ -147,6 +147,318 @@
 				"model": 24
 			},
 			"model": "megaloot:item/sword/24"
+		},
+		{
+			"predicate": {
+				"model": 25
+			},
+			"model": "megaloot:item/sword/25"
+		},
+		{
+			"predicate": {
+				"model": 26
+			},
+			"model": "megaloot:item/sword/26"
+		},
+		{
+			"predicate": {
+				"model": 27
+			},
+			"model": "megaloot:item/sword/27"
+		},
+		{
+			"predicate": {
+				"model": 28
+			},
+			"model": "megaloot:item/sword/28"
+		},
+		{
+			"predicate": {
+				"model": 29
+			},
+			"model": "megaloot:item/sword/29"
+		},
+		{
+			"predicate": {
+				"model": 30
+			},
+			"model": "megaloot:item/sword/30"
+		},
+		{
+			"predicate": {
+				"model": 31
+			},
+			"model": "megaloot:item/sword/31"
+		},
+		{
+			"predicate": {
+				"model": 32
+			},
+			"model": "megaloot:item/sword/32"
+		},
+		{
+			"predicate": {
+				"model": 33
+			},
+			"model": "megaloot:item/sword/33"
+		},
+		{
+			"predicate": {
+				"model": 34
+			},
+			"model": "megaloot:item/sword/34"
+		},
+		{
+			"predicate": {
+				"model": 35
+			},
+			"model": "megaloot:item/sword/35"
+		},
+		{
+			"predicate": {
+				"model": 36
+			},
+			"model": "megaloot:item/sword/36"
+		},
+		{
+			"predicate": {
+				"model": 37
+			},
+			"model": "megaloot:item/sword/37"
+		},
+		{
+			"predicate": {
+				"model": 38
+			},
+			"model": "megaloot:item/sword/38"
+		},
+		{
+			"predicate": {
+				"model": 39
+			},
+			"model": "megaloot:item/sword/39"
+		},
+		{
+			"predicate": {
+				"model": 40
+			},
+			"model": "megaloot:item/sword/40"
+		},
+		{
+			"predicate": {
+				"model": 41
+			},
+			"model": "megaloot:item/sword/41"
+		},
+		{
+			"predicate": {
+				"model": 42
+			},
+			"model": "megaloot:item/sword/42"
+		},
+		{
+			"predicate": {
+				"model": 43
+			},
+			"model": "megaloot:item/sword/43"
+		},
+		{
+			"predicate": {
+				"model": 44
+			},
+			"model": "megaloot:item/sword/44"
+		},
+		{
+			"predicate": {
+				"model": 45
+			},
+			"model": "megaloot:item/sword/45"
+		},
+		{
+			"predicate": {
+				"model": 46
+			},
+			"model": "megaloot:item/sword/46"
+		},
+		{
+			"predicate": {
+				"model": 47
+			},
+			"model": "megaloot:item/sword/47"
+		},
+		{
+			"predicate": {
+				"model": 48
+			},
+			"model": "megaloot:item/sword/48"
+		},
+		{
+			"predicate": {
+				"model": 49
+			},
+			"model": "megaloot:item/sword/49"
+		},
+		{
+			"predicate": {
+				"model": 50
+			},
+			"model": "megaloot:item/sword/50"
+		},
+		{
+			"predicate": {
+				"model": 51
+			},
+			"model": "megaloot:item/sword/51"
+		},
+		{
+			"predicate": {
+				"model": 52
+			},
+			"model": "megaloot:item/sword/52"
+		},
+		{
+			"predicate": {
+				"model": 53
+			},
+			"model": "megaloot:item/sword/53"
+		},
+		{
+			"predicate": {
+				"model": 54
+			},
+			"model": "megaloot:item/sword/54"
+		},
+		{
+			"predicate": {
+				"model": 55
+			},
+			"model": "megaloot:item/sword/55"
+		},
+		{
+			"predicate": {
+				"model": 56
+			},
+			"model": "megaloot:item/sword/56"
+		},
+		{
+			"predicate": {
+				"model": 57
+			},
+			"model": "megaloot:item/sword/57"
+		},
+		{
+			"predicate": {
+				"model": 58
+			},
+			"model": "megaloot:item/sword/58"
+		},
+		{
+			"predicate": {
+				"model": 59
+			},
+			"model": "megaloot:item/sword/59"
+		},
+		{
+			"predicate": {
+				"model": 60
+			},
+			"model": "megaloot:item/sword/60"
+		},
+		{
+			"predicate": {
+				"model": 61
+			},
+			"model": "megaloot:item/sword/61"
+		},
+		{
+			"predicate": {
+				"model": 62
+			},
+			"model": "megaloot:item/sword/62"
+		},
+		{
+			"predicate": {
+				"model": 63
+			},
+			"model": "megaloot:item/sword/63"
+		},
+		{
+			"predicate": {
+				"model": 64
+			},
+			"model": "megaloot:item/sword/64"
+		},
+		{
+			"predicate": {
+				"model": 65
+			},
+			"model": "megaloot:item/sword/65"
+		},
+		{
+			"predicate": {
+				"model": 66
+			},
+			"model": "megaloot:item/sword/66"
+		},
+		{
+			"predicate": {
+				"model": 67
+			},
+			"model": "megaloot:item/sword/67"
+		},
+		{
+			"predicate": {
+				"model": 68
+			},
+			"model": "megaloot:item/sword/68"
+		},
+		{
+			"predicate": {
+				"model": 69
+			},
+			"model": "megaloot:item/sword/69"
+		},
+		{
+			"predicate": {
+				"model": 70
+			},
+			"model": "megaloot:item/sword/70"
+		},
+		{
+			"predicate": {
+				"model": 71
+			},
+			"model": "megaloot:item/sword/71"
+		},
+		{
+			"predicate": {
+				"model": 72
+			},
+			"model": "megaloot:item/sword/72"
+		},
+		{
+			"predicate": {
+				"model": 73
+			},
+			"model": "megaloot:item/sword/73"
+		},
+		{
+			"predicate": {
+				"model": 74
+			},
+			"model": "megaloot:item/sword/74"
+		},
+		{
+			"predicate": {
+				"model": 75
+			},
+			"model": "megaloot:item/sword/75"
+		},
+		{
+			"predicate": {
+				"model": 76
+			},
+			"model": "megaloot:item/sword/76"
 		}
 	]
 }

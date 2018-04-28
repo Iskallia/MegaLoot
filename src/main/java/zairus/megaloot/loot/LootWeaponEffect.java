@@ -23,28 +23,40 @@ import zairus.megaloot.loot.LootSet.LootSetType;
 
 public class LootWeaponEffect
 {
-public static final Map<String, LootWeaponEffect> REGISTRY = new HashMap<String, LootWeaponEffect>();
+	public static final Map<String, LootWeaponEffect> REGISTRY = new HashMap<String, LootWeaponEffect>();
 	
-	public static final LootWeaponEffect WITHERING = create("wither", MobEffects.WITHER).setDuration(1, 2).setItemTypes(LootSetType.SWORD, LootSetType.BOW, LootSetType.TOOL);
-	public static final LootWeaponEffect POISON = create("poison", MobEffects.POISON).setDuration(1, 3).setAmplifier(0, 1).setItemTypes(LootSetType.SWORD, LootSetType.BOW, LootSetType.TOOL);
-	public static final LootWeaponEffect HUNGER = create("hunger", MobEffects.HUNGER).setDuration(1, 10).setItemTypes(LootSetType.SWORD, LootSetType.BOW, LootSetType.TOOL);
-	public static final LootWeaponEffect LEVITATION = create("levitation", MobEffects.LEVITATION).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW, LootSetType.TOOL);
-	public static final LootWeaponEffect WEAKNESS = create("weakness", MobEffects.WEAKNESS).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW, LootSetType.TOOL);
-	public static final LootWeaponEffect SLOWNESS = create("slowness", MobEffects.SLOWNESS).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW, LootSetType.TOOL);
-	public static final LootWeaponEffect BLINDNESS = create("blindness", MobEffects.BLINDNESS).setDuration(1, 2).setItemTypes(LootSetType.SWORD, LootSetType.BOW, LootSetType.TOOL);
-	public static final LootWeaponEffect MULTISHOT = create("multishot").setAmplifier(2, 6).setItemTypes(LootSetType.BOW);
-	public static final LootWeaponEffect LEECHLIFE = create("leechlife").setAmplifier(1, 100).setItemTypes(LootSetType.SWORD, LootSetType.TOOL);
+	public static final LootWeaponEffect WITHERING = create("wither", EffectType.PASSIVE, MobEffects.WITHER).setDuration(1, 2).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect POISON = create("poison", EffectType.PASSIVE, MobEffects.POISON).setDuration(1, 3).setAmplifier(0, 1).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect HUNGER = create("hunger", EffectType.PASSIVE, MobEffects.HUNGER).setDuration(1, 10).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect LEVITATION = create("levitation", EffectType.PASSIVE, MobEffects.LEVITATION).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect WEAKNESS = create("weakness", EffectType.PASSIVE, MobEffects.WEAKNESS).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect SLOWNESS = create("slowness", EffectType.PASSIVE, MobEffects.SLOWNESS).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect BLINDNESS = create("blindness", EffectType.PASSIVE, MobEffects.BLINDNESS).setDuration(1, 2).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
+	public static final LootWeaponEffect MULTISHOT = create("multishot", EffectType.PASSIVE).setAmplifier(2, 6).setItemTypes(LootSetType.BOW);
+	public static final LootWeaponEffect LEECHLIFE = create("leechlife", EffectType.PASSIVE).setAmplifier(1, 100).setItemTypes(LootSetType.SWORD);
 	
-	public static final LootWeaponEffect SPEED = create("speed", MobEffects.SPEED).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
-	public static final LootWeaponEffect STRENGTH = create("strength", MobEffects.STRENGTH).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
-	public static final LootWeaponEffect JUMP = create("jump", MobEffects.JUMP_BOOST).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
-	public static final LootWeaponEffect RESISTANCE = create("resistance", MobEffects.RESISTANCE).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
-	public static final LootWeaponEffect HASTE = create("haste", MobEffects.HASTE).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
-	public static final LootWeaponEffect FIRE_RESISTANT = create("fire_resistance", MobEffects.FIRE_RESISTANCE);
+	public static final LootWeaponEffect SPEED = create("speed", EffectType.PASSIVE, MobEffects.SPEED).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
+	public static final LootWeaponEffect STRENGTH = create("strength", EffectType.PASSIVE, MobEffects.STRENGTH).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
+	public static final LootWeaponEffect JUMP = create("jump", EffectType.PASSIVE, MobEffects.JUMP_BOOST).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
+	public static final LootWeaponEffect RESISTANCE = create("resistance", EffectType.PASSIVE, MobEffects.RESISTANCE).setAmplifier(0, 1).setItemTypes(LootSetType.RING);
+	public static final LootWeaponEffect HASTE = create("haste", EffectType.PASSIVE, MobEffects.HASTE).setAmplifier(0, 1).setItemTypes(LootSetType.RING, LootSetType.TOOL);
+	public static final LootWeaponEffect FIRE_RESISTANT = create("fire_resistance", EffectType.PASSIVE, MobEffects.FIRE_RESISTANCE);
 	
-	public static final LootWeaponEffect HEALTH_BOOST = create("healthboost", SharedMonsterAttributes.MAX_HEALTH).setAmplifier(1, 4).setItemTypes(LootSetType.ARMOR_HEAD, LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS, LootSetType.ARMOR_FEET);
-	public static final LootWeaponEffect KNOCKBACK_RESISTANCE = create("knockbackresistance", SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setAmplifier(1, 1).setItemTypes(LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS);
-	public static final LootWeaponEffect LUCK = create("luck", SharedMonsterAttributes.LUCK).setAmplifier(1, 1024).setItemTypes(LootSetType.ARMOR_HEAD);
+	public static final LootWeaponEffect HEALTH_BOOST = create("healthboost", EffectType.PASSIVE, SharedMonsterAttributes.MAX_HEALTH).setAmplifier(1, 4).setItemTypes(LootSetType.ARMOR_HEAD, LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS, LootSetType.ARMOR_FEET, LootSetType.TOOL);
+	public static final LootWeaponEffect KNOCKBACK_RESISTANCE = create("knockbackresistance", EffectType.PASSIVE, SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setAmplifier(1, 1).setItemTypes(LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS);
+	public static final LootWeaponEffect LUCK = create("luck", EffectType.PASSIVE, SharedMonsterAttributes.LUCK).setAmplifier(1, 1024).setItemTypes(LootSetType.ARMOR_HEAD);
+	
+	public static final LootWeaponEffect ARMOR = create("armor", EffectType.PASSIVE, SharedMonsterAttributes.ARMOR).setAmplifier(3, 10).setItemTypes(LootSetType.ARMOR_HEAD, LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS, LootSetType.ARMOR_FEET);
+	public static final LootWeaponEffect TOUGHNESS = create("armor_toughness", EffectType.PASSIVE, SharedMonsterAttributes.ARMOR_TOUGHNESS).setAmplifier(3, 6).setItemTypes(LootSetType.ARMOR_HEAD, LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS, LootSetType.ARMOR_FEET);
+	
+	public static final LootWeaponEffect LIFE_LONG = create("life_long", EffectType.PASSIVE).setItemTypes(LootSetType.TOOL);
+	public static final LootWeaponEffect NIGHT_VISION = create("night_vision", EffectType.PASSIVE, MobEffects.NIGHT_VISION).setItemTypes(LootSetType.TOOL);
+	public static final LootWeaponEffect AUTO_SMELT = create("auto_smelt", EffectType.ACTIVE).setItemTypes(LootSetType.TOOL).setAction(new LootEffectActionAutoSmelt());
+	public static final LootWeaponEffect AREA_MINER = create("area_miner", EffectType.ACTIVE).setItemTypes(LootSetType.TOOL).setAction(new LootEffectActionAreaMiner());
+	public static final LootWeaponEffect VOID = create("void", EffectType.ACTIVE).setItemTypes(LootSetType.TOOL).setAction(new LootEffectActionVoid());
+	public static final LootWeaponEffect SELECTIVE = create("selective", EffectType.USE).setItemTypes(LootSetType.TOOL).setAction(new LootEffectActionVoidFilter());
+	public static final LootWeaponEffect MAGNETIC = create("magnetic", EffectType.PASSIVE).setItemTypes(LootSetType.TOOL).setAction(new LootEffectActionMagnet());
+	public static final LootWeaponEffect MULTI = create("multi", EffectType.PASSIVE).setItemTypes(LootSetType.TOOL);
 	
 	private String id;
 	private Potion effect;
@@ -55,9 +67,58 @@ public static final Map<String, LootWeaponEffect> REGISTRY = new HashMap<String,
 	private int amplifierMax = 0;
 	private List<LootSetType> applyToItems = new ArrayList<LootSetType>();
 	
+	private ILootEffectAction action;
+	
+	private final EffectType effectType;
+	
+	public enum EffectType
+	{
+		ACTIVE(TextFormatting.GOLD),
+		PASSIVE(TextFormatting.GREEN),
+		USE(TextFormatting.AQUA);
+		
+		private TextFormatting color;
+		
+		private EffectType(TextFormatting color)
+		{
+			this.color = color;
+		}
+		
+		public TextFormatting getColor()
+		{
+			return this.color;
+		}
+		
+		public boolean equals(EffectType type)
+		{
+			return type == this;
+		}
+	}
+	
+	private LootWeaponEffect(EffectType type)
+	{
+		this.effectType = type;
+	}
+	
+	public EffectType getType()
+	{
+		return this.effectType;
+	}
+	
 	public boolean applyToItemType(LootSetType type)
 	{
 		return applyToItems.contains(type);
+	}
+	
+	public ILootEffectAction getAction()
+	{
+		return this.action;
+	}
+	
+	protected LootWeaponEffect setAction(ILootEffectAction action)
+	{
+		this.action = action;
+		return this;
 	}
 	
 	protected LootWeaponEffect setItemTypes(LootSetType... itemTypes)
@@ -88,12 +149,23 @@ public static final Map<String, LootWeaponEffect> REGISTRY = new HashMap<String,
 	{
 		LootWeaponEffect weaponEffect = null;
 		
+		boolean hasActive = false;
+		
+		for (LootWeaponEffect ex : exclude)
+		{
+			if (ex.getType() == EffectType.ACTIVE)
+				hasActive = true;
+		}
+		
 		List<LootWeaponEffect> list = new ArrayList<LootWeaponEffect>();
 		
 		for (LootWeaponEffect e : REGISTRY.values())
 		{
 			if (e.applyToItemType(type))
-				list.add(e);
+			{
+				if (!(hasActive && e.getType() == EffectType.ACTIVE))
+					list.add(e);
+			}
 		}
 		
 		list.removeAll(exclude);
@@ -172,24 +244,24 @@ public static final Map<String, LootWeaponEffect> REGISTRY = new HashMap<String,
 		return list;
 	}
 	
-	protected static LootWeaponEffect create(String id)
+	protected static LootWeaponEffect create(String id, EffectType type)
 	{
-		return create(id, null, null);
+		return create(id, type, null, null);
 	}
 	
-	protected static LootWeaponEffect create(String id, IAttribute attribute)
+	protected static LootWeaponEffect create(String id, EffectType type, IAttribute attribute)
 	{
-		return create(id, null, attribute);
+		return create(id, type, null, attribute);
 	}
 	
-	protected static LootWeaponEffect create(String id, Potion effect)
+	protected static LootWeaponEffect create(String id, EffectType type, Potion effect)
 	{
-		return create(id, effect, null);
+		return create(id, type, effect, null);
 	}
 	
-	protected static LootWeaponEffect create(String id, Potion effect, IAttribute attribute)
+	protected static LootWeaponEffect create(String id, EffectType type, Potion effect, IAttribute attribute)
 	{
-		LootWeaponEffect weaponEffect = new LootWeaponEffect();
+		LootWeaponEffect weaponEffect = new LootWeaponEffect(type);
 		
 		weaponEffect.id = id;
 		weaponEffect.effect = effect;
@@ -265,11 +337,23 @@ public static final Map<String, LootWeaponEffect> REGISTRY = new HashMap<String,
 	
 	public String getAmplifierString(ItemStack stack, String effectId, int add)
 	{
-		return TextFormatting.BOLD + "" + (getAmplifierFromStack(stack, effectId) + add) + "" + TextFormatting.RESET + ""  + TextFormatting.AQUA + "";
+		return TextFormatting.BOLD + "" + (getAmplifierFromStack(stack, effectId) + add) + "" + TextFormatting.RESET + ""  + ((this.getType() == EffectType.PASSIVE)? TextFormatting.GREEN : TextFormatting.GOLD) + "";
 	}
 	
 	public String getDurationString(ItemStack stack, String effectId)
 	{
-		return TextFormatting.BOLD + "" + (getDurationFromStack(stack, effectId) / 100) + "" + TextFormatting.RESET + "" + TextFormatting.AQUA + "";
+		return TextFormatting.BOLD + "" + (getDurationFromStack(stack, effectId) / 100) + "" + TextFormatting.RESET + "" + TextFormatting.GREEN + "";
+	}
+	
+	public String getActionStatus(ItemStack stack)
+	{
+		String statusString = "";
+		
+		if (this.getAction() != null)
+		{
+			statusString = this.getAction().getStatusString(stack);
+		}
+		
+		return statusString;
 	}
 }

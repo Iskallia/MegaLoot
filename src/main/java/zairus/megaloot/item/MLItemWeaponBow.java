@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -40,6 +41,7 @@ public class MLItemWeaponBow extends ItemBow
 	{
 		super();
 		this.setCreativeTab(MegaLoot.creativeTabMain);
+		this.setNoRepair();
 		
 		this.addPropertyOverride(new ResourceLocation("model"), new IItemPropertyGetter() {
 			@SideOnly(Side.CLIENT)
@@ -80,6 +82,18 @@ public class MLItemWeaponBow extends ItemBow
 				return entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F;
 			}
 		});
+	}
+	
+	@Override
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	{
+		return false;
+	}
+	
+	@Override
+	public String getItemStackDisplayName(ItemStack stack)
+	{
+		return MLItem.getMegaLootDisplayName(stack, super.getItemStackDisplayName(stack));
 	}
 	
 	@Override
@@ -283,12 +297,17 @@ public class MLItemWeaponBow extends ItemBow
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flagIn)
 	{
-		tooltip.add("");
-		tooltip.add(TextFormatting.GRAY + "Draw speed modifier " + TextFormatting.BOLD + "" + ItemStack.DECIMALFORMAT.format(LootItemHelper.getLootFloatValue(stack, MLItem.LOOT_TAG_DRAWSPEED)));
-		tooltip.add("Power multiplier " + TextFormatting.BOLD + "" + ItemStack.DECIMALFORMAT.format(LootItemHelper.getLootFloatValue(stack, MLItem.LOOT_TAG_POWER)));
-		tooltip.add("");
-		
-		LootItemHelper.addInformation(stack, tooltip);
+		if (GuiScreen.isShiftKeyDown())
+		{
+			LootItemHelper.addInformation(stack, tooltip);
+		}
+		else
+		{
+			tooltip.add(TextFormatting.RESET + "" + "Bow");
+			tooltip.add(TextFormatting.GRAY + "Draw speed modifier " + TextFormatting.BOLD + "" + ItemStack.DECIMALFORMAT.format(LootItemHelper.getLootFloatValue(stack, MLItem.LOOT_TAG_DRAWSPEED)));
+			tooltip.add("Power multiplier " + TextFormatting.BOLD + "" + ItemStack.DECIMALFORMAT.format(LootItemHelper.getLootFloatValue(stack, MLItem.LOOT_TAG_POWER)));
+			tooltip.add(TextFormatting.AQUA + "" + TextFormatting.ITALIC + "Shift" + TextFormatting.DARK_GRAY + " for more...");
+		}
 	}
 	
 	public boolean updatesFOV()

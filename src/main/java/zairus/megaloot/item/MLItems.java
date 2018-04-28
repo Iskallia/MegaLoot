@@ -18,7 +18,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import zairus.megaloot.MLConstants;
-import zairus.megaloot.MegaLoot;
 import zairus.megaloot.loot.LootRarity;
 import zairus.megaloot.loot.LootSet.LootSetType;
 
@@ -51,6 +50,24 @@ public class MLItems
 	public static final Item TOOL_PICKAXE;
 	@ObjectHolder(MLItem.TOOL_SHOVEL_ID)
 	public static final Item TOOL_SHOVEL;
+	@ObjectHolder(MLItem.SHARD_COMMON_ID)
+	public static final Item SHARD_COMMON;
+	@ObjectHolder(MLItem.SHARD_RARE_ID)
+	public static final Item SHARD_RARE;
+	@ObjectHolder(MLItem.SHARD_EPIC_ID)
+	public static final Item SHARD_EPIC;
+	@ObjectHolder(MLItem.UPGRADECHARM_COMMON_ID)
+	public static final Item UPGRADECHARM_COMMON;
+	@ObjectHolder(MLItem.UPGRADECHARM_RARE_ID)
+	public static final Item UPGRADECHARM_RARE;
+	@ObjectHolder(MLItem.UPGRADECHARM_EPIC_ID)
+	public static final Item UPGRADECHARM_EPIC;
+	@ObjectHolder(MLItem.RIFT_STONE_ID)
+	public static final Item RIFT_STONE;
+	@ObjectHolder(MLItem.INFUSED_EMERALD_COMMON_ID)
+	public static final Item INFUSED_EMERALD_COMMON;
+	@ObjectHolder(MLItem.INFUSED_EMERALD_RARE_ID)
+	public static final Item INFUSED_EMERALD_RARE;
 	
 	static
 	{
@@ -67,6 +84,17 @@ public class MLItems
 		TOOL_AXE = initItem(new MLItemToolAxe(), MLItem.TOOL_AXE_ID);
 		TOOL_PICKAXE = initItem(new MLItemToolPickaxe(), MLItem.TOOL_PICKAXE_ID);
 		TOOL_SHOVEL = initItem(new MLItemToolShovel(), MLItem.TOOL_SHOVEL_ID);
+		
+		SHARD_COMMON = initItem(new MLItemShard(LootRarity.COMMON), MLItem.SHARD_COMMON_ID);
+		SHARD_RARE = initItem(new MLItemShard(LootRarity.RARE), MLItem.SHARD_RARE_ID);
+		SHARD_EPIC = initItem(new MLItemShard(LootRarity.EPIC), MLItem.SHARD_EPIC_ID);
+		UPGRADECHARM_COMMON = initItem(new MLItemShard(LootRarity.COMMON).setRenderEffect(false), MLItem.UPGRADECHARM_COMMON_ID);
+		UPGRADECHARM_RARE = initItem(new MLItemShard(LootRarity.RARE).setRenderEffect(false), MLItem.UPGRADECHARM_RARE_ID);
+		UPGRADECHARM_EPIC = initItem(new MLItemShard(LootRarity.EPIC).setRenderEffect(false), MLItem.UPGRADECHARM_EPIC_ID);
+		RIFT_STONE = initItem(new MLItem(), MLItem.RIFT_STONE_ID);
+		
+		INFUSED_EMERALD_COMMON = initItem(new MLItemInfused(), MLItem.INFUSED_EMERALD_COMMON_ID);
+		INFUSED_EMERALD_RARE = initItem(new MLItemInfused(), MLItem.INFUSED_EMERALD_RARE_ID);
 		
 		MLItemTypeRegistry.register(WEAPONSWORD, LootSetType.SWORD);
 		MLItemTypeRegistry.register(WEAPONBOW, LootSetType.BOW);
@@ -102,13 +130,19 @@ public class MLItems
 				,TOOL_AXE
 				,TOOL_PICKAXE
 				,TOOL_SHOVEL
+				,SHARD_COMMON
+				,SHARD_RARE
+				,SHARD_EPIC
+				,UPGRADECHARM_COMMON
+				,UPGRADECHARM_RARE
+				,UPGRADECHARM_EPIC
+				,RIFT_STONE
+				,INFUSED_EMERALD_COMMON
+				,INFUSED_EMERALD_RARE
 		};
 		
 		for (final Item item : items)
 		{
-			MegaLoot.logInfo("s0:" + MLConstants.MOD_ID + ":" + item.getUnlocalizedName());
-			MegaLoot.logInfo("s1:" + MLConstants.MOD_ID + ":" + item.getUnlocalizedName().substring(5));
-			
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(MLConstants.MOD_ID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
 		}
 	}
@@ -155,6 +189,15 @@ public class MLItems
 					,TOOL_AXE
 					,TOOL_PICKAXE
 					,TOOL_SHOVEL
+					,SHARD_COMMON
+					,SHARD_RARE
+					,SHARD_EPIC
+					,UPGRADECHARM_COMMON
+					,UPGRADECHARM_RARE
+					,UPGRADECHARM_EPIC
+					,RIFT_STONE
+					,INFUSED_EMERALD_COMMON
+					,INFUSED_EMERALD_RARE
 			};
 			
 			final IForgeRegistry<Item> registry = event.getRegistry();

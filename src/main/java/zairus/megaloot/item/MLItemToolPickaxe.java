@@ -1,30 +1,37 @@
 package zairus.megaloot.item;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import zairus.megaloot.MegaLoot;
+import zairus.megaloot.gui.MLGuiHandler;
 import zairus.megaloot.loot.LootItemHelper;
+import zairus.megaloot.loot.LootWeaponEffect;
 
 public class MLItemToolPickaxe extends ItemPickaxe
 {
@@ -33,6 +40,7 @@ public class MLItemToolPickaxe extends ItemPickaxe
 		super(ToolMaterial.DIAMOND);
 		
 		this.setCreativeTab(MegaLoot.creativeTabMain);
+		this.setNoRepair();
 		
 		this.addPropertyOverride(new ResourceLocation("model"), new IItemPropertyGetter() {
 			@SideOnly(Side.CLIENT)
@@ -48,48 +56,119 @@ public class MLItemToolPickaxe extends ItemPickaxe
 	}
 	
 	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack)
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
 	{
-		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot, stack);
+		return false;
+	}
+	
+	@Override
+	public String getItemStackDisplayName(ItemStack stack)
+	{
+		return MLItem.getMegaLootDisplayName(stack, super.getItemStackDisplayName(stack));
+	}
+	
+	@Override
+	public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer player)
+	{
+		boolean onbreak = false;
 		
-		int attackDamage = LootItemHelper.getLootIntValue(stack, MLItem.LOOT_TAG_DAMAGE);
-		float attackSpeed = LootItemHelper.getLootFloatValue(stack, MLItem.LOOT_TAG_SPEED);
-		
-		if (slot == EntityEquipmentSlot.MAINHAND)
+		if (LootItemHelper.hasEffect(itemstack, LootWeaponEffect.AREA_MINER))
 		{
-			multimap.removeAll(SharedMonsterAttributes.ATTACK_DAMAGE.getName());
-			multimap.removeAll(SharedMonsterAttributes.ATTACK_SPEED.getName());
+			RayTraceResult raytrace = MLItem.getBlockOnReach(player.world, player);
 			
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)attackDamage, 0));
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)attackSpeed, 0));
+			if (raytrace != null)
+			{
+				int level = LootItemHelper.getLootIntValue(itemstack, MLItem.LOOT_TAG_EFFECT_LEVEL);
+				onbreak = MLItem.breakBlocks(itemstack, level, player.world, pos, raytrace.sideHit, player);
+			}
 		}
 		
+		return onbreak;
+	}
+	
+	@Override
+	public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected)
+	{
+		if (entity instanceof EntityPlayer && isSelected)
+		{
+			EntityPlayer player = (EntityPlayer)entity;
+			
+			MLItem.applyEffects(stack, player, itemSlot, isSelected);
+		}
+	}
+	
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
+	{
+		ItemStack stack = player.getHeldItemMainhand();
+		
+		if (stack != null && !stack.isEmpty() && LootItemHelper.hasEffect(stack, LootWeaponEffect.SELECTIVE) && player.isSneaking() && !world.isRemote)
+		{
+			player.openGui(MegaLoot.instance, MLGuiHandler.GUI_VOID_FILTER, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+		}
+		
+		return super.onItemRightClick(world, player, hand);
+	}
+	
+	@Override
+	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack)
+	{
+		Multimap<String, AttributeModifier> multimap = MLItem.modifiersForStack(slot, stack, super.getAttributeModifiers(slot, stack), "Tool modifier");
+		
 		return multimap;
+	}
+	
+	@Override
+	public float getDestroySpeed(ItemStack stack, IBlockState state)
+	{
+		return MLItem.getEfficiency(stack, state);
+	}
+	
+	@Override
+	public Set<String> getToolClasses(ItemStack stack)
+	{
+		List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
+		
+		for (LootWeaponEffect e : effects)
+		{
+			if (e == LootWeaponEffect.MULTI)
+				return Sets.<String>newHashSet("axe", "pickaxe", "shovel");
+		}
+		
+		return super.getToolClasses(stack);
+	}
+	
+	@Override
+	public int getHarvestLevel(ItemStack stack, String toolClass, @Nullable EntityPlayer player, @Nullable IBlockState blockState)
+	{
+		List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
+		
+		for (LootWeaponEffect e : effects)
+		{
+			if (e == LootWeaponEffect.MULTI)
+				return 3;
+		}
+		
+		return super.getHarvestLevel(stack, toolClass, player, blockState);
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flagIn)
 	{
-		int attackDamage = LootItemHelper.getLootIntValue(stack, MLItem.LOOT_TAG_DAMAGE);
-		float speedDisplay = LootItemHelper.getLootFloatValue(stack, MLItem.LOOT_TAG_SPEED);
-		double sp1 = (double)speedDisplay;
-		
-		EntityPlayer player = Minecraft.getMinecraft().player;
-		
-		if (player != null)
+		if (GuiScreen.isShiftKeyDown())
 		{
-			sp1 += player.getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).getBaseValue();
+			LootItemHelper.addInformation(stack, tooltip);
 		}
-		
-		attackDamage += EnchantmentHelper.getModifierForCreature(stack, EnumCreatureAttribute.UNDEFINED);
-		
-		tooltip.add("");
-		tooltip.add(TextFormatting.GRAY + "" + attackDamage + " Damage | " + ItemStack.DECIMALFORMAT.format(sp1) + " Speed");
-		tooltip.add(TextFormatting.WHITE + ItemStack.DECIMALFORMAT.format(((float)attackDamage * sp1)) + " DPS");
-		tooltip.add("");
-		
-		LootItemHelper.addInformation(stack, tooltip);
+		else
+		{
+			tooltip.add(TextFormatting.RESET + "" + "Pickaxe");
+			
+			float efficiency = LootItemHelper.getLootFloatValue(stack, MLItem.LOOT_TAG_EFFICIENCY);
+			tooltip.add(TextFormatting.GRAY + "" + ItemStack.DECIMALFORMAT.format(efficiency) + " Mining Speed");
+			
+			tooltip.add(TextFormatting.AQUA + "" + TextFormatting.ITALIC + "Shift" + TextFormatting.DARK_GRAY + " for more...");
+		}
 	}
 	
 	@Override
@@ -100,5 +179,11 @@ public class MLItemToolPickaxe extends ItemPickaxe
 		MLItem.handleEffectsAfterHit(stack, target, attacker);
 		
 		return hit;
+	}
+	
+	@Override
+	public int getMaxDamage(ItemStack stack)
+	{
+		return LootItemHelper.getMaxDamage(stack);
 	}
 }
