@@ -230,9 +230,7 @@ public class LootItemHelper
 		
 		int kills = LootItemHelper.getLootIntValue(stack, MLItem.LOOT_TAG_KILLS);
 		if (kills > 0)
-			tooltip.add(TextFormatting.RED + "" + kills + "player kills");
-		
-		//tooltip.add("");
+			tooltip.add(TextFormatting.RED + "" + kills + " Player Kills");
 	}
 	
 	public static boolean hasEffect(ItemStack stack, LootWeaponEffect effect)

@@ -29,11 +29,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import zairus.megaloot.MegaLoot;
-import zairus.megaloot.gui.MLGuiHandler;
 import zairus.megaloot.loot.LootItemHelper;
 import zairus.megaloot.loot.LootWeaponEffect;
 
-public class MLItemToolPickaxe extends ItemPickaxe
+public class MLItemToolPickaxe extends ItemPickaxe implements IMegaLoot
 {
 	protected MLItemToolPickaxe()
 	{
@@ -100,14 +99,11 @@ public class MLItemToolPickaxe extends ItemPickaxe
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
 	{
-		ItemStack stack = player.getHeldItemMainhand();
+		ActionResult<ItemStack> defaultAction = super.onItemRightClick(world, player, hand);
 		
-		if (stack != null && !stack.isEmpty() && LootItemHelper.hasEffect(stack, LootWeaponEffect.SELECTIVE) && player.isSneaking() && !world.isRemote)
-		{
-			player.openGui(MegaLoot.instance, MLGuiHandler.GUI_VOID_FILTER, world, (int)player.posX, (int)player.posY, (int)player.posZ);
-		}
+		defaultAction = MLItem.use(defaultAction, world, player, hand);
 		
-		return super.onItemRightClick(world, player, hand);
+		return defaultAction;
 	}
 	
 	@Override

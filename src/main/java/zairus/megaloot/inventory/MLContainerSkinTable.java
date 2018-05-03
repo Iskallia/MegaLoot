@@ -5,11 +5,9 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import zairus.megaloot.MegaLoot;
 import zairus.megaloot.item.MLItems;
 import zairus.megaloot.tileentity.MLTileEntityBase;
 import zairus.megaloot.tileentity.MLTileEntitySkinTable;
-import zairus.megaloot.util.network.MLPacketSkinTable;
 
 public class MLContainerSkinTable extends MLContainerBase
 {
@@ -22,10 +20,6 @@ public class MLContainerSkinTable extends MLContainerBase
 				, 0
 				, 80
 				, 41
-				//, MLItems.ARMOR_BOOTS
-				//, MLItems.ARMOR_CHESTPLATE
-				//, MLItems.ARMOR_HELMET
-				//, MLItems.ARMOR_LEGGINGS
 				, MLItems.BAUBLERING
 				, MLItems.TOOL_AXE
 				, MLItems.TOOL_PICKAXE
@@ -68,11 +62,15 @@ public class MLContainerSkinTable extends MLContainerBase
 		{
 		case 36:
 			if (skinTable != null)
-				MegaLoot.packetPipeline.sendToServer(new MLPacketSkinTable(skinTable.getPos().getX(), skinTable.getPos().getY(), skinTable.getPos().getZ(), 0));
+			{
+				skinTable.populateSkins(player, true, 0);
+			}
 			break;
 		case 37:
 			if (skinTable != null)
-				MegaLoot.packetPipeline.sendToServer(new MLPacketSkinTable(skinTable.getPos().getX(), skinTable.getPos().getY(), skinTable.getPos().getZ(), 1));
+			{
+				skinTable.clearInput();
+			}
 			break;
 		case 38:
 		case 39:
@@ -83,8 +81,10 @@ public class MLContainerSkinTable extends MLContainerBase
 		case 44:
 			ItemStack clickedSkin = this.getSlot(slotId).getStack();
 			
-			if (!clickedSkin.isEmpty())
-				this.putStackInSlot(37, clickedSkin.copy());
+			if (skinTable != null && !clickedSkin.isEmpty())
+			{
+				skinTable.setInventorySlotContents(1, clickedSkin.copy());
+			}
 			break;
 		default:
 			break;

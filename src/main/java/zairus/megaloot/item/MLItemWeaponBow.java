@@ -35,7 +35,7 @@ import zairus.megaloot.loot.LootItemHelper;
 import zairus.megaloot.loot.LootWeaponEffect;
 import zairus.megaloot.sound.MLSoundEvents;
 
-public class MLItemWeaponBow extends ItemBow
+public class MLItemWeaponBow extends ItemBow implements IMegaLoot
 {
 	protected MLItemWeaponBow()
 	{

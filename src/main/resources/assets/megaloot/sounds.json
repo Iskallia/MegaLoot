@@ -79,4 +79,19 @@
 			,{"name": "megaloot:tool_take2", "stream": false}
 		]
 	}
+	,"snore": {
+		"category": "master"
+		,"sounds": [
+			{"name": "megaloot:snore1", "stream": false}
+			,{"name": "megaloot:snore2", "stream": false}
+			,{"name": "megaloot:snore3", "stream": false}
+			,{"name": "megaloot:snore4", "stream": false}
+		]
+	}
+	,"thrust": {
+		"category": "master"
+		,"sounds": [
+			{"name": "megaloot:thrust1", "stream": false}
+		]
+	}
 }

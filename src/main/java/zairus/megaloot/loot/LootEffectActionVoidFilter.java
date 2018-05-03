@@ -8,9 +8,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import zairus.megaloot.MegaLoot;
+import zairus.megaloot.gui.MLGuiHandler;
 
 public class LootEffectActionVoidFilter implements ILootEffectAction
 {
@@ -76,5 +80,14 @@ public class LootEffectActionVoidFilter implements ILootEffectAction
 	public String getStatusString(ItemStack stack)
 	{
 		return "";
+	}
+	
+	@Override
+	public ActionResult<ItemStack> handleUse(ActionResult<ItemStack> defaultAction, World world, EntityPlayer player, EnumHand hand)
+	{
+		if (player.isSneaking())
+			player.openGui(MegaLoot.instance, MLGuiHandler.GUI_VOID_FILTER, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+		
+		return defaultAction;
 	}
 }

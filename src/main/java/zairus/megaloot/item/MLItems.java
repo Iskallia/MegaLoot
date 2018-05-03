@@ -1,6 +1,8 @@
 package zairus.megaloot.item;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -69,6 +71,8 @@ public class MLItems
 	@ObjectHolder(MLItem.INFUSED_EMERALD_RARE_ID)
 	public static final Item INFUSED_EMERALD_RARE;
 	
+	protected static final List<Item> ITEMS = new ArrayList<Item>();
+	
 	static
 	{
 		WEAPONCASE_COMMON = initItem(new MLItemWeaponCase(LootRarity.COMMON), MLItem.WEAPONCASE_COMMON_ID);
@@ -116,32 +120,7 @@ public class MLItems
 	@SideOnly(Side.CLIENT)
 	public static void registerModels()
 	{
-		final Item[] items = {
-				WEAPONCASE_COMMON
-				,WEAPONCASE_RARE
-				,WEAPONCASE_EPIC
-				,WEAPONSWORD
-				,WEAPONBOW
-				,BAUBLERING
-				,ARMOR_BOOTS
-				,ARMOR_LEGGINGS
-				,ARMOR_CHESTPLATE
-				,ARMOR_HELMET
-				,TOOL_AXE
-				,TOOL_PICKAXE
-				,TOOL_SHOVEL
-				,SHARD_COMMON
-				,SHARD_RARE
-				,SHARD_EPIC
-				,UPGRADECHARM_COMMON
-				,UPGRADECHARM_RARE
-				,UPGRADECHARM_EPIC
-				,RIFT_STONE
-				,INFUSED_EMERALD_COMMON
-				,INFUSED_EMERALD_RARE
-		};
-		
-		for (final Item item : items)
+		for (final Item item : ITEMS)
 		{
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(MLConstants.MOD_ID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
 		}
@@ -157,14 +136,14 @@ public class MLItems
 	{
 		item.setRegistryName(new ResourceLocation(MLConstants.MOD_ID, id));
 		item.setUnlocalizedName(id);
-		
+		ITEMS.add(item);
 		return item;
 	}
 	
 	@Mod.EventBusSubscriber(modid = MLConstants.MOD_ID)
 	public static class ItemRegistry
 	{
-		public static final Set<Item> ITEMS = new HashSet<Item>();
+		public static final Set<Item> ITEM_SET = new HashSet<Item>();
 		
 		@SubscribeEvent
 		public static void newRegistry(final RegistryEvent.NewRegistry event)
@@ -175,37 +154,12 @@ public class MLItems
 		@SubscribeEvent
 		public static void register(final RegistryEvent.Register<Item> event)
 		{
-			final Item[] items = {
-					WEAPONCASE_COMMON
-					,WEAPONCASE_RARE
-					,WEAPONCASE_EPIC
-					,WEAPONSWORD
-					,WEAPONBOW
-					,BAUBLERING
-					,ARMOR_BOOTS
-					,ARMOR_LEGGINGS
-					,ARMOR_CHESTPLATE
-					,ARMOR_HELMET
-					,TOOL_AXE
-					,TOOL_PICKAXE
-					,TOOL_SHOVEL
-					,SHARD_COMMON
-					,SHARD_RARE
-					,SHARD_EPIC
-					,UPGRADECHARM_COMMON
-					,UPGRADECHARM_RARE
-					,UPGRADECHARM_EPIC
-					,RIFT_STONE
-					,INFUSED_EMERALD_COMMON
-					,INFUSED_EMERALD_RARE
-			};
-			
 			final IForgeRegistry<Item> registry = event.getRegistry();
 			
-			for (final Item item : items)
+			for (final Item item : ITEMS)
 			{
 				registry.register(item);
-				ITEMS.add(item);
+				ITEM_SET.add(item);
 			}
 			
 			initialize();

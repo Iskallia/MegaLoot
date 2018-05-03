@@ -8,9 +8,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
 import zairus.megaloot.tileentity.MLTileEntityBase;
 
 public class MLContainerBase extends Container
@@ -188,39 +185,6 @@ public class MLContainerBase extends Container
 	@Override
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickType, EntityPlayer player)
 	{
-		if (slotId < 0 || slotId >= this.inventorySlots.size())
-			return ItemStack.EMPTY;
-		
-		if (this.inventorySlots.get(slotId).getStack() == null)
-			this.inventorySlots.get(slotId).putStack(ItemStack.EMPTY);
-		
-		if (slotId < 9 && slotId >= 0)
-		{
-			if (this.inventory instanceof MLTileEntityBase)
-			{
-				MLTileEntityBase te = (MLTileEntityBase)this.inventory;
-				
-				ItemStack stack = te.getStackInSlot(slotId);
-				
-				if (!stack.isEmpty())
-				{
-					SoundEvent placeSound = te.getItemPlaceSound();
-					
-					if (placeSound != null)
-					{
-						World world = te.getWorld();
-						world.playSound(
-								(EntityPlayer)null, 
-								te.getPos(), 
-								placeSound, 
-								SoundCategory.BLOCKS, 
-								0.8F, 
-								world.rand.nextFloat() * 0.1F + 0.9F);
-					}
-				}
-			}
-		}
-		
 		return super.slotClick(slotId, dragType, clickType, player);
 	}
 	

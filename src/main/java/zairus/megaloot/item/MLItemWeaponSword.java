@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import zairus.megaloot.MegaLoot;
 import zairus.megaloot.loot.LootItemHelper;
 
-public class MLItemWeaponSword extends ItemSword
+public class MLItemWeaponSword extends ItemSword implements IMegaLoot
 {
 	protected MLItemWeaponSword()
 	{

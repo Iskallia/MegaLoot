@@ -8,6 +8,7 @@ import java.util.UUID;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -15,14 +16,15 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -137,6 +139,31 @@ public class MLItem extends Item
 		applyEffects(stack, player, 0, true);
 	}
 	
+	public static ActionResult<ItemStack> use(ActionResult<ItemStack> defaultAction, World world, EntityPlayer player, EnumHand hand)
+	{
+		ItemStack stack = player.getHeldItemMainhand();
+		
+		List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
+		
+		if (effects != null)
+		{
+			for (LootWeaponEffect effect : effects)
+			{
+				if (effect != null)
+				{
+					ILootEffectAction action = effect.getAction();
+					
+					if (action != null)
+					{
+						defaultAction = action.handleUse(defaultAction, world, player, hand);
+					}
+				}
+			}
+		}
+		
+		return defaultAction;
+	}
+	
 	public static void applyEffects(ItemStack stack, EntityPlayer player, int slot, boolean isSelected)
 	{
 		List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
@@ -169,7 +196,13 @@ public class MLItem extends Item
 		
 		for (String type : stack.getItem().getToolClasses(stack))
 		{
-			if (state.getBlock().isToolEffective(type, state) || (state.getBlock() == Blocks.OBSIDIAN && type == "pickaxe"))
+			Material material = state.getMaterial();
+			if (
+					state.getBlock().isToolEffective(type, state) 
+					|| (type == "pickaxe" 
+					&& (material == Material.IRON
+					|| material == Material.ANVIL
+					|| material == Material.ROCK)))
 				return efficiency;
 		}
 		

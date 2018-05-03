@@ -5,6 +5,8 @@ import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -28,8 +30,6 @@ public class LootEffectActionAreaMiner implements ILootEffectAction
 	@Override
 	public void handleHarvest(EntityPlayer player, ItemStack stack, List<ItemStack> drops)
 	{
-		//PlayerControllerMP
-		//((EntityPlayerMP)player).connection.sendPacket(new SPacketBlockChange(player.world, new BlockPos(0, 0,0)));
 	}
 	
 	@Override
@@ -60,5 +60,11 @@ public class LootEffectActionAreaMiner implements ILootEffectAction
 		int level = LootItemHelper.getLootIntValue(stack, MLItem.LOOT_TAG_EFFECT_LEVEL);
 		String status = "[" + (level + 1) + "x" + (level + 1) + "]";
 		return status;
+	}
+	
+	@Override
+	public ActionResult<ItemStack> handleUse(ActionResult<ItemStack> defaultAction, World world, EntityPlayer player, EnumHand hand)
+	{
+		return defaultAction;
 	}
 }

@@ -35,7 +35,7 @@ import zairus.megaloot.loot.LootSet;
 import zairus.megaloot.loot.LootWeaponEffect;
 
 @SuppressWarnings("deprecation")
-public class MLItemArmor extends ItemArmor
+public class MLItemArmor extends ItemArmor implements IMegaLoot
 {
 	protected MLItemArmor(EntityEquipmentSlot equipmentSlot)
 	{

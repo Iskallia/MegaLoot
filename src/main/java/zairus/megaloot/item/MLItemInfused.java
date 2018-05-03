@@ -26,7 +26,7 @@ public class MLItemInfused extends MLItem
 			stack.setTagCompound(new NBTTagCompound());
 		
 		if (!stack.getTagCompound().hasKey("evolve_chance"))
-			stack.getTagCompound().setInteger("evolve_chance", 1 + itemRand.nextInt(50));
+			stack.getTagCompound().setInteger("evolve_chance", 30 + itemRand.nextInt(51));
 	}
 	
 	@SideOnly(Side.CLIENT)

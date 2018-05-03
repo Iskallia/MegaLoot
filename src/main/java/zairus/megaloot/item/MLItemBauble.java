@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import zairus.megaloot.loot.LootItemHelper;
 
-public class MLItemBauble extends MLItem implements IBauble
+public class MLItemBauble extends MLItem implements IBauble, IMegaLoot
 {
 	protected MLItemBauble()
 	{

@@ -117,6 +117,9 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Abstra
 		registerPacket(MLPacketToolRepair.class);
 		registerPacket(MLPacketSkinTable.class);
 		registerPacket(MLPacketToolUse.class);
+		registerPacket(MLPacketLootBrag.class);
+		registerPacket(MLPacketSleep.class);
+		registerPacket(MLPacketJetpack.class);
 	}
 	
 	public void postInitialise()

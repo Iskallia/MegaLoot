@@ -3,34 +3,51 @@ package zairus.megaloot.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.storage.loot.LootEntryItem;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraftforge.client.event.FOVUpdateEvent;
+import net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.LeftClickBlock;
+import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import zairus.megaloot.MLConstants;
 import zairus.megaloot.MegaLoot;
 import zairus.megaloot.client.settings.MLKeyBindings;
+import zairus.megaloot.item.IMegaLoot;
 import zairus.megaloot.item.MLItemWeaponBow;
 import zairus.megaloot.item.MLItems;
 import zairus.megaloot.loot.ILootEffectAction;
+import zairus.megaloot.loot.LootItemHelper;
 import zairus.megaloot.loot.LootWeaponEffect;
+import zairus.megaloot.sound.MLSoundEvents;
+import zairus.megaloot.util.network.MLPacketJetpack;
+import zairus.megaloot.util.network.MLPacketLootBrag;
 import zairus.megaloot.util.network.MLPacketToolUse;
 
 @Mod.EventBusSubscriber(modid = MLConstants.MOD_ID)
@@ -152,34 +169,34 @@ public class MLEventHandler
 				|| event.getName().equals(LootTableList.CHESTS_JUNGLE_TEMPLE)
 				|| event.getName().equals(LootTableList.CHESTS_DESERT_PYRAMID))
 		{
-			addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 5);
-			addPoolEntry(main, MLItems.WEAPONCASE_RARE, 3);
-			addPoolEntry(main, MLItems.WEAPONCASE_EPIC, 1);
+			addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 10);
+			addPoolEntry(main, MLItems.WEAPONCASE_RARE, 7);
+			addPoolEntry(main, MLItems.WEAPONCASE_EPIC, 3);
 		}
 		else if (
 				event.getName().equals(LootTableList.CHESTS_IGLOO_CHEST)
 				|| event.getName().equals(LootTableList.CHESTS_END_CITY_TREASURE))
 		{
-			addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 6);
-			addPoolEntry(main, MLItems.WEAPONCASE_RARE, 4);
-			addPoolEntry(main, MLItems.WEAPONCASE_EPIC, 2);
+			addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 13);
+			addPoolEntry(main, MLItems.WEAPONCASE_RARE, 8);
+			addPoolEntry(main, MLItems.WEAPONCASE_EPIC, 5);
 		}
 		else if (
 				event.getName().equals(LootTableList.CHESTS_SIMPLE_DUNGEON))
 		{
-			addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 3);
-			addPoolEntry(main, MLItems.WEAPONCASE_RARE, 1);
+			addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 6);
+			addPoolEntry(main, MLItems.WEAPONCASE_RARE, 2);
 		}
 		else if (
 				event.getName().equals(LootTableList.CHESTS_ABANDONED_MINESHAFT))
 		{
-			addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 3);
+			addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 5);
 			addPoolEntry(main, MLItems.WEAPONCASE_RARE, 1);
 		}
 		else if (
 				event.getName().equals(LootTableList.CHESTS_VILLAGE_BLACKSMITH))
 		{
-			addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 2);
+			addPoolEntry(main, MLItems.WEAPONCASE_COMMON, 4);
 			addPoolEntry(main, MLItems.WEAPONCASE_RARE, 1);
 		}
 	}
@@ -244,11 +261,92 @@ public class MLEventHandler
 	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
+	public void onClientTick(ClientTickEvent event)
+	{
+		boolean f = Minecraft.getMinecraft().gameSettings.keyBindForward.isKeyDown();
+		boolean b = Minecraft.getMinecraft().gameSettings.keyBindBack.isKeyDown();
+		boolean l = Minecraft.getMinecraft().gameSettings.keyBindLeft.isKeyDown();
+		boolean r = Minecraft.getMinecraft().gameSettings.keyBindRight.isKeyDown();
+		boolean j = Minecraft.getMinecraft().gameSettings.keyBindJump.isKeyDown();
+		boolean s = Minecraft.getMinecraft().gameSettings.keyBindSneak.isKeyDown();
+		
+		if (f || b || l || r || j || s)
+		{
+			MegaLoot.packetPipeline.sendToServer(new MLPacketJetpack(f, b, l, r, j, s));
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
 	public void onKeyHandle(InputEvent.KeyInputEvent event)
 	{
 		if (MLKeyBindings.activateEffect.isPressed())
 		{
 			MegaLoot.packetPipeline.sendToServer(new MLPacketToolUse());
+		}
+	}
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void keyboardEvent(KeyboardInputEvent.Post event)
+	{
+		if (
+				GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindChat) 
+				&& event.getGui() instanceof GuiContainer 
+				&& GuiScreen.isShiftKeyDown())
+		{
+			GuiContainer gui = (GuiContainer) event.getGui();
+			Slot slot = gui.getSlotUnderMouse();
+			if(slot != null && slot.inventory != null && !"tmp".equals(slot.inventory.getName()))
+			{
+				ItemStack stack = slot.getStack();
+				if(!stack.isEmpty() && stack.getItem() instanceof IMegaLoot)
+				{
+					MegaLoot.packetPipeline.sendToServer(new MLPacketLootBrag(stack));
+				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void sleepingLocationCheck(SleepingLocationCheckEvent event)
+	{
+		if (event.getEntityPlayer().isPlayerSleeping() && !event.getEntityPlayer().world.isDaytime())
+		{
+			event.setResult(Result.ALLOW);
+		}
+	}
+	
+	@SubscribeEvent
+	public void onPlayerTick(PlayerTickEvent event)
+	{
+		ItemStack chestplate = event.player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+		
+		if (chestplate != null && !chestplate.isEmpty() && LootItemHelper.hasEffect(chestplate, LootWeaponEffect.JETPACK))
+		{
+			if(!event.player.onGround)
+			{
+				event.player.world.playSound(
+						(EntityPlayer)null
+						, event.player.getPosition()
+						, MLSoundEvents.THRUST
+						, SoundCategory.PLAYERS
+						, 0.3F
+						, 1.0F);
+				
+				int hover = LootWeaponEffect.getAmplifierFromStack(chestplate, LootWeaponEffect.JETPACK.getId());
+				
+				double factor = 1.0D - ((double)hover / 100.0D); // 0.93D;
+				
+				if (event.player.isSneaking())
+					factor = 0.97D;
+				
+				if (event.player.motionY < 0.0D)
+				{
+					event.player.motionY *= factor;
+					event.player.fallDistance *= factor;
+				}
+			}
 		}
 	}
 }

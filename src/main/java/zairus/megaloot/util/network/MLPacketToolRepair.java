@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import zairus.megaloot.tileentity.MLTileEntityDisenchanter;
 
-public class MLPacketToolRepair extends AbstractPacket
+public class MLPacketToolRepair extends MLPacket
 {
 	private double x;
 	private double y;
@@ -44,11 +44,6 @@ public class MLPacketToolRepair extends AbstractPacket
 		y = buffer.readDouble();
 		z = buffer.readDouble();
 		this.action = buffer.readInt();
-	}
-	
-	@Override
-	public void handleClientSide(EntityPlayer player)
-	{
 	}
 	
 	@Override

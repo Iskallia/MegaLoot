@@ -31,6 +31,7 @@ public class MLTileEntitySkinTable extends MLTileEntityBase
 	private ItemStack[] chestContents = new ItemStack[9];
 	
 	private int offset = 0;
+	//private MLContainerSkinTable container;
 	
 	public MLTileEntitySkinTable()
 	{
@@ -159,15 +160,21 @@ public class MLTileEntitySkinTable extends MLTileEntityBase
 		do_populate:
 		{
 			if (tool == null || tool.isEmpty())
+			{
 				break do_populate;
+			}
 			
 			if (!playerTag.hasKey(MLConstants.MOD_ID))
+			{
 				break do_populate;
+			}
 			
 			NBTTagCompound playerLootTag = playerTag.getCompoundTag(MLConstants.MOD_ID);
 			
 			if (!playerLootTag.hasKey(MLItem.LOOT_TAG_SKIN_LIST))
+			{
 				break do_populate;
+			}
 			
 			NBTTagCompound skinTag = playerLootTag.getCompoundTag(MLItem.LOOT_TAG_SKIN_LIST);
 			
@@ -252,6 +259,9 @@ public class MLTileEntitySkinTable extends MLTileEntityBase
 	
 	public void clearInput()
 	{
+		if (chestContents[0]== null)
+			chestContents[0] = ItemStack.EMPTY;
+		
 		if (!this.chestContents[0].isEmpty())
 		{
 			this.chestContents[0] = ItemStack.EMPTY;
@@ -276,5 +286,18 @@ public class MLTileEntitySkinTable extends MLTileEntityBase
 		this.world.notifyBlockUpdate(getPos(), state, state, 0);
 		
 		this.markDirty();
+	}
+	
+	@Override
+	public ItemStack decrStackSize(int index, int count)
+	{
+		ItemStack stack = super.decrStackSize(index, count);
+		return stack;
+	}
+	
+	@Override
+	public void setInventorySlotContents(int index, ItemStack stack)
+	{
+		super.setInventorySlotContents(index, stack);
 	}
 }

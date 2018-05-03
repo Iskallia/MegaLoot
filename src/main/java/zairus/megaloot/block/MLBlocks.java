@@ -1,6 +1,8 @@
 package zairus.megaloot.block;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.google.common.base.Preconditions;
@@ -30,6 +32,8 @@ public class MLBlocks
 	@ObjectHolder(MLBlock.EVOLUTION_CHAMBER_ID)
 	public static final Block EVOLUTION_CHAMBER;
 	
+	protected static final List<Block> BLOCKS = new ArrayList<Block>();
+	
 	static
 	{
 		SKIN_TABLE = initBlock(new MLBlockSkinTable(), MLBlock.SKIN_TABLE_ID);
@@ -46,6 +50,7 @@ public class MLBlocks
 	{
 		block.setRegistryName(new ResourceLocation(MLConstants.MOD_ID, id));
 		block.setUnlocalizedName(id);
+		BLOCKS.add(block);
 		
 		return block;
 	}
@@ -53,15 +58,9 @@ public class MLBlocks
 	@SideOnly(Side.CLIENT)
 	public static void registerModels()
 	{
-		final Item[] blocks = {
-				Item.getItemFromBlock(SKIN_TABLE)
-				,Item.getItemFromBlock(DISENCHANTER)
-				,Item.getItemFromBlock(EVOLUTION_CHAMBER)
-		};
-		
-		for (final Item block : blocks)
+		for (final Block block : BLOCKS)
 		{
-			ModelLoader.setCustomModelResourceLocation(block, 0, new ModelResourceLocation(MLConstants.MOD_ID + ":" + block.getUnlocalizedName().substring(5), "inventory"));
+			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(MLConstants.MOD_ID + ":" + block.getUnlocalizedName().substring(5), "inventory"));
 		}
 	}
 	
@@ -81,13 +80,7 @@ public class MLBlocks
 		{
 			final IForgeRegistry<Block> registry = event.getRegistry();
 			
-			final Block[] blocks = {
-					SKIN_TABLE
-					,DISENCHANTER
-					,EVOLUTION_CHAMBER
-			};
-			
-			registry.registerAll(blocks);
+			registry.registerAll(BLOCKS.toArray(new Block[] { }));
 		}
 		
 		@SubscribeEvent
@@ -95,16 +88,10 @@ public class MLBlocks
 		{
 			final IForgeRegistry<Item> registry = event.getRegistry();
 			
-			final ItemBlock[] items = {
-					new ItemBlock(SKIN_TABLE)
-					,new ItemBlock(DISENCHANTER)
-					,new ItemBlock(EVOLUTION_CHAMBER)
-			};
-			
-			for (final ItemBlock item : items)
+			for (final Block block : BLOCKS)
 			{
-				final Block block = item.getBlock();
 				final ResourceLocation registryName = Preconditions.checkNotNull(block.getRegistryName(), "Block %s has null registry name", block);
+				ItemBlock item = new ItemBlock(block);
 				registry.register(item.setRegistryName(registryName));
 				ITEM_BLOCKS.add(item);
 			}

@@ -18,7 +18,7 @@ import zairus.megaloot.item.MLItems;
 
 public class MLTileEntityEvolutionChamber extends MLTileEntityBase
 {
-	public static final int TOTAL_EVOLUTION_TIME = 120;
+	public static final int TOTAL_EVOLUTION_TIME = 10;
 	
 	private ItemStack[] chestContents = new ItemStack[4];
 	
@@ -79,7 +79,7 @@ public class MLTileEntityEvolutionChamber extends MLTileEntityBase
 							if (ingredient.getItem() == MLItems.INFUSED_EMERALD_COMMON)
 								failed = new ItemStack(MLItems.SHARD_COMMON, 1);
 							else if (ingredient.getItem() == MLItems.INFUSED_EMERALD_RARE)
-								failed = new ItemStack(MLItems.SHARD_RARE, 1);
+								failed = new ItemStack(MLItems.SHARD_RARE, 4 + this.world.rand.nextInt(6));
 						}
 						
 						if (!failed.isEmpty())
@@ -89,13 +89,15 @@ public class MLTileEntityEvolutionChamber extends MLTileEntityBase
 							{
 								this.setInventorySlotContents(2, failed.copy());
 								ingredient.shrink(1);
+								upgradable.shrink(1);
 							}
 							else if (failed.isItemEqual(shard))
 							{
-								if (shard.getCount() < shard.getMaxStackSize())
+								if (shard.getCount() + shard.getCount() <= shard.getMaxStackSize())
 								{
-									shard.grow(1);
+									shard.grow(failed.getCount());
 									ingredient.shrink(1);
+									upgradable.shrink(1);
 								}
 							}
 						}
@@ -119,6 +121,7 @@ public class MLTileEntityEvolutionChamber extends MLTileEntityBase
 							}
 						}
 					}
+					this.updateInWorld();
 					evolution_time = 0;
 					break evolution_progress;
 				}
@@ -129,12 +132,17 @@ public class MLTileEntityEvolutionChamber extends MLTileEntityBase
 				break evolution_progress;
 			}
 			
-			this.markDirty();
-			IBlockState state = this.world.getBlockState(getPos());
-			this.world.notifyBlockUpdate(getPos(), state, state, 0);
+			this.updateInWorld();
 		}
 		
 		super.update();
+	}
+	
+	private void updateInWorld()
+	{
+		this.markDirty();
+		IBlockState state = this.world.getBlockState(getPos());
+		this.world.notifyBlockUpdate(getPos(), state, state, 0);
 	}
 	
 	public int getEvolutionTime()

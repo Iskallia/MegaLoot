@@ -21,7 +21,7 @@ repositories {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "0.2.15"
+version = "0.2.23"
 group = "zairus.megaloot"
 archivesBaseName = "megaloot-1.12.2"
 
@@ -58,3 +58,8 @@ processResources {
     }
 }
 
+jar {
+    manifest {
+        attributes 'FMLAT': 'ml_at.cfg'
+    }
+}

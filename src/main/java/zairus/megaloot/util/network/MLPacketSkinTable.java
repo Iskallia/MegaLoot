@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import zairus.megaloot.tileentity.MLTileEntitySkinTable;
 
-public class MLPacketSkinTable extends AbstractPacket
+public class MLPacketSkinTable extends MLPacket
 {
 	private double x;
 	private double y;
@@ -58,8 +58,18 @@ public class MLPacketSkinTable extends AbstractPacket
 			
 			switch(this.action)
 			{
+			case 0:
+				skinTable.populateSkins(player, true, 0);
+				break;
 			case 1:
 				skinTable.clearInput();
+			case 2:
+				// Previous model list
+				skinTable.populateSkins(player, false, -1);
+				break;
+			case 3:
+				// Next model list
+				skinTable.populateSkins(player, false, 1);
 				break;
 			}
 		}

@@ -44,7 +44,7 @@ public class LootWeaponEffect
 	
 	public static final LootWeaponEffect HEALTH_BOOST = create("healthboost", EffectType.PASSIVE, SharedMonsterAttributes.MAX_HEALTH).setAmplifier(1, 4).setItemTypes(LootSetType.ARMOR_HEAD, LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS, LootSetType.ARMOR_FEET, LootSetType.TOOL);
 	public static final LootWeaponEffect KNOCKBACK_RESISTANCE = create("knockbackresistance", EffectType.PASSIVE, SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setAmplifier(1, 1).setItemTypes(LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS);
-	public static final LootWeaponEffect LUCK = create("luck", EffectType.PASSIVE, SharedMonsterAttributes.LUCK).setAmplifier(1, 1024).setItemTypes(LootSetType.ARMOR_HEAD);
+	public static final LootWeaponEffect LUCK = create("luck", EffectType.PASSIVE, SharedMonsterAttributes.LUCK).setAmplifier(1, 100).setItemTypes(LootSetType.ARMOR_HEAD);
 	
 	public static final LootWeaponEffect ARMOR = create("armor", EffectType.PASSIVE, SharedMonsterAttributes.ARMOR).setAmplifier(3, 10).setItemTypes(LootSetType.ARMOR_HEAD, LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS, LootSetType.ARMOR_FEET);
 	public static final LootWeaponEffect TOUGHNESS = create("armor_toughness", EffectType.PASSIVE, SharedMonsterAttributes.ARMOR_TOUGHNESS).setAmplifier(3, 6).setItemTypes(LootSetType.ARMOR_HEAD, LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS, LootSetType.ARMOR_FEET);
@@ -57,6 +57,9 @@ public class LootWeaponEffect
 	public static final LootWeaponEffect SELECTIVE = create("selective", EffectType.USE).setItemTypes(LootSetType.TOOL).setAction(new LootEffectActionVoidFilter());
 	public static final LootWeaponEffect MAGNETIC = create("magnetic", EffectType.PASSIVE).setItemTypes(LootSetType.TOOL).setAction(new LootEffectActionMagnet());
 	public static final LootWeaponEffect MULTI = create("multi", EffectType.PASSIVE).setItemTypes(LootSetType.TOOL);
+	public static final LootWeaponEffect SLEEP = create("sleep", EffectType.USE).setItemTypes(LootSetType.TOOL).setAction(new LootEffectActionSleep());
+	
+	public static final LootWeaponEffect JETPACK = create("jetpack", EffectType.PASSIVE).setItemTypes(LootSetType.ARMOR_CHEST).setAmplifier(5, 20).setDuration(2, 5);
 	
 	private String id;
 	private Potion effect;
@@ -150,11 +153,15 @@ public class LootWeaponEffect
 		LootWeaponEffect weaponEffect = null;
 		
 		boolean hasActive = false;
+		boolean hasUse = false;
 		
 		for (LootWeaponEffect ex : exclude)
 		{
 			if (ex.getType() == EffectType.ACTIVE)
 				hasActive = true;
+			
+			if (ex.getType() == EffectType.USE)
+				hasUse = true;
 		}
 		
 		List<LootWeaponEffect> list = new ArrayList<LootWeaponEffect>();
@@ -163,7 +170,9 @@ public class LootWeaponEffect
 		{
 			if (e.applyToItemType(type))
 			{
-				if (!(hasActive && e.getType() == EffectType.ACTIVE))
+				if (
+						!(hasActive && e.getType() == EffectType.ACTIVE) 
+						&& !(hasUse && e.getType() == EffectType.USE))
 					list.add(e);
 			}
 		}
