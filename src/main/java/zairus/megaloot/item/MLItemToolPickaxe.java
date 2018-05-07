@@ -71,7 +71,7 @@ public class MLItemToolPickaxe extends ItemPickaxe implements IMegaLoot
 	{
 		boolean onbreak = false;
 		
-		if (LootItemHelper.hasEffect(itemstack, LootWeaponEffect.AREA_MINER))
+		if (LootItemHelper.hasEffect(itemstack, LootWeaponEffect.AREA_MINER) && LootItemHelper.getLootIntValue(itemstack, MLItem.LOOT_TAG_EFFECT_LEVEL) > 1)
 		{
 			RayTraceResult raytrace = MLItem.getBlockOnReach(player.world, player);
 			

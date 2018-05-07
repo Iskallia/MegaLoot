@@ -44,7 +44,10 @@ public class LootEffectActionAreaMiner implements ILootEffectAction
 		message += "'s ";
 		message += I18n.translateToLocal("weaponeffect.area_miner.name");
 		message += ", has been set to: ";
-		message += "[" + (level + 1) + "x" + (level + 1) + "]";
+		if (level == 0)
+			message += "[Off]";
+		else
+			message += "[" + (level + 1) + "x" + (level + 1) + "]";
 		
 		return new TextComponentString(message);
 	}

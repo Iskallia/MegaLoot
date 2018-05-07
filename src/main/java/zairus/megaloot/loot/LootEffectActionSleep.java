@@ -9,6 +9,7 @@ import com.google.common.base.Predicate;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
@@ -139,7 +140,8 @@ public class LootEffectActionSleep implements ILootEffectAction
 		
 		player.spawnShoulderEntities();
 		
-		MegaLoot.packetPipeline.sendToAll(new MLPacketSleep());
+		if (player instanceof EntityPlayerMP)
+			MegaLoot.packetPipeline.sendTo(new MLPacketSleep(), (EntityPlayerMP)player);
 		
 		player.sleeping = true;
 		player.sleepTimer = 0;
@@ -147,7 +149,6 @@ public class LootEffectActionSleep implements ILootEffectAction
 		player.motionX = 0.0D;
 		player.motionY = 0.0D;
 		player.motionZ = 0.0D;
-		
 		
 		if (!player.world.isRemote)
 		{

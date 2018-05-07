@@ -331,7 +331,7 @@ public class MLEventHandler
 						, event.player.getPosition()
 						, MLSoundEvents.THRUST
 						, SoundCategory.PLAYERS
-						, 0.3F
+						, 0.1F
 						, 1.0F);
 				
 				int hover = LootWeaponEffect.getAmplifierFromStack(chestplate, LootWeaponEffect.JETPACK.getId());
