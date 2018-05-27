@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import zairus.megaloot.MegaLoot;
 import zairus.megaloot.item.MLItems;
 
 public class MLTileEntityEvolutionChamber extends MLTileEntityBase
@@ -28,6 +29,41 @@ public class MLTileEntityEvolutionChamber extends MLTileEntityBase
 	public MLTileEntityEvolutionChamber()
 	{
 		;
+	}
+	
+	private boolean canInfuse()
+	{
+		ItemStack ingredient = this.getStackInSlot(0);
+		ItemStack upgradable = this.getStackInSlot(1);
+		
+		ItemStack shard = this.getStackInSlot(2);
+		ItemStack weaponcase = this.getStackInSlot(3);
+		
+		if (ingredient.isEmpty() || upgradable.isEmpty())
+		{
+			MegaLoot.logInfo("empty ingredients");
+			return false;
+		}
+		
+		if (
+				ingredient.getItem() == MLItems.INFUSED_EMERALD_COMMON 
+				&& upgradable.getItem() == MLItems.WEAPONCASE_COMMON
+				&& (shard.isEmpty() || shard.getItem() == MLItems.SHARD_COMMON)
+				&& (weaponcase.isEmpty() || weaponcase.getItem() == MLItems.WEAPONCASE_RARE))
+		{
+			return true;
+		}
+		
+		if (
+				ingredient.getItem() == MLItems.INFUSED_EMERALD_RARE 
+				&& upgradable.getItem() == MLItems.WEAPONCASE_RARE
+				&& (shard.isEmpty() || shard.getItem() == MLItems.SHARD_RARE)
+				&& (weaponcase.isEmpty() || weaponcase.getItem() == MLItems.WEAPONCASE_EPIC))
+		{
+			return true;
+		}
+		
+		return false;
 	}
 	
 	@Override
@@ -49,9 +85,7 @@ public class MLTileEntityEvolutionChamber extends MLTileEntityBase
 				break evolution_progress;
 			}
 			
-			if (
-					(ingredient.getItem() == MLItems.INFUSED_EMERALD_COMMON && upgradable.getItem() == MLItems.WEAPONCASE_COMMON)
-					|| (ingredient.getItem() == MLItems.INFUSED_EMERALD_RARE && upgradable.getItem() == MLItems.WEAPONCASE_RARE))
+			if (canInfuse())
 			{
 				// Continue 2 minutes to evolve
 				++evolution_time;

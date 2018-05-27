@@ -199,10 +199,19 @@ public class MLItem extends Item
 			Material material = state.getMaterial();
 			if (
 					state.getBlock().isToolEffective(type, state) 
-					|| (type == "pickaxe" 
-					&& (material == Material.IRON
-					|| material == Material.ANVIL
-					|| material == Material.ROCK)))
+					|| (
+							type == "pickaxe" 
+							&& (
+									material == Material.IRON
+									|| material == Material.ANVIL
+									|| material == Material.ROCK))
+					|| (
+							type == "axe"
+							&& (
+									material == Material.WOOD
+									|| material == Material.PLANTS
+									|| material == Material.VINE
+									|| material == Material.LEAVES)))
 				return efficiency;
 		}
 		

@@ -44,7 +44,7 @@ public class LootWeaponEffect
 	
 	public static final LootWeaponEffect HEALTH_BOOST = create("healthboost", EffectType.PASSIVE, SharedMonsterAttributes.MAX_HEALTH).setAmplifier(1, 4).setItemTypes(LootSetType.ARMOR_HEAD, LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS, LootSetType.ARMOR_FEET, LootSetType.TOOL);
 	public static final LootWeaponEffect KNOCKBACK_RESISTANCE = create("knockbackresistance", EffectType.PASSIVE, SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setAmplifier(1, 1).setItemTypes(LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS);
-	public static final LootWeaponEffect LUCK = create("luck", EffectType.PASSIVE, SharedMonsterAttributes.LUCK).setAmplifier(1, 100).setItemTypes(LootSetType.ARMOR_HEAD);
+	public static final LootWeaponEffect LUCK = create("luck", EffectType.PASSIVE, SharedMonsterAttributes.LUCK).setAmplifier(1, 5).setItemTypes(LootSetType.ARMOR_HEAD);
 	
 	public static final LootWeaponEffect ARMOR = create("armor", EffectType.PASSIVE, SharedMonsterAttributes.ARMOR).setAmplifier(3, 10).setItemTypes(LootSetType.ARMOR_HEAD, LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS, LootSetType.ARMOR_FEET);
 	public static final LootWeaponEffect TOUGHNESS = create("armor_toughness", EffectType.PASSIVE, SharedMonsterAttributes.ARMOR_TOUGHNESS).setAmplifier(3, 6).setItemTypes(LootSetType.ARMOR_HEAD, LootSetType.ARMOR_CHEST, LootSetType.ARMOR_LEGS, LootSetType.ARMOR_FEET);

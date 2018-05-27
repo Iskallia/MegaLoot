@@ -102,14 +102,7 @@ public class MLItemToolAxe extends ItemAxe implements IMegaLoot
 		ActionResult<ItemStack> defaultAction = super.onItemRightClick(world, player, hand);
 		
 		defaultAction = MLItem.use(defaultAction, world, player, hand);
-		/*
-		ItemStack stack = player.getHeldItemMainhand();
 		
-		if (stack != null && !stack.isEmpty() && LootItemHelper.hasEffect(stack, LootWeaponEffect.SELECTIVE) && player.isSneaking() && !world.isRemote)
-		{
-			player.openGui(MegaLoot.instance, MLGuiHandler.GUI_VOID_FILTER, world, (int)player.posX, (int)player.posY, (int)player.posZ);
-		}
-		*/
 		return defaultAction;
 	}
 	
