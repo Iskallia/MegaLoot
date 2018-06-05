@@ -81,7 +81,7 @@ public class MLPacketJetpack extends MLPacket
 		if (!player.onGround)
 		{
 			float yaw = player.rotationYaw;
-			float pitch = 0.0F; //player.rotationPitch;
+			float pitch = 0.0F;
 			
 			float f = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);
 			float f1 = MathHelper.sin(-yaw * 0.017453292F - (float)Math.PI);
@@ -91,33 +91,37 @@ public class MLPacketJetpack extends MLPacket
 			
 			Vec3d vLeft = new Vec3d(vForward.z, vForward.y, -vForward.x);
 			
+			double mX = 0.0D;
+			double mZ = 0.0D;
+			
 			if (this.forward)
 			{
-				player.motionX = vForward.x * speed;
-				player.motionZ = vForward.z * speed;
-				((EntityPlayerMP)player).connection.sendPacket(new SPacketEntityVelocity(player));
+				mX += vForward.x * speed;
+				mZ += vForward.z * speed;
 			}
 			
 			if (this.back)
 			{
-				player.motionX = vForward.x * -speed;
-				player.motionZ = vForward.z * -speed;
-				((EntityPlayerMP)player).connection.sendPacket(new SPacketEntityVelocity(player));
+				mX += vForward.x * -speed;
+				mZ += vForward.z * -speed;
 			}
 			
 			if (this.left)
 			{
-				player.motionX = vLeft.x * speed;
-				player.motionZ = vLeft.z * speed;
-				((EntityPlayerMP)player).connection.sendPacket(new SPacketEntityVelocity(player));
+				mX += vLeft.x * speed;
+				mZ += vLeft.z * speed;
 			}
 			
 			if (this.right)
 			{
-				player.motionX = vLeft.x * -speed;
-				player.motionZ = vLeft.z * -speed;
-				((EntityPlayerMP)player).connection.sendPacket(new SPacketEntityVelocity(player));
+				mX += vLeft.x * -speed;
+				mZ += vLeft.z * -speed;
 			}
+			
+			player.motionX = mX;
+			player.motionZ = mZ;
+			
+			((EntityPlayerMP)player).connection.sendPacket(new SPacketEntityVelocity(player));
 		}
 	}
 }

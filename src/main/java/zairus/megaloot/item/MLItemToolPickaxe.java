@@ -123,26 +123,31 @@ public class MLItemToolPickaxe extends ItemPickaxe implements IMegaLoot
 	@Override
 	public Set<String> getToolClasses(ItemStack stack)
 	{
-		List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
-		
-		for (LootWeaponEffect e : effects)
+		if(LootItemHelper.hasEffect(stack, LootWeaponEffect.MULTI))
 		{
-			if (e == LootWeaponEffect.MULTI)
-				return Sets.<String>newHashSet("axe", "pickaxe", "shovel");
+			return Sets.<String>newHashSet("axe", "pickaxe", "shovel");
 		}
 		
 		return super.getToolClasses(stack);
 	}
 	
 	@Override
+	public boolean canHarvestBlock(IBlockState state, ItemStack stack)
+	{
+		boolean canHarvest = super.canHarvestBlock(state, stack);
+		
+		if (LootItemHelper.hasEffect(stack, LootWeaponEffect.MULTI))
+			return true;
+		
+		return canHarvest;
+	}
+	
+	@Override
 	public int getHarvestLevel(ItemStack stack, String toolClass, @Nullable EntityPlayer player, @Nullable IBlockState blockState)
 	{
-		List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
-		
-		for (LootWeaponEffect e : effects)
+		if(LootItemHelper.hasEffect(stack, LootWeaponEffect.MULTI))
 		{
-			if (e == LootWeaponEffect.MULTI)
-				return 3;
+			return 3;
 		}
 		
 		return super.getHarvestLevel(stack, toolClass, player, blockState);
