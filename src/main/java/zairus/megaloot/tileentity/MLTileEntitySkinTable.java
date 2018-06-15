@@ -12,7 +12,6 @@ import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -31,7 +30,6 @@ public class MLTileEntitySkinTable extends MLTileEntityBase
 	private ItemStack[] chestContents = new ItemStack[9];
 	
 	private int offset = 0;
-	//private MLContainerSkinTable container;
 	
 	public MLTileEntitySkinTable()
 	{
@@ -39,19 +37,7 @@ public class MLTileEntitySkinTable extends MLTileEntityBase
 	}
 	
 	@Override
-	public int[] getSlotsForFace(EnumFacing side)
-	{
-		return new int[] { 0 };
-	}
-	
-	@Override
-	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction)
-	{
-		return false;
-	}
-	
-	@Override
-	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
+	public boolean isItemValidForSlot(int index, ItemStack stack)
 	{
 		return false;
 	}

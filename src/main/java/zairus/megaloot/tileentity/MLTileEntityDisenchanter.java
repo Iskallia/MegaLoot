@@ -17,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -79,24 +78,6 @@ public class MLTileEntityDisenchanter extends MLTileEntityBase
 	public int getDisenchantStep()
 	{
 		return this.disenchantStep;
-	}
-	
-	@Override
-	public int[] getSlotsForFace(EnumFacing side)
-	{
-		return new int[] { 0 };
-	}
-	
-	@Override
-	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction)
-	{
-		return false;
-	}
-	
-	@Override
-	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
-	{
-		return false;
 	}
 	
 	@Override

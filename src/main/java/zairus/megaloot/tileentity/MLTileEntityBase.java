@@ -9,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,8 +23,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import zairus.megaloot.MLConstants;
 import zairus.megaloot.inventory.MLContainerBase;
+import zairus.megaloot.tileentity.capabilities.MLItemHandler;
 
-public abstract class MLTileEntityBase extends TileEntityLockableLoot implements ITickable, ISidedInventory
+public abstract class MLTileEntityBase extends TileEntityLockableLoot implements ITickable //, ISidedInventory
 {
 	public int playersUsing;
 	
@@ -55,6 +55,19 @@ public abstract class MLTileEntityBase extends TileEntityLockableLoot implements
 	
 	@SideOnly(Side.CLIENT)
 	public abstract ResourceLocation getTextures();
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@javax.annotation.Nullable
+	public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing)
+	{
+		if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		{
+			return (T) new MLItemHandler();
+		}
+		
+		return super.getCapability(capability, facing);
+	}
 	
 	public String getDefaultName()
 	{
@@ -121,10 +134,7 @@ public abstract class MLTileEntityBase extends TileEntityLockableLoot implements
 	@Override
 	public ItemStack getStackInSlot(int index)
 	{
-		if (getChestContents() == null)
-			return ItemStack.EMPTY;
-		
-		if (index >= getChestContents().length)
+		if (getChestContents() == null || index >= getChestContents().length)
 			return ItemStack.EMPTY;
 		
 		ItemStack stack = getChestContents()[index];
@@ -252,7 +262,7 @@ public abstract class MLTileEntityBase extends TileEntityLockableLoot implements
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack)
 	{
-		return true;
+		return false;
 	}
 	
 	@Override

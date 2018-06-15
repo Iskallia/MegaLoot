@@ -8,7 +8,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -182,24 +181,6 @@ public class MLTileEntityEvolutionChamber extends MLTileEntityBase
 	public int getEvolutionTime()
 	{
 		return this.evolution_time;
-	}
-	
-	@Override
-	public int[] getSlotsForFace(EnumFacing side)
-	{
-		return new int[] { 0 };
-	}
-	
-	@Override
-	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction)
-	{
-		return false;
-	}
-	
-	@Override
-	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
-	{
-		return false;
 	}
 	
 	@Override
