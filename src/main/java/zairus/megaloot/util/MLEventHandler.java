@@ -13,7 +13,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.world.storage.loot.LootEntryItem;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTableList;
@@ -45,7 +44,6 @@ import zairus.megaloot.item.MLItems;
 import zairus.megaloot.loot.ILootEffectAction;
 import zairus.megaloot.loot.LootItemHelper;
 import zairus.megaloot.loot.LootWeaponEffect;
-import zairus.megaloot.sound.MLSoundEvents;
 import zairus.megaloot.util.network.MLPacketJetpack;
 import zairus.megaloot.util.network.MLPacketLootBrag;
 import zairus.megaloot.util.network.MLPacketToolUse;
@@ -325,14 +323,6 @@ public class MLEventHandler
 		{
 			if(!event.player.onGround)
 			{
-				event.player.world.playSound(
-						(EntityPlayer)null
-						, event.player.getPosition()
-						, MLSoundEvents.THRUST
-						, SoundCategory.PLAYERS
-						, 0.1F
-						, 1.0F);
-				
 				int hover = LootWeaponEffect.getAmplifierFromStack(chestplate, LootWeaponEffect.JETPACK.getId());
 				
 				double factor = 1.0D - ((double)hover / 100.0D); // 0.93D;

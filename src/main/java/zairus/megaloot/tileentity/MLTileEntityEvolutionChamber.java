@@ -44,6 +44,11 @@ public class MLTileEntityEvolutionChamber extends MLTileEntityBase
 			return false;
 		}
 		
+		if (!shard.isEmpty() && shard.getCount() >= shard.getMaxStackSize())
+		{
+			return false;
+		}
+		
 		if (
 				ingredient.getItem() == MLItems.INFUSED_EMERALD_COMMON 
 				&& upgradable.getItem() == MLItems.WEAPONCASE_COMMON
@@ -109,10 +114,12 @@ public class MLTileEntityEvolutionChamber extends MLTileEntityBase
 						}
 						else
 						{
+							int shardCount = 4 + this.world.rand.nextInt(6);
+							
 							if (ingredient.getItem() == MLItems.INFUSED_EMERALD_COMMON)
-								failed = new ItemStack(MLItems.SHARD_COMMON, 1);
+								failed = new ItemStack(MLItems.SHARD_COMMON, shardCount);
 							else if (ingredient.getItem() == MLItems.INFUSED_EMERALD_RARE)
-								failed = new ItemStack(MLItems.SHARD_RARE, 4 + this.world.rand.nextInt(6));
+								failed = new ItemStack(MLItems.SHARD_RARE, shardCount);
 						}
 						
 						if (!failed.isEmpty())
@@ -126,12 +133,17 @@ public class MLTileEntityEvolutionChamber extends MLTileEntityBase
 							}
 							else if (failed.isItemEqual(shard))
 							{
-								if (shard.getCount() + shard.getCount() <= shard.getMaxStackSize())
+								if (shard.getCount() + failed.getCount() <= shard.getMaxStackSize())
 								{
 									shard.grow(failed.getCount());
-									ingredient.shrink(1);
-									upgradable.shrink(1);
 								}
+								else
+								{
+									shard.setCount(shard.getMaxStackSize());
+								}
+								
+								ingredient.shrink(1);
+								upgradable.shrink(1);
 							}
 						}
 						else if (!success.isEmpty())

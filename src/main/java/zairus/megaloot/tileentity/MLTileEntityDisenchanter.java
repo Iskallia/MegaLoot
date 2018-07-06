@@ -167,6 +167,12 @@ public class MLTileEntityDisenchanter extends MLTileEntityBase
 		List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(tool);
 		LootSetType type = MLItems.getItemType(tool.getItem());
 		
+		if (!effects.contains(LootWeaponEffect.ARMOR))
+			effects.add(LootWeaponEffect.ARMOR);
+		
+		if (!effects.contains(LootWeaponEffect.TOUGHNESS))
+			effects.add(LootWeaponEffect.TOUGHNESS);
+		
 		LootWeaponEffect me = LootWeaponEffect.getRandomExcluding(this.world.rand, type, effects);
 		
 		if (me != null)
