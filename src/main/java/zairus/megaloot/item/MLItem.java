@@ -211,7 +211,8 @@ public class MLItem extends Item
 									material == Material.WOOD
 									|| material == Material.PLANTS
 									|| material == Material.VINE
-									|| material == Material.LEAVES)))
+									|| material == Material.LEAVES))
+					|| LootItemHelper.hasEffect(stack, LootWeaponEffect.MULTI))
 				return efficiency;
 		}
 		
