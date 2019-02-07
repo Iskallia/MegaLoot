@@ -28,7 +28,6 @@ public class LootWeaponEffect
 	public static final LootWeaponEffect WITHERING = create("wither", EffectType.PASSIVE, MobEffects.WITHER).setDuration(1, 2).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
 	public static final LootWeaponEffect POISON = create("poison", EffectType.PASSIVE, MobEffects.POISON).setDuration(1, 3).setAmplifier(0, 1).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
 	public static final LootWeaponEffect HUNGER = create("hunger", EffectType.PASSIVE, MobEffects.HUNGER).setDuration(1, 10).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
-	public static final LootWeaponEffect LEVITATION = create("levitation", EffectType.PASSIVE, MobEffects.LEVITATION).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
 	public static final LootWeaponEffect WEAKNESS = create("weakness", EffectType.PASSIVE, MobEffects.WEAKNESS).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
 	public static final LootWeaponEffect SLOWNESS = create("slowness", EffectType.PASSIVE, MobEffects.SLOWNESS).setDuration(1, 3).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
 	public static final LootWeaponEffect BLINDNESS = create("blindness", EffectType.PASSIVE, MobEffects.BLINDNESS).setDuration(1, 2).setItemTypes(LootSetType.SWORD, LootSetType.BOW);
