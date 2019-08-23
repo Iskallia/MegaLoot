@@ -18,6 +18,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.text.TextFormatting;
+import zairus.megaloot.MLConfig;
 import zairus.megaloot.item.MLItem;
 import zairus.megaloot.loot.LootSet.LootSetType;
 
@@ -154,6 +155,8 @@ public class LootWeaponEffect
 		
 		boolean hasActive = false;
 		boolean hasUse = false;
+		
+		exclude.addAll(MLConfig.spawnDisabledEffects);
 		
 		for (LootWeaponEffect ex : exclude)
 		{
@@ -327,6 +330,9 @@ public class LootWeaponEffect
 		if (this.effect == null)
 			return null;
 		
+		if (!MLConfig.effectActive(this))
+			return null;
+		
 		PotionEffect weaponEffect = new PotionEffect(this.effect, duration, amplifier, true, false);
 		return weaponEffect;
 	}
@@ -335,7 +341,7 @@ public class LootWeaponEffect
 	{
 		PotionEffect effect = this.getPotionEffect(duration, amplifier);
 		
-		if (effect != null)
+		if (effect != null && MLConfig.effectActive(this))
 			target.addPotionEffect(effect);
 	}
 	

@@ -11,6 +11,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import zairus.megaloot.MLConfig;
 import zairus.megaloot.item.MLItem;
 import zairus.megaloot.item.MLItems;
 import zairus.megaloot.loot.LootWeaponEffect.EffectType;
@@ -235,6 +236,9 @@ public class LootItemHelper
 	
 	public static boolean hasEffect(ItemStack stack, LootWeaponEffect effect)
 	{
+		if (!MLConfig.effectActive(effect))
+			return false;
+		
 		boolean hasEffect = false;
 		
 		List<LootWeaponEffect> effects = LootWeaponEffect.getEffectList(stack);
